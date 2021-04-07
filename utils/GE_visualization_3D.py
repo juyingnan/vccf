@@ -4,6 +4,8 @@ import csv
 import os
 import sys
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+from plotly.graph_objs import Layout
 
 
 def write_csv(path, list_of_columns, list_of_names=None):
@@ -203,49 +205,108 @@ color_dict = {
     'T-Helper': "blue",
     'T-Reg': "green",
 }
-color = [color_dict[type] for type in nuclei_type_list]
+n_color = [color_dict[type] for type in nuclei_type_list]
+v_color = [color_dict['CD31']] * len(vessel_x_list)
 
-fig = plt.figure(figsize=(20, 20))
-ax = fig.add_subplot(111, projection='3d')
-ax._axis3don = False
-
-color_max = max(nuclei_distance_list)
-colors = ['#%02x%02x%02x' % (0, int(255 * value / color_max), int(255 * (color_max - value) / color_max))
-          for value in nuclei_distance_list]
-
-ax.scatter(nuclei_x_list, nuclei_y_list, nuclei_z_list, color=color, marker="o", s=15)
-ax.scatter(vessel_x_list, vessel_y_list, vessel_z_list, color='r', marker="o", s=15)
-
-for i in range(len(nuclei_id_list)):
-    ax.plot([nuclei_x_list[i], nuclei_nearest_vessel_x_list[i]],
-            [nuclei_y_list[i], nuclei_nearest_vessel_y_list[i]],
-            [nuclei_z_list[i], nuclei_nearest_vessel_z_list[i]],
-            color='k', linewidth=0.1)
-
-ax.set_xlim3d(0, 3000)
-ax.set_ylim3d(0, 3000)
-ax.set_zlim3d(0, 3000)
-
-plt.show()
-
-# plt.scatter(vessel_x_list, vessel_y_list, c='r')
-# plt.scatter(nuclei_x_list, nuclei_y_list, c='b')
-plt.hist(nuclei_distance_list, bins=100)
-plt.show()
+size_dict = {
+    'CD68': 15.89,
+    'CD31': 16.83,
+    'T-Helper': 16.96,
+    'T-Reg': 17.75,
+}
+n_size = [size_dict[type] / 2 for type in nuclei_type_list]
+v_size = [size_dict['CD31'] / 2] * len(vessel_x_list)
+# fig = plt.figure(figsize=(20, 20))
+# ax = fig.add_subplot(111, projection='3d')
+# ax._axis3don = False
+#
+# color_max = max(nuclei_distance_list)
+# colors = ['#%02x%02x%02x' % (0, int(255 * value / color_max), int(255 * (color_max - value) / color_max))
+#           for value in nuclei_distance_list]
+#
+# ax.scatter(nuclei_x_list, nuclei_y_list, nuclei_z_list, color=color, marker="o", s=15)
+# ax.scatter(vessel_x_list, vessel_y_list, vessel_z_list, color='r', marker="o", s=15)
+#
+# for i in range(len(nuclei_id_list)):
+#     ax.plot([nuclei_x_list[i], nuclei_nearest_vessel_x_list[i]],
+#             [nuclei_y_list[i], nuclei_nearest_vessel_y_list[i]],
+#             [nuclei_z_list[i], nuclei_nearest_vessel_z_list[i]],
+#             color='k', linewidth=0.1)
+#
+# ax.set_xlim3d(0, 3000)
+# ax.set_ylim3d(0, 3000)
+# ax.set_zlim3d(0, 3000)
+#
+# plt.show()
+#
+# # plt.scatter(vessel_x_list, vessel_y_list, c='r')
+# # plt.scatter(nuclei_x_list, nuclei_y_list, c='b')
+# plt.hist(nuclei_distance_list, bins=100)
+# plt.show()
 
 import pandas as pd
 
-data = dict()
-data["nx"] = nuclei_x_list
-data["ny"] = nuclei_y_list
-data["nz"] = nuclei_z_list
-data["color"] = color
-#data["vx"] = vessel_x_list
-#data["vy"] = vessel_y_list
-#data["vz"] = vessel_z_list
-n_df = pd.DataFrame(data)
-import plotly.express as px
+n_data = dict()
+n_data["nx"] = nuclei_x_list
+n_data["ny"] = nuclei_y_list
+n_data["nz"] = nuclei_z_list
+n_data["color"] = n_color
+v_data = dict()
+v_data["vx"] = vessel_x_list
+v_data["vy"] = vessel_y_list
+v_data["vz"] = vessel_z_list
+# v_color = ['red'] * len(vessel_x_list)
+v_data["color"] = v_color
+n_df = pd.DataFrame(n_data)
+v_df = pd.DataFrame(v_data)
+# import plotly.express as px
+#
+# range_max = max(bottom_right[0] - top_left[0], bottom_right[1] - top_left[1]) * 1.2
+#
+# fig = px.scatter_3d(n_df, x='nx', y='ny', z='nz',
+#                     color='color', opacity=0.7,  # size=1,
+#                     range_x=[0, range_max], range_y=[0, range_max], range_z=[0, range_max])
+# # fig.add_scatter3d(px.scatter_3d(v_df, x='vx', y='vy', z='vz', color='color'))
+# import plotly.graph_objects as go
+#
+# fig.add_trace(go.Scatter3d(v_df, x='vx', y='vy', z='vz'))
+#
+# fig.show()
 
-fig = px.scatter_3d(n_df, x='nx', y='ny', z='nz', color='color')
-#fig = px.scatter_3d(n_df, x='vx', y='vy', z='vz', color='red')
+
+range_max = max(bottom_right[0] - top_left[0], bottom_right[1] - top_left[1]) * 1.2
+
+trace_n = go.Scatter3d(x=nuclei_x_list, y=nuclei_y_list, z=nuclei_z_list,
+                       mode="markers",
+                       marker=dict(
+                           size=n_size,
+                           color=n_color,
+                           opacity=0.8
+                       ))
+trace_v = go.Scatter3d(x=vessel_x_list, y=vessel_y_list, z=vessel_z_list,
+                       mode="markers",
+                       marker=dict(
+                           size=v_size,
+                           color=v_color,
+                           opacity=0.8
+                       ))
+traces_line = [go.Scatter3d(x=[nuclei_x_list[i], nuclei_nearest_vessel_x_list[i]],
+                            y=[nuclei_y_list[i], nuclei_nearest_vessel_y_list[i]],
+                            z=[nuclei_z_list[i], nuclei_nearest_vessel_z_list[i]],
+                            mode="lines",
+                            opacity=0.5,
+                            line=dict(
+                                color='grey',
+                                width=1, )
+                            ) for i in range(len(nuclei_x_list))]
+
+layout = Layout(
+    title='GE VCCF 3D',
+    scene=dict(
+        aspectmode='data'
+    ))
+contents = [trace_n, trace_v]
+contents.extend(traces_line)
+fig = go.Figure(contents, layout=layout)
+fig.update_layout(showlegend=False)
 fig.show()

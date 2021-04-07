@@ -309,4 +309,5 @@ contents = [trace_n, trace_v]
 contents.extend(traces_line)
 fig = go.Figure(contents, layout=layout)
 fig.update_layout(showlegend=False)
+fig.write_html("./result/GE_3D.html")
 fig.show()

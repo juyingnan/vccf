@@ -1,42 +1,12 @@
-from skimage import io
 import math
-import csv
 import os
 import sys
-import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import utils.kidney_nuclei_vessel_calculate as my_csv
+# import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
-
-
-def write_csv(path, list_of_columns, list_of_names=None):
-    with open(path, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        if list_of_names is not None:
-            writer.writerow(list_of_names)
-        lines = []
-        for _i in range(len(list_of_columns[0])):
-            lines.append([column[_i] for column in list_of_columns])
-        writer.writerows(lines)
-
-
-def read_csv(path):
-    with open(path, 'r', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',')
-        _headers = next(reader, None)
-
-        # get column
-        _columns = {}
-        for h in _headers:
-            _columns[h] = []
-        for row in reader:
-            for h, v in zip(_headers, row):
-                _columns[h].append(v)
-
-        for item in _headers:
-            print(item)
-
-        return _headers, _columns
-
 
 # prs = Presentation(r'C:\Users\bunny\Desktop\KidneyAnnotated-GW.pptx')
 # print(prs.slide_height, prs.slide_width)
@@ -65,8 +35,10 @@ vessel_z_list = list()
 z_list = [77, 78, 79, 80, 81, 83, 84, 85, 86, 88, 89, 90, 91, 92, 94, 95, 96, 97, 98, 99, 100, 101]
 scale = 16
 
-top_left = [5350, 3900]
-bottom_right = [7150, 4700]
+# top_left = [5350, 3900]
+# bottom_right = [7150, 4700]
+top_left = [0, 0]
+bottom_right = [1000000, 1000000]
 
 if len(sys.argv) >= 2:
     input_id = sys.argv[1]
@@ -79,7 +51,7 @@ nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 if len(sys.argv) >= 3:
     nuclei_file_path = sys.argv[2]
 
-n_headers, n_columns = read_csv(nuclei_file_path)
+n_headers, n_columns = my_csv.read_csv(nuclei_file_path)
 for i in range(0, 5):  # len(n_headers)):
     n_columns[n_headers[i]] = [value for value in n_columns[n_headers[i]]]
 # n_columns['Y'] = [float(value) for value in n_columns['Y']]
@@ -87,21 +59,18 @@ for i in range(0, 5):  # len(n_headers)):
 for i in range(len(n_columns['X'])):
     if top_left[0] < float(n_columns['X'][i]) * scale < bottom_right[0] and \
             top_left[1] < float(n_columns['Y'][i]) * scale < bottom_right[1]:
+        temp_z = float(n_columns['Z'][i])
+        temp_z_int = int(math.floor(temp_z))
+        z = z_list[temp_z_int] - z_list[0] + temp_z - temp_z_int
         if n_columns['cell_type'][i] == 'CD31':
             vessel_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
             vessel_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
-            temp_z = float(n_columns['Z'][i])
-            temp_z_int = int(math.floor(temp_z))
-            z = z_list[temp_z_int] - z_list[0] + temp_z - temp_z_int
             vessel_z_list.append(z * scale)
         else:
             nuclei_id_list.append(i)
             nuclei_type_list.append(n_columns['cell_type'][i])
             nuclei_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
             nuclei_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
-            temp_z = float(n_columns['Z'][i])
-            temp_z_int = int(math.floor(temp_z))
-            z = z_list[temp_z_int] - z_list[0] + temp_z - temp_z_int
             nuclei_z_list.append(z * scale)
 # nuclei_class_list = [int(value) for value in n_columns['Class']]
 
@@ -130,16 +99,16 @@ nuclei_output_path = os.path.join(output_root_path, nuclei_output_name)
 vessel_output_name = 'vessel.csv'
 vessel_output_path = os.path.join(output_root_path, vessel_output_name)
 
-write_csv(nuclei_output_path,
-          [nuclei_id_list,
-           nuclei_x_list,
-           nuclei_y_list,
-           nuclei_type_list],
-          ['id', 'x', 'y', 'z', 'type'])
+my_csv.write_csv(nuclei_output_path,
+                 [nuclei_id_list,
+                  nuclei_x_list,
+                  nuclei_y_list,
+                  nuclei_type_list],
+                 ['id', 'x', 'y', 'z', 'type'])
 
-write_csv(vessel_output_path,
-          [vessel_x_list, vessel_y_list],
-          ['x', 'y', 'z'])
+my_csv.write_csv(vessel_output_path,
+                 [vessel_x_list, vessel_y_list],
+                 ['x', 'y', 'z'])
 
 for nid in range(len(nuclei_id_list)):
     _min_dist = 1500
@@ -174,23 +143,23 @@ for nid in range(len(nuclei_id_list)):
 print(len(nuclei_id_list), len(nuclei_x_list), len(nuclei_y_list), len(nuclei_distance_list),
       len(nuclei_nearest_vessel_x_list), len(nuclei_nearest_vessel_y_list))
 
-write_csv(nuclei_output_path,
-          [nuclei_id_list,
-           nuclei_x_list,
-           nuclei_y_list,
-           nuclei_z_list,
-           nuclei_type_list,
-           nuclei_distance_list,
-           nuclei_nearest_vessel_x_list,
-           nuclei_nearest_vessel_y_list,
-           nuclei_nearest_vessel_z_list],
-          ['id', 'x', 'y', 'z',
-           'type',
-           'distance', 'vx', 'vy', 'vz'])
+my_csv.write_csv(nuclei_output_path,
+                 [nuclei_id_list,
+                  nuclei_x_list,
+                  nuclei_y_list,
+                  nuclei_z_list,
+                  nuclei_type_list,
+                  nuclei_distance_list,
+                  nuclei_nearest_vessel_x_list,
+                  nuclei_nearest_vessel_y_list,
+                  nuclei_nearest_vessel_z_list],
+                 ['id', 'x', 'y', 'z',
+                  'type',
+                  'distance', 'vx', 'vy', 'vz'])
 
-write_csv(vessel_output_path,
-          [vessel_x_list, vessel_y_list, vessel_z_list],
-          ['x', 'y', 'z'])
+my_csv.write_csv(vessel_output_path,
+                 [vessel_x_list, vessel_y_list, vessel_z_list],
+                 ['x', 'y', 'z'])
 
 # import matplotlib.pyplot as plt
 #
@@ -205,7 +174,7 @@ color_dict = {
     'T-Helper': "blue",
     'T-Reg': "green",
 }
-n_color = [color_dict[type] for type in nuclei_type_list]
+n_color = [color_dict[cell_type] for cell_type in nuclei_type_list]
 v_color = [color_dict['CD31']] * len(vessel_x_list)
 
 size_dict = {
@@ -214,7 +183,7 @@ size_dict = {
     'T-Helper': 16.96,
     'T-Reg': 17.75,
 }
-n_size = [size_dict[type] / 2 for type in nuclei_type_list]
+n_size = [size_dict[cell_type] / 2 for cell_type in nuclei_type_list]
 v_size = [size_dict['CD31'] / 2] * len(vessel_x_list)
 # fig = plt.figure(figsize=(20, 20))
 # ax = fig.add_subplot(111, projection='3d')
@@ -244,21 +213,42 @@ v_size = [size_dict['CD31'] / 2] * len(vessel_x_list)
 # plt.hist(nuclei_distance_list, bins=100)
 # plt.show()
 
-import pandas as pd
 
 n_data = dict()
 n_data["nx"] = nuclei_x_list
 n_data["ny"] = nuclei_y_list
 n_data["nz"] = nuclei_z_list
 n_data["color"] = n_color
-v_data = dict()
-v_data["vx"] = vessel_x_list
-v_data["vy"] = vessel_y_list
-v_data["vz"] = vessel_z_list
-# v_color = ['red'] * len(vessel_x_list)
-v_data["color"] = v_color
+
 n_df = pd.DataFrame(n_data)
+
+print(n_df)
+# https://stackoverflow.com/questions/56723792/plotly-how-to-efficiently-plot-a-large-number-of-line-shapes-where-the-points-a
+
+line_x = [None] * (len(nuclei_x_list) + len(nuclei_nearest_vessel_x_list))
+line_y = [None] * (len(nuclei_y_list) + len(nuclei_nearest_vessel_y_list))
+line_z = [None] * (len(nuclei_z_list) + len(nuclei_nearest_vessel_z_list))
+line_x[::2] = nuclei_nearest_vessel_x_list
+line_x[1::2] = nuclei_x_list
+line_y[::2] = nuclei_nearest_vessel_y_list
+line_y[1::2] = nuclei_y_list
+line_z[::2] = nuclei_nearest_vessel_z_list
+line_z[1::2] = nuclei_z_list
+v_data = dict()
+v_data["vx"] = line_x
+v_data["vy"] = line_y
+v_data["vz"] = line_z
+# v_color = ['red'] * len(vessel_x_list)
+# v_data["color"] = v_color
 v_df = pd.DataFrame(v_data)
+
+v_gap = (v_df.iloc[1::2]
+         .assign(vx=np.nan, vy=np.nan)
+         .rename(lambda x: x + .5))
+v_df_one = pd.concat([v_df, v_gap], sort=False).sort_index().reset_index(drop=True)
+v_df_one.loc[v_df_one.isnull().any(axis=1), :] = np.nan
+
+print(v_df_one)
 # import plotly.express as px
 #
 # range_max = max(bottom_right[0] - top_left[0], bottom_right[1] - top_left[1]) * 1.2
@@ -281,33 +271,32 @@ trace_n = go.Scatter3d(x=nuclei_x_list, y=nuclei_y_list, z=nuclei_z_list,
                        marker=dict(
                            size=n_size,
                            color=n_color,
-                           opacity=0.8
+                           opacity=0.6
                        ))
 trace_v = go.Scatter3d(x=vessel_x_list, y=vessel_y_list, z=vessel_z_list,
                        mode="markers",
                        marker=dict(
                            size=v_size,
                            color=v_color,
-                           opacity=0.8
+                           opacity=0.6
                        ))
-traces_line = [go.Scatter3d(x=[nuclei_x_list[i], nuclei_nearest_vessel_x_list[i]],
-                            y=[nuclei_y_list[i], nuclei_nearest_vessel_y_list[i]],
-                            z=[nuclei_z_list[i], nuclei_nearest_vessel_z_list[i]],
-                            mode="lines",
-                            opacity=0.5,
-                            line=dict(
-                                color='grey',
-                                width=1, )
-                            ) for i in range(len(nuclei_x_list))]
+traces_line = go.Scatter3d(x=v_df_one.vx,
+                           y=v_df_one.vy,
+                           z=v_df_one.vz,
+                           mode="lines",
+                           opacity=0.5,
+                           line=dict(
+                               color='grey',
+                               width=1, ))
 
 layout = Layout(
     title='GE VCCF 3D',
     scene=dict(
         aspectmode='data'
     ))
-contents = [trace_n, trace_v]
-contents.extend(traces_line)
+contents = [trace_n, trace_v, traces_line]
 fig = go.Figure(contents, layout=layout)
 fig.update_layout(showlegend=False)
+fig.update_traces(connectgaps=False)
 fig.write_html("./result/GE_3D.html")
 fig.show()

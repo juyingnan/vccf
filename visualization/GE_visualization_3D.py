@@ -7,6 +7,7 @@ import utils.kidney_nuclei_vessel_calculate as my_csv
 # import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
+from plotly.subplots import make_subplots
 
 # prs = Presentation(r'C:\Users\bunny\Desktop\KidneyAnnotated-GW.pptx')
 # print(prs.slide_height, prs.slide_width)
@@ -33,12 +34,13 @@ vessel_x_list = list()
 vessel_y_list = list()
 vessel_z_list = list()
 z_list = [77, 78, 79, 80, 81, 83, 84, 85, 86, 88, 89, 90, 91, 92, 94, 95, 96, 97, 98, 99, 100, 101]
-scale = 16
+micro_per_pixel = 0.325
+scale = 16 * micro_per_pixel
 
-# top_left = [5350, 3900]
-# bottom_right = [7150, 4700]
-top_left = [0, 0]
-bottom_right = [1000000, 1000000]
+top_left = [5350 * micro_per_pixel, 3900 * micro_per_pixel]
+bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
+# top_left = [0, 0]
+# bottom_right = [1000000, 1000000]
 
 if len(sys.argv) >= 2:
     input_id = sys.argv[1]
@@ -111,7 +113,7 @@ my_csv.write_csv(vessel_output_path,
                  ['x', 'y', 'z'])
 
 for nid in range(len(nuclei_id_list)):
-    _min_dist = 1500
+    _min_dist = 100 * scale
     _min_vessel_x = 0
     _min_vessel_y = 0
     _min_vessel_z = 0
@@ -218,6 +220,9 @@ n_data = dict()
 n_data["nx"] = nuclei_x_list
 n_data["ny"] = nuclei_y_list
 n_data["nz"] = nuclei_z_list
+n_data["size"] = n_size
+n_data["type"] = nuclei_type_list
+n_data["distance"] = nuclei_distance_list
 n_data["color"] = n_color
 
 n_df = pd.DataFrame(n_data)
@@ -263,20 +268,25 @@ print(v_df_one)
 #
 # fig.show()
 
-
-trace_n = go.Scatter3d(x=nuclei_x_list, y=nuclei_y_list, z=nuclei_z_list,
-                       mode="markers",
-                       marker=dict(
-                           size=n_size,
-                           color=n_color,
-                           opacity=0.5,
-                           line=dict(
-                               color=n_color,
-                               width=0
-                           )
-                       ))
+traces_n = []
+for cell_type in set(nuclei_type_list):
+    traces_n.append(go.Scatter3d(x=n_df[n_df['type'] == cell_type]["nx"],
+                                 y=n_df[n_df['type'] == cell_type]["ny"],
+                                 z=n_df[n_df['type'] == cell_type]["nz"],
+                                 mode="markers",
+                                 name=cell_type,
+                                 marker=dict(
+                                     size=n_df[n_df['type'] == cell_type]["size"],
+                                     color=n_df[n_df['type'] == cell_type]["color"],
+                                     opacity=0.5,
+                                     line=dict(
+                                         color=n_df[n_df['type'] == cell_type]["color"],
+                                         width=0
+                                     )
+                                 )))
 trace_v = go.Scatter3d(x=vessel_x_list, y=vessel_y_list, z=vessel_z_list,
                        mode="markers",
+                       name="Blood Vessel",
                        marker=dict(
                            size=v_size,
                            color=v_color,
@@ -290,19 +300,79 @@ traces_line = go.Scatter3d(x=v_df_one.vx,
                            y=v_df_one.vy,
                            z=v_df_one.vz,
                            mode="lines",
+                           name="distance",
                            opacity=0.5,
                            line=dict(
                                color='grey',
                                width=1, ))
 
-layout = Layout(
-    title='GE VCCF 3D',
+traces_histogram_all = go.Histogram(
+    x=n_df["distance"],
+    opacity=0.5,
+    marker=dict(color="gray"),
+    showlegend=False,
+    name='All'
+)
+
+traces_histogram_CD68 = go.Histogram(
+    x=n_df[n_df['type'] == "CD68"]["distance"],
+    opacity=0.5,
+    marker=dict(color=color_dict['CD68']),
+    showlegend=False,
+    name='CD68'
+)
+
+traces_histogram_TH = go.Histogram(
+    x=n_df[n_df['type'] == "T-Helper"]["distance"],
+    opacity=0.5,
+    marker=dict(color=color_dict['T-Helper']),
+    showlegend=False,
+    name='T-Helper'
+)
+
+traces_histogram_TR = go.Histogram(
+    x=n_df[n_df['type'] == "T-Reg"]["distance"],
+    opacity=0.5,
+    marker=dict(color=color_dict['T-Reg']),
+    showlegend=False,
+    name='T-Reg'
+)
+
+# contents = [trace_n, trace_v, traces_line]
+fig = make_subplots(
+    rows=2, cols=4,
+    column_widths=[0.25, 0.25, 0.25, 0.25],
+    row_heights=[0.8, 0.2],
+    specs=[[{"type": "Scatter3d", "colspan": 4}, None, None, None],
+           [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
+    horizontal_spacing=0.02, vertical_spacing=0.03,
+    subplot_titles=['VCCF 3D', 'Histogram - ALL', 'Histogram - CD68', 'Histogram - T-Helper', 'Histogram - T-Reg'],
+)
+for trace_n in traces_n:
+    fig.add_trace(trace_n, 1, 1)
+fig.add_trace(trace_v, 1, 1)
+fig.add_trace(traces_line, 1, 1)
+
+fig.add_trace(traces_histogram_all, 2, 1)
+fig.add_trace(traces_histogram_CD68, 2, 2)
+fig.add_trace(traces_histogram_TH, 2, 3)
+fig.add_trace(traces_histogram_TR, 2, 4)
+
+fig['layout'].update(
+    # title='GE VCCF 3D',
     scene=dict(
         aspectmode='data'
     ))
-contents = [trace_n, trace_v, traces_line]
-fig = go.Figure(contents, layout=layout)
-fig.update_layout(showlegend=False)
-fig.update_traces(connectgaps=False)
+# fig = go.Figure(contents, layout=layout)
+# fig.update_layout(showlegend=False, )
+fig.update_layout(legend=dict(
+    yanchor="top",
+    y=0.99,
+    xanchor="left",
+    x=0.01
+))
+fig.update_xaxes(title_text="Distance (um)", row=2, col=2)
+fig.update_yaxes(title_text="Count #", row=2, col=1)
+fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.write_html("./result/GE_3D.html")
 fig.show()

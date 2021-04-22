@@ -264,21 +264,27 @@ print(v_df_one)
 # fig.show()
 
 
-range_max = max(bottom_right[0] - top_left[0], bottom_right[1] - top_left[1]) * 1.2
-
 trace_n = go.Scatter3d(x=nuclei_x_list, y=nuclei_y_list, z=nuclei_z_list,
                        mode="markers",
                        marker=dict(
                            size=n_size,
                            color=n_color,
-                           opacity=0.6
+                           opacity=0.5,
+                           line=dict(
+                               color=n_color,
+                               width=0
+                           )
                        ))
 trace_v = go.Scatter3d(x=vessel_x_list, y=vessel_y_list, z=vessel_z_list,
                        mode="markers",
                        marker=dict(
                            size=v_size,
                            color=v_color,
-                           opacity=0.6
+                           opacity=0.5,
+                           line=dict(
+                               color=v_color,
+                               width=0
+                           )
                        ))
 traces_line = go.Scatter3d(x=v_df_one.vx,
                            y=v_df_one.vy,

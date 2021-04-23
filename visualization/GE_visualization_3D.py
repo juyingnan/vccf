@@ -37,10 +37,10 @@ z_list = [77, 78, 79, 80, 81, 83, 84, 85, 86, 88, 89, 90, 91, 92, 94, 95, 96, 97
 micro_per_pixel = 0.325
 scale = 16 * micro_per_pixel
 
-top_left = [5350 * micro_per_pixel, 3900 * micro_per_pixel]
-bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
-# top_left = [0, 0]
-# bottom_right = [1000000, 1000000]
+top_left = [0, 0]
+bottom_right = [1000000, 1000000]
+# top_left = [5350 * micro_per_pixel, 3900 * micro_per_pixel]
+# bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
 
 if len(sys.argv) >= 2:
     input_id = sys.argv[1]
@@ -100,17 +100,6 @@ nuclei_output_name = 'nuclei.csv'
 nuclei_output_path = os.path.join(output_root_path, nuclei_output_name)
 vessel_output_name = 'vessel.csv'
 vessel_output_path = os.path.join(output_root_path, vessel_output_name)
-
-my_csv.write_csv(nuclei_output_path,
-                 [nuclei_id_list,
-                  nuclei_x_list,
-                  nuclei_y_list,
-                  nuclei_type_list],
-                 ['id', 'x', 'y', 'z', 'type'])
-
-my_csv.write_csv(vessel_output_path,
-                 [vessel_x_list, vessel_y_list],
-                 ['x', 'y', 'z'])
 
 for nid in range(len(nuclei_id_list)):
     _min_dist = 100 * scale
@@ -278,7 +267,7 @@ for cell_type in set(nuclei_type_list):
                                  marker=dict(
                                      size=n_df[n_df['type'] == cell_type]["size"],
                                      color=n_df[n_df['type'] == cell_type]["color"],
-                                     opacity=0.5,
+                                     opacity=0.75,
                                      line=dict(
                                          color=n_df[n_df['type'] == cell_type]["color"],
                                          width=0
@@ -290,7 +279,7 @@ trace_v = go.Scatter3d(x=vessel_x_list, y=vessel_y_list, z=vessel_z_list,
                        marker=dict(
                            size=v_size,
                            color=v_color,
-                           opacity=0.5,
+                           opacity=0.75,
                            line=dict(
                                color=v_color,
                                width=0
@@ -345,7 +334,7 @@ fig = make_subplots(
     row_heights=[0.8, 0.2],
     specs=[[{"type": "Scatter3d", "colspan": 4}, None, None, None],
            [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
-    horizontal_spacing=0.02, vertical_spacing=0.03,
+    horizontal_spacing=0.015, vertical_spacing=0.02,
     subplot_titles=['VCCF 3D', 'Histogram - ALL', 'Histogram - CD68', 'Histogram - T-Helper', 'Histogram - T-Reg'],
 )
 for trace_n in traces_n:
@@ -367,9 +356,9 @@ fig['layout'].update(
 # fig.update_layout(showlegend=False, )
 fig.update_layout(legend=dict(
     yanchor="top",
-    y=0.99,
+    y=0.95,
     xanchor="left",
-    x=0.01
+    x=0.05
 ))
 fig.update_xaxes(title_text="Distance (um)", row=2, col=2)
 fig.update_yaxes(title_text="Count #", row=2, col=1)

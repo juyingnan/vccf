@@ -45,9 +45,9 @@ bottom_right = [1000000, 1000000]
 if len(sys.argv) >= 2:
     input_id = sys.argv[1]
 
-region_index = 6
+region_index = 1
 
-nuclei_root_path = rf'G:\GE\region_{region_index}'
+nuclei_root_path = rf'G:\GE\skin_12_data\region_{region_index}'
 nuclei_file_name = rf'centroids.csv'
 
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
@@ -182,6 +182,17 @@ size_dict = {
     'T-Reg': 17.75,
     'T-Regulatory': 17.75,
 }
+
+cell_type_dict = {
+    'CD68': "Machrophage / CD68",
+    'Machrophage': "Machrophage / CD68",
+    'CD31': "Blood Vessel",
+    'Blood Vessel': "Blood Vessel",
+    'T-Helper': "T-Helper",
+    'T-Reg': "T-Regulatory",
+    'T-Regulatory': "T-Regulatory",
+}
+
 n_size = [size_dict[cell_type] / 2 for cell_type in nuclei_type_list]
 v_size = [size_dict['CD31'] / 2] * len(vessel_x_list)
 # fig = plt.figure(figsize=(20, 20))
@@ -271,7 +282,7 @@ for cell_type in set(nuclei_type_list):
                                  y=n_df[n_df['type'] == cell_type]["ny"],
                                  z=n_df[n_df['type'] == cell_type]["nz"],
                                  mode="markers",
-                                 name=cell_type,
+                                 name=cell_type_dict[cell_type],
                                  marker=dict(
                                      size=n_df[n_df['type'] == cell_type]["size"],
                                      color=n_df[n_df['type'] == cell_type]["color"],
@@ -297,7 +308,7 @@ traces_line = go.Scatter3d(x=v_df_one.vx,
                            y=v_df_one.vy,
                            z=v_df_one.vz,
                            mode="lines",
-                           name="distance",
+                           name="Distance",
                            opacity=0.5,
                            line=dict(
                                color='grey',

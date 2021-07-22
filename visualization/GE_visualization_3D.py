@@ -42,10 +42,11 @@ bottom_right = [1000000, 1000000]
 # top_left = [5350 * micro_per_pixel, 3900 * micro_per_pixel]
 # bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
 
-if len(sys.argv) >= 2:
-    input_id = sys.argv[1]
 
 region_index = 1
+
+if len(sys.argv) >= 2:
+    region_index = sys.argv[1]
 
 nuclei_root_path = rf'G:\GE\skin_12_data\region_{region_index}'
 nuclei_file_name = rf'centroids.csv'

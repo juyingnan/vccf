@@ -45,8 +45,10 @@ bottom_right = [1000000, 1000000]
 if len(sys.argv) >= 2:
     input_id = sys.argv[1]
 
-nuclei_root_path = rf'G:\GE\Dense Reconstruction 3D - March 2021'
-nuclei_file_name = rf'all.csv'
+region_index = 6
+
+nuclei_root_path = rf'G:\GE\region_{region_index}'
+nuclei_file_name = rf'centroids.csv'
 
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
@@ -161,18 +163,24 @@ my_csv.write_csv(vessel_output_path,
 
 color_dict = {
     'CD68': "gold",
+    'Machrophage': "gold",
     'CD31': "red",
+    'Blood Vessel': "red",
     'T-Helper': "blue",
     'T-Reg': "green",
+    'T-Regulatory': "green",
 }
 n_color = [color_dict[cell_type] for cell_type in nuclei_type_list]
 v_color = [color_dict['CD31']] * len(vessel_x_list)
 
 size_dict = {
     'CD68': 15.89,
+    'Machrophage': 15.89,
     'CD31': 16.83,
+    'Blood Vessel': 16.83,
     'T-Helper': 16.96,
     'T-Reg': 17.75,
+    'T-Regulatory': 17.75,
 }
 n_size = [size_dict[cell_type] / 2 for cell_type in nuclei_type_list]
 v_size = [size_dict['CD31'] / 2] * len(vessel_x_list)
@@ -308,7 +316,7 @@ traces_histogram_CD68 = go.Histogram(
     opacity=0.5,
     marker=dict(color=color_dict['CD68']),
     showlegend=False,
-    name='CD68'
+    name='CD68/Machrophage'
 )
 
 traces_histogram_TH = go.Histogram(
@@ -324,7 +332,7 @@ traces_histogram_TR = go.Histogram(
     opacity=0.5,
     marker=dict(color=color_dict['T-Reg']),
     showlegend=False,
-    name='T-Reg'
+    name='T-Regulatory'
 )
 
 # contents = [trace_n, trace_v, traces_line]
@@ -335,7 +343,8 @@ fig = make_subplots(
     specs=[[{"type": "Scatter3d", "colspan": 4}, None, None, None],
            [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
     horizontal_spacing=0.015, vertical_spacing=0.02,
-    subplot_titles=['VCCF 3D', 'Histogram - ALL', 'Histogram - CD68', 'Histogram - T-Helper', 'Histogram - T-Reg'],
+    subplot_titles=['VCCF 3D', 'Histogram - ALL', 'Histogram - CD68/Machrophage',
+                    'Histogram - T-Helper', 'Histogram - T-Regulatory'],
 )
 for trace_n in traces_n:
     fig.add_trace(trace_n, 1, 1)
@@ -363,5 +372,5 @@ fig.update_layout(legend=dict(
 fig.update_xaxes(title_text="Distance (um)", row=2, col=2)
 fig.update_yaxes(title_text="Count #", row=2, col=1)
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
-fig.write_html("./result/GE_3D.html")
+fig.write_html(os.path.join(nuclei_root_path, "result.html"))
 fig.show()

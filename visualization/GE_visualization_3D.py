@@ -43,7 +43,7 @@ bottom_right = [1000000, 1000000]
 # bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
 
 
-region_index = 1
+region_index = 10
 
 if len(sys.argv) >= 2:
     region_index = sys.argv[1]
@@ -315,9 +315,15 @@ traces_line = go.Scatter3d(x=v_df_one.vx,
                                color='grey',
                                width=1, ))
 
+# bin_width = 10
+# nbins = math.ceil((n_df["distance"].max() - n_df["distance"].min()) / bin_width)
+
+bin_dict = dict(start=0, end=150, size=5)
+
 traces_histogram_all = go.Histogram(
     x=n_df["distance"],
-    opacity=0.5,
+    xbins=bin_dict,
+    opacity=0.1,
     marker=dict(color="gray"),
     showlegend=False,
     name='All'
@@ -325,6 +331,7 @@ traces_histogram_all = go.Histogram(
 
 traces_histogram_CD68 = go.Histogram(
     x=n_df[n_df['type'] == "CD68"]["distance"],
+    xbins=bin_dict,
     opacity=0.5,
     marker=dict(color=color_dict['CD68']),
     showlegend=False,
@@ -333,6 +340,7 @@ traces_histogram_CD68 = go.Histogram(
 
 traces_histogram_TH = go.Histogram(
     x=n_df[n_df['type'] == "T-Helper"]["distance"],
+    xbins=bin_dict,
     opacity=0.5,
     marker=dict(color=color_dict['T-Helper']),
     showlegend=False,
@@ -341,6 +349,7 @@ traces_histogram_TH = go.Histogram(
 
 traces_histogram_TR = go.Histogram(
     x=n_df[n_df['type'] == "T-Reg"]["distance"],
+    xbins=bin_dict,
     opacity=0.5,
     marker=dict(color=color_dict['T-Reg']),
     showlegend=False,
@@ -355,7 +364,7 @@ fig = make_subplots(
     specs=[[{"type": "Scatter3d", "colspan": 4}, None, None, None],
            [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
     horizontal_spacing=0.015, vertical_spacing=0.02,
-    subplot_titles=['VCCF 3D', 'Histogram - ALL', 'Histogram - CD68/Machrophage',
+    subplot_titles=[f'VCCF 3D - Region {region_index}', 'Histogram - ALL', 'Histogram - CD68/Machrophage',
                     'Histogram - T-Helper', 'Histogram - T-Regulatory'],
 )
 for trace_n in traces_n:
@@ -363,7 +372,10 @@ for trace_n in traces_n:
 fig.add_trace(trace_v, 1, 1)
 fig.add_trace(traces_line, 1, 1)
 
-fig.add_trace(traces_histogram_all, 2, 1)
+# fig.add_trace(traces_histogram_all, 2, 1)
+fig.add_trace(traces_histogram_CD68, 2, 1)
+fig.add_trace(traces_histogram_TH, 2, 1)
+fig.add_trace(traces_histogram_TR, 2, 1)
 fig.add_trace(traces_histogram_CD68, 2, 2)
 fig.add_trace(traces_histogram_TH, 2, 3)
 fig.add_trace(traces_histogram_TR, 2, 4)
@@ -380,9 +392,44 @@ fig.update_layout(legend=dict(
     y=0.95,
     xanchor="left",
     x=0.05
-))
+),
+    barmode='relative', )
 fig.update_xaxes(title_text="Distance (um)", row=2, col=2)
 fig.update_yaxes(title_text="Count #", row=2, col=1)
+fig.update_xaxes(range=[0, 150], row=2)
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
+
+# Add dropdown
+fig.update_layout(
+    updatemenus=[
+        dict(
+            buttons=list([
+                dict(
+                    args=["barmode", "relative"],
+                    label="Stacked",
+                    method="relayout"
+                ),
+                dict(
+                    args=["barmode", "overlay"],
+                    label="Overlaid",
+                    method="relayout"
+                ),
+                dict(
+                    args=["barmode", "group"],
+                    label="Grouped",
+                    method="relayout"
+                )
+            ]),
+            direction="up",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="right",
+            y=-0.05,
+            yanchor="bottom"
+        ),
+    ]
+)
+
 fig.write_html(os.path.join(nuclei_root_path, "result.html"))
 fig.show()

@@ -3,11 +3,13 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-import utils.kidney_nuclei_vessel_calculate as my_csv
 # import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.graph_objs import Layout
 from plotly.subplots import make_subplots
+
+sys.path.insert(1, r'C:\Users\bunny\PycharmProjects\vccf_visualization')
+import utils.kidney_nuclei_vessel_calculate as my_csv
 
 # prs = Presentation(r'C:\Users\bunny\Desktop\KidneyAnnotated-GW.pptx')
 # print(prs.slide_height, prs.slide_width)

@@ -433,5 +433,5 @@ fig.update_layout(
     ]
 )
 
-fig.write_html(os.path.join(nuclei_root_path, "result.html"))
+fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}.html"))
 fig.show()

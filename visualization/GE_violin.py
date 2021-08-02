@@ -1,4 +1,4 @@
-import plotly.express as pt
+import os
 import plotly.graph_objects as go
 import pandas as pd
 from plotly.subplots import make_subplots
@@ -172,4 +172,5 @@ fig.update_xaxes(title_text="Age", row=4, col=1)
 fig.update_yaxes(title_text="Nearest Distance", row=2, col=1)
 fig.update_yaxes(title_text="Percentage", row=2, col=1, secondary_y=True)
 
+fig.write_html(os.path.join(target_root_path, f"violin.html"))
 fig.show()

@@ -63,9 +63,12 @@ if __name__ == '__main__':
 
     p = figure(match_aspect=True,
                plot_width=int(3727 * 1.075), plot_height=int(2348 * 1.075),
-               tools=tools_list,
+               tools=tools_list, output_backend="svg",
                # title='nuclei/vessel distance',
                )
+
+    p.background_fill_color = None
+    p.border_fill_color = None
 
     p.xgrid.visible = False
     p.ygrid.visible = False

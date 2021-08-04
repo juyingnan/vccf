@@ -9,7 +9,7 @@ for region_id in range(1, 13):
     cell_file.readline()
     cell_lines = cell_file.readlines()
 
-    distances = {}
+    distances = {'all': []}
 
     for line in cell_lines:
         content = line.split(',')
@@ -19,6 +19,7 @@ for region_id in range(1, 13):
             distances[type] = []
         else:
             distances[type].append(float(distance))
+            distances['all'].append(float(distance))
 
     # print("Region ", region_id)
     # for key in distances:
@@ -27,7 +28,7 @@ for region_id in range(1, 13):
     #     print("\t\tMedian Distance: ", statistics.median(distances[key]))
 
     print("Region ", region_id, end='')
-    for key in ['CD68', 'T-Reg', 'T-Helper']:
+    for key in ['all', 'CD68', 'T-Reg', 'T-Helper']:
         print("\t", key, end='')
         print("\tAverage Distance:\t", statistics.mean(distances[key]), end='')
         print("\tMedian Distance:\t", statistics.median(distances[key]), end='')

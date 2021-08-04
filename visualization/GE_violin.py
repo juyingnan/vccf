@@ -154,7 +154,8 @@ fig = make_subplots(
     row_heights=[0.25, 0.25, 0.25, 0.25],
     # specs=[[{"type": "Scatter3d", "colspan": 4}, None, None, None],
     #        [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
-    vertical_spacing=0.05,
+    shared_xaxes=True,
+    vertical_spacing=0.02,
     subplot_titles=[f'All', 'CD68 / Macrophage', 'T-Helper', 'T-Regulatory'],
     specs=[[{"secondary_y": False}],
            [{"secondary_y": True}],
@@ -205,10 +206,11 @@ for cell_type in cell_type_list:
                       y=n_data['distance'][(n_data['Skin Type'] == skin_type) &
                                            (n_data['type'].str.contains(cell_type))],
                       name=skin_type,
-                      points="outliers", opacity=opacity_dict[skin_type], width=4,
-                      legendgroup=cell_type_dict[cell_type],
+                      points=False, opacity=opacity_dict[skin_type], width=4,
+                      legendgroup=cell_type_dict[cell_type], scalegroup='', scalemode='width',
                       legendgrouptitle_text=cell_type_dict[cell_type],
-                      box_visible=True, line_color=color_dict[f'{cell_type}-{skin_type}'], meanline_visible=False),
+                      box_visible=True, box_fillcolor='white', line_width=1,
+                      line_color=color_dict[f'{cell_type}-{skin_type}'], meanline_visible=False),
             secondary_y=False, row=cell_type_list.index(cell_type) + 1, col=1)
 
         if cell_type != '':
@@ -228,6 +230,7 @@ fig.update_layout(
     title="Nearest distance distribution",
     # x1axis_title="Age",
     # y4axis_title="Nearest Distance",
+    violingap=0.3, violingroupgap=0,
     violinmode='overlay',
     yaxis_zeroline=False)
 fig.update_xaxes(title_text="Age", row=4, col=1)

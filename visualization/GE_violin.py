@@ -115,6 +115,8 @@ median_dict = {
 
 color_dict = {'Sun-Exposed': 'black',
               'Non-Sun-Exposed': 'grey',
+              '-Sun-Exposed': 'black',
+              '-Non-Sun-Exposed': 'grey',
               'CD68-Sun-Exposed': 'orangered',
               'CD68-Non-Sun-Exposed': 'orange',
               'T-Helper-Sun-Exposed': 'midnightblue',
@@ -183,34 +185,42 @@ fig = make_subplots(
 #                             line_color=color_dict[suns[next]], points="outliers",
 #                             box_visible=True, width=1,
 #                             meanline_visible=True))
-for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
-    fig.add_trace(go.Violin(x=n_data['Age'][n_data['Skin Type'] == skin_type],
-                            y=n_data['distance'][n_data['Skin Type'] == skin_type],
-                            name=skin_type, legendgroup='All', legendgrouptitle_text="All",
-                            points="outliers", opacity=opacity_dict[skin_type], width=4,
-                            box_visible=True, line_color=color_dict[skin_type], meanline_visible=False),
-                  secondary_y=False, row=1, col=1, )
+# for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
+#     fig.add_trace(go.Violin(x=n_data['Age'][n_data['Skin Type'] == skin_type],
+#                             y=n_data['distance'][n_data['Skin Type'] == skin_type],
+#                             name=skin_type, legendgroup='All', legendgrouptitle_text="All",
+#                             points="outliers", opacity=opacity_dict[skin_type], width=4,
+#                             box_visible=True, line_color=color_dict[skin_type], meanline_visible=False),
+#                   secondary_y=False, row=1, col=1, )
 
-cell_type_list = ['CD68', 'T-Helper', 'T-Reg']
+cell_type_list = ['', 'CD68', 'T-Helper', 'T-Reg']
+cell_type_dict = {'': 'All',
+                  'CD68': 'CD68 / Macrophage',
+                  'T-Helper': 'T-Helper',
+                  'T-Reg': 'T-Regulatory'}
 for cell_type in cell_type_list:
     for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
         fig.add_trace(
-            go.Violin(x=n_data['Age'][(n_data['Skin Type'] == skin_type) & (n_data['type'] == cell_type)],
-                      y=n_data['distance'][(n_data['Skin Type'] == skin_type) & (n_data['type'] == cell_type)],
-                      name=skin_type, legendgroup=cell_type, legendgrouptitle_text=cell_type,
+            go.Violin(x=n_data['Age'][(n_data['Skin Type'] == skin_type) & (n_data['type'].str.contains(cell_type))],
+                      y=n_data['distance'][(n_data['Skin Type'] == skin_type) &
+                                           (n_data['type'].str.contains(cell_type))],
+                      name=skin_type,
                       points="outliers", opacity=opacity_dict[skin_type], width=4,
+                      legendgroup=cell_type_dict[cell_type],
+                      legendgrouptitle_text=cell_type_dict[cell_type],
                       box_visible=True, line_color=color_dict[f'{cell_type}-{skin_type}'], meanline_visible=False),
-            secondary_y=False, row=cell_type_list.index(cell_type) + 2, col=1)
+            secondary_y=False, row=cell_type_list.index(cell_type) + 1, col=1)
 
-        line_ages = [age for age in ages if suns[ages.index(age)] == skin_type]
-        line_ages.sort()
-        fig.add_trace(
-            go.Scatter(x=line_ages,
-                       y=[percentage_dict[cell_type][ages.index(age)] * 100 for age in line_ages],
-                       mode='lines+markers', marker_symbol='x',
-                       name=skin_type + " percentage", legendgroup=cell_type,
-                       line=dict(color=color_dict[f'{cell_type}-{skin_type}'], width=1), ),
-            secondary_y=True, row=cell_type_list.index(cell_type) + 2, col=1)
+        if cell_type != '':
+            line_ages = [age for age in ages if suns[ages.index(age)] == skin_type]
+            line_ages.sort()
+            fig.add_trace(
+                go.Scatter(x=line_ages,
+                           y=[percentage_dict[cell_type][ages.index(age)] * 100 for age in line_ages],
+                           mode='lines+markers', marker_symbol='cross',
+                           name=skin_type + " percentage", legendgroup=cell_type_dict[cell_type],
+                           line=dict(color=color_dict[f'{cell_type}-{skin_type}'], width=1), ),
+                secondary_y=True, row=cell_type_list.index(cell_type) + 1, col=1)
 
 # fig.update_traces(meanline_visible=True,
 #                   scalemode='width')  # scale violin plot area with total count

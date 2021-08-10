@@ -256,22 +256,38 @@ cell_type_dict = {'': 'All',
 
 # plt.figure(figsize=(12, 8))
 region_count = 12
-fig, axs = plt.subplots(region_count + 1, 2)
-for i in range(region_count + 1):
+fig, axs = plt.subplots(region_count + 3, 2)
+for i in range(region_count + 3):
     if i < region_count:
         region_data = n_data['distance'][n_data["Region"] == i + 1].squeeze()
-    else:
+        title = f'Region {i + 1}'
+    elif i == region_count:
         region_data = n_data['distance'].squeeze()
+        title = f'ALL'
+    elif i == region_count + 1:
+        region_data = n_data['distance'][n_data["Skin Type"] == 'Sun-Exposed'].squeeze()
+        title = f'SUN-EXPOSED'
+    elif i == region_count + 2:
+        region_data = n_data['distance'][n_data["Skin Type"] == 'Non-Sun-Exposed'].squeeze()
+        title = f'NON-SUN-EXPOSED'
+    else:
+        continue
+
     # print(region_data)
 
-    region_data.plot(kind='hist',
-                     # bins=50,
-                     # bins=np.arange(0, max(region_data) + 5, 5),
-                     bins=np.arange(0, 205, 5),
-                     density=True, alpha=0.5,
-                     color=plt.rcParams['axes.prop_cycle'].by_key()['color'][1], ax=axs[i, 0])
+    for col in [0,1]:
+        region_data.plot(kind='hist',
+                         # bins=50,
+                         # bins=np.arange(0, max(region_data) + 5, 5),
+                         bins=np.arange(0, 205, 5),
+                         density=True, alpha=0.5,
+                         color=plt.rcParams['axes.prop_cycle'].by_key()['color'][1], ax=axs[i, col])
+
+        dataYLim = axs[i, 0].get_ylim()
+        axs[i, col].set_ylim(dataYLim)
+        axs[i, col].set_xlim(0)
+
     # Save plot limits
-    dataYLim = axs[i, 0].get_ylim()
 
     # Find best fit distribution
     best_fit_name, best_fit_params, differences = best_fit_distribution(region_data, 200, axs[i, 0])
@@ -286,7 +302,6 @@ for i in range(region_count + 1):
     best_dist = getattr(st, best_fit_name)
 
     # Update plots
-    axs[i, 0].set_ylim(dataYLim)
     # axs[i, 0].set_title(u'El Niño sea temp.\n All Fitted Distributions')
     # axs[i, 0].set_xlabel(u'Temp (°C)')
     # axs[i, 0].set_ylabel('Frequency')
@@ -296,18 +311,18 @@ for i in range(region_count + 1):
 
     # Display
     pdf.plot(lw=2, label='PDF', legend=True, ax=axs[i, 1])
-    region_data.plot(kind='hist',
-                     # bins=50,
-                     # bins=np.arange(0, max(region_data) + 5, 5),
-                     bins=np.arange(0, 205, 5),
-                     density=True, alpha=0.5, label='Data', legend=True, ax=axs[i, 1])
+    # region_data.plot(kind='hist',
+    #                  # bins=50,
+    #                  # bins=np.arange(0, max(region_data) + 5, 5),
+    #                  bins=np.arange(0, 205, 5),
+    #                  density=True, alpha=0.5, label='Data', legend=False, ax=axs[i, 1])
 
     param_names = (best_dist.shapes + ', loc, scale').split(', ') if best_dist.shapes else ['loc', 'scale']
     param_str = ', '.join(['{}={:0.2f}'.format(k, v) for k, v in zip(param_names, best_fit_params)])
     dist_str = '{}({})'.format(best_fit_name, param_str)
 
-    axs[i, 1].set_ylim(dataYLim)
-    axs[i, 1].set_title(dist_str, y=1.0, pad=-60)
+    # axs[i, 1].set_ylim(dataYLim)
+    axs[i, 1].set_title(f'{dist_str}\n{title}', y=1.0, pad=-60)
     # axs[i, 1].set_xlabel(u'Temp. (°C)')
     # axs[i, 1].set_ylabel('Frequency')
 plt.show()

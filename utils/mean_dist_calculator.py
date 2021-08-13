@@ -2,6 +2,10 @@ import statistics
 
 target_root_path = r"G:\GE\skin_12_data"
 
+for i in range(4):
+    print("\tAverage\tMedian", end='')
+print()
+
 for region_id in range(1, 13):
     target_file_path = target_root_path + rf"\region_{region_id}\nuclei.csv"
 
@@ -30,6 +34,6 @@ for region_id in range(1, 13):
     print("Region ", region_id, end='')
     for key in ['all', 'CD68', 'T-Reg', 'T-Helper']:
         print("\t", key, end='')
-        print("\tAverage Distance:\t", statistics.mean(distances[key]), end='')
-        print("\tMedian Distance:\t", statistics.median(distances[key]), end='')
+        print(f"\t{statistics.mean(distances[key])}", end='')
+        print(f"\t{statistics.median(distances[key])}", end='')
     print()

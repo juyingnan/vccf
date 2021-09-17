@@ -172,6 +172,7 @@ color_dict = {
     'T-Helper': "blue",
     'T-Reg': "green",
     'T-Regulatory': "green",
+    'T-Killer': "purple",
 }
 n_color = [color_dict[cell_type] for cell_type in nuclei_type_list]
 v_color = [color_dict['CD31']] * len(vessel_x_list)
@@ -184,6 +185,7 @@ size_dict = {
     'T-Helper': 16.96,
     'T-Reg': 17.75,
     'T-Regulatory': 17.75,
+    'T-Killer': 16,  # placeholder, not accurate
 }
 
 cell_type_dict = {
@@ -194,6 +196,7 @@ cell_type_dict = {
     'T-Helper': "T-Helper",
     'T-Reg': "T-Regulatory",
     'T-Regulatory': "T-Regulatory",
+    'T-Killer': "T-Killer",
 }
 
 n_size = [size_dict[cell_type] / 2 for cell_type in nuclei_type_list]
@@ -359,6 +362,15 @@ traces_histogram_TR = go.Histogram(
     name='T-Regulatory'
 )
 
+traces_histogram_TK = go.Histogram(
+    x=n_df[n_df['type'] == "T-Killer"]["distance"],
+    xbins=bin_dict,
+    opacity=0.5,
+    marker=dict(color=color_dict['T-Killer']),
+    showlegend=False,
+    name='T-Killer'
+)
+
 # curve fitting
 from scipy import stats
 
@@ -374,7 +386,7 @@ trace_curve_all = go.Scatter(x=data_all, y=pdf * len(data_all) * bin_size,
                              name='weibull fitting')
 
 traces_curve = []
-for cell_type in ["CD68", "T-Helper", "T-Reg"]:
+for cell_type in ["CD68", "T-Helper", "T-Reg", "T-Killer"]:
     data = n_df[n_df['type'] == cell_type]["distance"].to_numpy()
     data.sort()
     threshold = len(data) - np.count_nonzero(data)
@@ -390,15 +402,16 @@ for cell_type in ["CD68", "T-Helper", "T-Reg"]:
 
 # contents = [trace_n, trace_v, traces_line]
 fig = make_subplots(
-    rows=2, cols=4,
-    column_widths=[0.25, 0.25, 0.25, 0.25],
+    rows=2, cols=5,
+    column_widths=[0.2, 0.2, 0.2, 0.2, 0.2],
     row_heights=[0.8, 0.2],
-    specs=[[{"type": "Scatter3d", "colspan": 4}, None, None, None],
-           [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
+    specs=[[{"type": "Scatter3d", "colspan": 5}, None, None, None, None],
+           [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"},
+            {"type": "Histogram"}]],
     horizontal_spacing=0.015, vertical_spacing=0.02,
     subplot_titles=[f'VCCF 3D - Region {region_index}', 'Histogram - ALL',
                     'Histogram - CD68/Machrophage',
-                    'Histogram - T-Helper', 'Histogram - T-Regulatory'],
+                    'Histogram - T-Helper', 'Histogram - T-Regulatory', 'Histogram - T-Killer'],
 )
 for trace_n in traces_n:
     fig.add_trace(trace_n, 1, 1)
@@ -416,6 +429,7 @@ fig.add_trace(traces_histogram_TR, 2, 1)
 fig.add_trace(traces_histogram_CD68, 2, 2)
 fig.add_trace(traces_histogram_TH, 2, 3)
 fig.add_trace(traces_histogram_TR, 2, 4)
+fig.add_trace(traces_histogram_TK, 2, 5)
 
 fig['layout'].update(
     # title='GE VCCF 3D',

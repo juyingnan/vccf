@@ -6,7 +6,7 @@ def try_parse_int(s, base=10, val=None):
 
 
 target_root_path = r"G:\GE\skin_12_data"
-cell_file_path = r"C:\Users\bunny\Desktop\Centroids_New.txt"
+cell_file_path = r"C:\Users\bunny\Desktop\Centroids_New_0916.txt"
 
 # bv_file = open(bv_file_path, 'r')
 # bv_lines = bv_file.readlines()
@@ -18,6 +18,7 @@ cells = {}
 type_abr = {
     "TRegulatory": "T-Reg",
     "THelper": "T-Helper",
+    "TKiller": "T-Killer",
     "Macrophage": "CD68",
     "Blood Vessels": "CD31",
 }
@@ -26,9 +27,10 @@ headline = "ID,X,Y,Z,cell_type\n"
 current_region = ""
 current_type = ""
 for line_content in cell_lines:
-    line = line_content.strip()
+    line = line_content.strip().rstrip(",")
     if line.startswith("Region"):
-        cells[line] = {}
+        if line not in cells:
+            cells[line] = {}
         current_region = line
         current_type = ""
         continue

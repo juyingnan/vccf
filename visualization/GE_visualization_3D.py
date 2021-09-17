@@ -45,7 +45,7 @@ bottom_right = [1000000, 1000000]
 # bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
 
 
-region_index = 12
+region_index = 1
 
 if len(sys.argv) >= 2:
     region_index = sys.argv[1]
@@ -166,7 +166,7 @@ my_csv.write_csv(vessel_output_path,
 
 color_dict = {
     'CD68': "gold",
-    'Machrophage': "gold",
+    'Macrophage': "gold",
     'CD31': "red",
     'Blood Vessel': "red",
     'T-Helper': "blue",
@@ -179,7 +179,7 @@ v_color = [color_dict['CD31']] * len(vessel_x_list)
 
 size_dict = {
     'CD68': 15.89,
-    'Machrophage': 15.89,
+    'Macrophage': 15.89,
     'CD31': 16.83,
     'Blood Vessel': 16.83,
     'T-Helper': 16.96,
@@ -189,8 +189,8 @@ size_dict = {
 }
 
 cell_type_dict = {
-    'CD68': "Machrophage / CD68",
-    'Machrophage': "Machrophage / CD68",
+    'CD68': "Macrophage / CD68",
+    'Macrophage': "Macrophage / CD68",
     'CD31': "Blood Vessel",
     'Blood Vessel': "Blood Vessel",
     'T-Helper': "T-Helper",
@@ -341,7 +341,7 @@ traces_histogram_CD68 = go.Histogram(
     opacity=0.5,
     marker=dict(color=color_dict['CD68']),
     showlegend=False,
-    name='CD68/Machrophage'
+    name='CD68/Macrophage'
 )
 
 traces_histogram_TH = go.Histogram(
@@ -385,20 +385,20 @@ trace_curve_all = go.Scatter(x=data_all, y=pdf * len(data_all) * bin_size,
                              showlegend=False,
                              name='weibull fitting')
 
-traces_curve = []
-for cell_type in ["CD68", "T-Helper", "T-Reg", "T-Killer"]:
-    data = n_df[n_df['type'] == cell_type]["distance"].to_numpy()
-    data.sort()
-    threshold = len(data) - np.count_nonzero(data)
-    data = data[threshold:]
-    curve_fit = stats.exponweib.fit(data, floc=0)
-    pdf = stats.exponweib.pdf(data, *curve_fit)
-    # curve_fit = stats.weibull_min.fit(data, floc=0)
-    # pdf = stats.weibull_min.pdf(data, *curve_fit)
-    traces_curve.append(go.Scatter(x=data, y=pdf * len(data) * bin_size,
-                                   marker=dict(color=color_dict[cell_type]),
-                                   showlegend=False,
-                                   name='weibull fitting'))
+# traces_curve = []
+# for cell_type in ["CD68", "T-Helper", "T-Reg", "T-Killer"]:
+#     data = n_df[n_df['type'] == cell_type]["distance"].to_numpy()
+#     data.sort()
+#     threshold = len(data) - np.count_nonzero(data)
+#     data = data[threshold:]
+#     curve_fit = stats.exponweib.fit(data, floc=0)
+#     pdf = stats.exponweib.pdf(data, *curve_fit)
+#     # curve_fit = stats.weibull_min.fit(data, floc=0)
+#     # pdf = stats.weibull_min.pdf(data, *curve_fit)
+#     traces_curve.append(go.Scatter(x=data, y=pdf * len(data) * bin_size,
+#                                    marker=dict(color=color_dict[cell_type]),
+#                                    showlegend=False,
+#                                    name='weibull fitting'))
 
 # contents = [trace_n, trace_v, traces_line]
 fig = make_subplots(
@@ -410,7 +410,7 @@ fig = make_subplots(
             {"type": "Histogram"}]],
     horizontal_spacing=0.015, vertical_spacing=0.02,
     subplot_titles=[f'VCCF 3D - Region {region_index}', 'Histogram - ALL',
-                    'Histogram - CD68/Machrophage',
+                    'Histogram - CD68/Macrophage',
                     'Histogram - T-Helper', 'Histogram - T-Regulatory', 'Histogram - T-Killer'],
 )
 for trace_n in traces_n:
@@ -426,6 +426,7 @@ fig.add_trace(trace_curve_all, 2, 1)
 fig.add_trace(traces_histogram_CD68, 2, 1)
 fig.add_trace(traces_histogram_TH, 2, 1)
 fig.add_trace(traces_histogram_TR, 2, 1)
+fig.add_trace(traces_histogram_TK, 2, 1)
 fig.add_trace(traces_histogram_CD68, 2, 2)
 fig.add_trace(traces_histogram_TH, 2, 3)
 fig.add_trace(traces_histogram_TR, 2, 4)

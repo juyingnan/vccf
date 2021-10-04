@@ -172,6 +172,7 @@ color_dict = {
     'T-Helper': "blue",
     'T-Reg': "green",
     'T-Regulatory': "green",
+    'T-Regulator': "green",
     'T-Killer': "purple",
 }
 n_color = [color_dict[cell_type] for cell_type in nuclei_type_list]
@@ -185,6 +186,7 @@ size_dict = {
     'T-Helper': 16.96,
     'T-Reg': 17.75,
     'T-Regulatory': 17.75,
+    'T-Regulator': 17.75,
     'T-Killer': 16,  # placeholder, not accurate
 }
 
@@ -194,8 +196,9 @@ cell_type_dict = {
     'CD31': "Blood Vessel",
     'Blood Vessel': "Blood Vessel",
     'T-Helper': "T-Helper",
-    'T-Reg': "T-Regulatory",
-    'T-Regulatory': "T-Regulatory",
+    'T-Reg': "T-Regulator",
+    'T-Regulatory': "T-Regulator",
+    'T-Regulator': "T-Regulator",
     'T-Killer': "T-Killer",
 }
 
@@ -304,7 +307,7 @@ trace_v = go.Scatter3d(x=vessel_x_list, y=vessel_y_list, z=vessel_z_list,
                        marker=dict(
                            size=v_size,
                            color=v_color,
-                           opacity=0.75,
+                           opacity=0.5,
                            line=dict(
                                color=v_color,
                                width=0
@@ -359,7 +362,7 @@ traces_histogram_TR = go.Histogram(
     opacity=0.5,
     marker=dict(color=color_dict['T-Reg']),
     showlegend=False,
-    name='T-Regulatory'
+    name='T-Regulator'
 )
 
 traces_histogram_TK = go.Histogram(
@@ -411,7 +414,7 @@ fig = make_subplots(
     horizontal_spacing=0.015, vertical_spacing=0.02,
     subplot_titles=[f'VCCF 3D - Region {region_index}', 'Histogram - ALL',
                     'Histogram - CD68/Macrophage',
-                    'Histogram - T-Helper', 'Histogram - T-Regulatory', 'Histogram - T-Killer'],
+                    'Histogram - T-Helper', 'Histogram - T-Regulator', 'Histogram - T-Killer'],
 )
 for trace_n in traces_n:
     fig.add_trace(trace_n, 1, 1)

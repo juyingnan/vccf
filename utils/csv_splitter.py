@@ -16,7 +16,8 @@ cell_lines = cell_file.readlines()
 
 cells = {}
 type_abr = {
-    "TRegulatory": "T-Reg",
+    "_TRegulatory": "T-Reg",
+    "TRegulator": "T-Reg",
     "THelper": "T-Helper",
     "TKiller": "T-Killer",
     "Macrophage": "CD68",
@@ -28,6 +29,8 @@ current_region = ""
 current_type = ""
 for line_content in cell_lines:
     line = line_content.strip().rstrip(",")
+    if len(line) == 0:
+        continue
     if line.startswith("Region"):
         if line not in cells:
             cells[line] = {}

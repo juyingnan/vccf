@@ -123,6 +123,8 @@ color_dict = {'Sun-Exposed': 'black',
               'T-Helper-Non-Sun-Exposed': 'royalblue',
               'T-Reg-Sun-Exposed': 'darkolivegreen',
               'T-Reg-Non-Sun-Exposed': 'mediumseagreen',
+              'T-Killer-Sun-Exposed': 'purple',
+              'T-Killer-Non-Sun-Exposed': 'violet',
               }
 
 opacity_dict = {'Sun-Exposed': 0.7,
@@ -156,7 +158,8 @@ fig = make_subplots(
     #        [{"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}, {"type": "Histogram"}]],
     shared_xaxes=True,
     vertical_spacing=0.02,
-    subplot_titles=[f'All', 'CD68 / Macrophage', 'T-Helper', 'T-Regulatory'],
+    # subplot_titles=[f'All', 'CD68 / Macrophage', 'T-Helper', 'T-Regulatory'],
+    subplot_titles=[f'All', 'CD68 / Macrophage', 'T-Helper', 'T-Killer'],
     specs=[[{"secondary_y": False}],
            [{"secondary_y": True}],
            [{"secondary_y": True}],
@@ -194,11 +197,12 @@ fig = make_subplots(
 #                             box_visible=True, line_color=color_dict[skin_type], meanline_visible=False),
 #                   secondary_y=False, row=1, col=1, )
 
-cell_type_list = ['', 'CD68', 'T-Helper', 'T-Reg']
+cell_type_list = ['', 'CD68', 'T-Helper', 'T-Killer']
 cell_type_dict = {'': 'All',
                   'CD68': 'CD68 / Macrophage',
                   'T-Helper': 'T-Helper',
-                  'T-Reg': 'T-Regulatory'}
+                  'T-Reg': 'T-Regulator',
+                  'T-Killer': 'T-Killer'}
 for cell_type in cell_type_list:
     for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
         fig.add_trace(
@@ -218,7 +222,10 @@ for cell_type in cell_type_list:
             line_ages.sort()
             fig.add_trace(
                 go.Scatter(x=line_ages,
-                           y=[percentage_dict[cell_type][ages.index(age)] * 100 for age in line_ages],
+                           # y=[percentage_dict[cell_type][ages.index(age)] * 100 for age in line_ages],
+                           y=[len(n_data[(n_data['type'].str.contains(cell_type)) & (n_data['Age'] == age)])
+                              / len(n_data[n_data['Age'] == age])
+                              * 100 for age in line_ages],
                            mode='lines+markers', marker_symbol='cross',
                            name=skin_type + " percentage", legendgroup=cell_type_dict[cell_type],
                            line=dict(color=color_dict[f'{cell_type}-{skin_type}'], width=1), ),

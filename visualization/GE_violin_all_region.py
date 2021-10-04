@@ -124,6 +124,8 @@ color_dict = {'Sun-Exposed': 'black',
               'T-Helper-Non-Sun-Exposed': 'royalblue',
               'T-Reg-Sun-Exposed': 'darkolivegreen',
               'T-Reg-Non-Sun-Exposed': 'mediumseagreen',
+              'T-Killer-Sun-Exposed': 'purple',
+              'T-Killer-Non-Sun-Exposed': 'violet',
               }
 
 point_position_dict = {'Sun-Exposed': 1.1,
@@ -136,6 +138,8 @@ point_position_dict = {'Sun-Exposed': 1.1,
                        'T-Helper-Non-Sun-Exposed': -0.85,
                        'T-Reg-Sun-Exposed': 1.1,
                        'T-Reg-Non-Sun-Exposed': -0.7,
+                       'T-Killer-Sun-Exposed': 1.1,
+                       'T-Killer-Non-Sun-Exposed': -0.7,
                        }
 
 opacity_dict = {'Sun-Exposed': 0.7,
@@ -196,14 +200,14 @@ fig = go.Figure()
 #                             box_visible=True, line_color=color_dict[skin_type], meanline_visible=False),
 #                   secondary_y=False, row=1, col=1, )
 
-cell_type_list = ['', 'CD68', 'T-Helper', 'T-Reg']
+cell_type_list = ['', 'CD68', 'T-Helper', 'T-Killer']  # , 'T-Reg']
 cell_type_dict = {'': 'All',
                   'CD68': 'CD68 / Macrophage',
                   'T-Helper': 'T-Helper',
-                  'T-Reg': 'T-Regulatory'}
+                  'T-Reg': 'T-Regulator',
+                  'T-Killer': 'T-Killer'}
 for cell_type in cell_type_list:
     for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
-
         fig.add_trace(
             go.Violin(x=(n_data['type'][(n_data['Skin Type'] == skin_type) &
                                         (n_data['type'].str.contains(cell_type))]

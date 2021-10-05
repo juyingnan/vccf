@@ -32,11 +32,19 @@ for region_id in [11, 3, 6, 8, 9, 1, 12, 5, 4, 2, 10, 7]:
     #     print("\t\tMedian Distance: ", statistics.median(distances[key]))
 
     print("Region ", region_id, end='')
-    for key in ['all', 'CD68', 'T-Reg', 'T-Helper']:
+    for key in ['all', 'CD68', 'T-Helper', 'T-Killer']:
         print("\t", key, end='')
-        print(f"\t{statistics.mean(distances[key])}", end='')
-        print(f"\t{statistics.median(distances[key])}", end='')
-        print(f"\t{len(distances[key]) / len(distances['all'])}", end='')
+        if key in distances:
+            dis_mean = statistics.mean(distances[key])
+            dis_median = statistics.median(distances[key])
+            percentage = len(distances[key]) / len(distances['all'])
+        else:
+            dis_mean = 0
+            dis_median = 0
+            percentage = 0
+        print(f"\t{dis_mean}", end='')
+        print(f"\t{dis_median}", end='')
+        print(f"\t{percentage}", end='')
     print()
 #
 # distances = {'all': []}

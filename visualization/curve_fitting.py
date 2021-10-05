@@ -228,6 +228,8 @@ color_dict = {'Sun-Exposed': 'black',
               'T-Helper-Non-Sun-Exposed': 'royalblue',
               'T-Reg-Sun-Exposed': 'darkolivegreen',
               'T-Reg-Non-Sun-Exposed': 'mediumseagreen',
+              'T-Killer-Sun-Exposed': 'purple',
+              'T-Killer-Non-Sun-Exposed': 'violet',
               }
 
 opacity_dict = {'Sun-Exposed': 0.7,
@@ -252,7 +254,8 @@ cell_type_list = ['', 'CD68', 'T-Helper', 'T-Reg']
 cell_type_dict = {'': 'All',
                   'CD68': 'CD68 / Macrophage',
                   'T-Helper': 'T-Helper',
-                  'T-Reg': 'T-Regulatory'}
+                  'T-Reg': 'T-Regulatory',
+                  'T-Killer': 'T-Killer'}
 
 # plt.figure(figsize=(12, 8))
 region_count = 12

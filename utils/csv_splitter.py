@@ -6,7 +6,7 @@ def try_parse_int(s, base=10, val=None):
 
 
 target_root_path = r"G:\GE\skin_12_data"
-cell_file_path = r"C:\Users\bunny\Desktop\Centroids_New_0916.txt"
+cell_file_path = r"C:\Users\bunny\Desktop\ge_temp\Centroids_Oct2021.csv"
 
 # bv_file = open(bv_file_path, 'r')
 # bv_lines = bv_file.readlines()
@@ -16,11 +16,15 @@ cell_lines = cell_file.readlines()
 
 cells = {}
 type_abr = {
-    "_TRegulatory": "T-Reg",
+    # "_TRegulatory": "T-Reg",
+    "Macrophage": "CD68",
+    "TKiller": "T-Killer",
     "TRegulator": "T-Reg",
     "THelper": "T-Helper",
-    "TKiller": "T-Killer",
-    "Macrophage": "CD68",
+    "P53": "P53",
+    "KI67": "KI67",
+    "DDB2": "DDB2",
+    "Skin mask": "Skin",
     "Blood Vessels": "CD31",
 }
 headline = "ID,X,Y,Z,cell_type\n"
@@ -37,9 +41,7 @@ for line_content in cell_lines:
         current_region = line
         current_type = ""
         continue
-    elif line.startswith("Mac") or \
-            line.startswith("Blood") or \
-            line.startswith("T"):
+    elif line.strip() in type_abr:
         assert current_region != ""
         current_type = line
         cells[current_region][current_type] = []
@@ -69,3 +71,16 @@ for region in cells:
         for line in cells[region][cell_type]:
             csv_file.write(line + "\n")
     csv_file.close()
+
+# format output for excel
+for region in cells:
+    print(region, "\t", end='')
+    for cell_type in ["Macrophage",
+                      "TKiller",
+                      "TRegulator",
+                      "THelper",
+                      "P53",
+                      "KI67",
+                      "DDB2", ]:
+        print(f"{len(cells[region][cell_type])}\t", end='')
+    print()

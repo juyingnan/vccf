@@ -606,7 +606,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
             fig.add_trace(go.Scatter(line,
                                      line=dict(color=color_dict[hist_names[i]], width=2), showlegend=False,
                                      ), row=2, col=col)
-        n_df[f'{hist_names[i]}_pos'] = -0.1 - 0.1 * i
+        n_df[f'{hist_names[i]}_pos'] = 0.1 * (i + 1)
         fig.add_trace(go.Scatter(x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
                                  y=n_df[f'{hist_names[i]}_pos'],
                                  mode='markers',
@@ -615,7 +615,8 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
                                  ), row=3, col=col)
 
     # some manual adjustments on the rugplot
-    fig.update_yaxes(range=[-0.1 * (len(hist_names) + 1), 0], tickfont=dict(color='rgba(0,0,0,0)', size=1),
+    fig.update_yaxes(range=[0, 0.1 * (len(hist_names) + 1)],
+                     tickvals=[0.1 * (i + 1) for i in range(len(hist_names))], ticktext=hist_names,
                      row=3, col=col)
     fig.update_xaxes(tickfont=dict(color='rgba(0,0,0,0)', size=1), row=2, col=col)
 
@@ -691,14 +692,15 @@ for annotation in fig['layout']['annotations'][1:]:
 background_color = 'rgb(240,246,255)'
 fig.add_annotation(dict(text="Slide:", showarrow=False,
                         x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
-fig.update_yaxes(rangemode='tozero', row=2)
-fig.update_yaxes(rangemode='tozero', row=3)
-fig.update_xaxes(rangemode='tozero', row=2)
-fig.update_xaxes(rangemode='tozero', row=3)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="inside", side="bottom",
-                 title=dict(text="Distance (um)", standoff=0, font_size=14), row=3, )
+                 title=dict(text="Distance (um)", standoff=5, font_size=14), row=3, )
+fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="inside", side="right",
-                 title=dict(text="Count #", standoff=0, font_size=14), row=2, )
+                 title=dict(text="Count #", standoff=5, font_size=14), row=2, )
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
     updatemenus=[

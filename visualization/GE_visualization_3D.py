@@ -37,13 +37,15 @@ def generate_one_line_df(df, key):
     return l_df_one
 
 
-def generate_nuclei_scatter(df, ct, show_legend=True):
+def generate_nuclei_scatter(df, ct, show_legend=True, legend_group=""):
     return go.Scatter3d(x=df[df['type'] == ct]["nx"],
                         y=df[df['type'] == ct]["ny"],
                         z=df[df['type'] == ct]["nz"],
                         mode="markers",
                         name=cell_type_dict[cell_type],
                         showlegend=show_legend,
+                        legendgroup=legend_group,
+                        legendgrouptitle_text=legend_group,
                         marker=dict(
                             size=df[df['type'] == ct]["size"],
                             color=df[df['type'] == ct]["color"],
@@ -56,11 +58,13 @@ def generate_nuclei_scatter(df, ct, show_legend=True):
                         ))
 
 
-def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend=True):
+def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend=True, legend_group=""):
     return go.Scatter3d(x=df[f"{key}x"], y=df[f"{key}y"], z=df[f"{key}z"],
                         mode="markers",
                         name=name,
                         showlegend=show_legend,
+                        legendgroup=legend_group,
+                        legendgrouptitle_text=legend_group,
                         marker=dict(
                             size=df["size"],
                             color=df["color"],
@@ -72,7 +76,7 @@ def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend
                         visible=visible)
 
 
-def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_legend=True):
+def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_legend=True, legend_group=""):
     return go.Scatter3d(x=df["x"],
                         y=df["y"],
                         z=df["z"],
@@ -80,6 +84,8 @@ def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_lege
                         name=name,
                         opacity=opacity,
                         showlegend=show_legend,
+                        legendgroup=legend_group,
+                        legendgrouptitle_text=legend_group,
                         line=dict(
                             color=color,
                             width=width, ),
@@ -188,6 +194,13 @@ for i in range(len(n_columns['X'])):
 #             nuclei_id_list.append(_nid)
 #             _nid += 1
 print(len(nuclei_x_list))
+x_min, x_max = min(nuclei_x_list), max(nuclei_x_list)
+y_min, y_max = min(nuclei_y_list), max(nuclei_y_list)
+z_min, z_max = min(nuclei_z_list), max(nuclei_z_list)
+margin_index = 0.05
+x_margin = (x_max - x_min) * margin_index
+y_margin = (y_max - y_min) * margin_index
+z_margin = (z_max - z_min) * margin_index * 2
 
 output_root_path = nuclei_root_path
 nuclei_output_name = 'nuclei.csv'
@@ -368,6 +381,8 @@ histogram_location_dict = {
     "DDB2": [3, 4],
 }
 
+# marker options:
+# ['circle', 'circle-open', 'square', 'square-open', 'diamond', 'diamond-open', 'cross', 'x']
 marker_dict = {
     'T-Helper': 'circle',
     'T-Reg': 'circle',
@@ -376,9 +391,9 @@ marker_dict = {
     'CD68': 'circle',
     "Macrophage / CD68": 'circle',
     'CD31': 'circle',
-    "P53": 'x',
-    "KI67": 'x',
-    "DDB2": 'x',
+    "P53": 'cross',
+    "KI67": 'cross',
+    "DDB2": 'cross',
     "Skin": 'diamond',
 }
 
@@ -465,15 +480,21 @@ print(s_df_one)
 
 traces_n = []
 for cell_type in set(nuclei_type_list):
-    traces_n.append(generate_nuclei_scatter(n_df, cell_type))
-trace_v = generate_other_scatter(v_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=True)
-trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible='legendonly')
-traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color='grey', visible=True)
-traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color='grey', visible='legendonly')
+    traces_n.append(generate_nuclei_scatter(n_df, cell_type,
+                                            legend_group="Damage" if cell_type in damage_type_list else "Cell"))
+trace_v = generate_other_scatter(v_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=True,
+                                 legend_group="Vessel & Skin")
+trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible='legendonly',
+                                 legend_group="Vessel & Skin")
+traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color='grey', visible=True,
+                                   legend_group="Link")
+traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color='grey', visible='legendonly',
+                                 legend_group="Link")
 traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
 
 hist_subtitle = '<br><sup>Histogram</sup>'
+horizontal_spacing = 0.02
 fig = make_subplots(
     rows=3, cols=2,
     column_widths=[0.5, 0.5],
@@ -483,9 +504,9 @@ fig = make_subplots(
         [{"type": "Histogram"}, {"type": "Histogram"}],
         [{"type": "Scatter"}, {"type": "Scatter"}],
     ],
-    horizontal_spacing=0.015, vertical_spacing=0.02, shared_xaxes=True,
+    horizontal_spacing=horizontal_spacing, vertical_spacing=0.02, shared_xaxes=True,
     subplot_titles=[f'VCCF 3D - Region {region_index}',
-                    f'Distance to Blood vessel{hist_subtitle}',
+                    f'Distance to Blood Vessel{hist_subtitle}',
                     f'Distance to Skin{hist_subtitle}', ],
 )
 for trace_n in traces_n:
@@ -514,14 +535,16 @@ for layer in range(0, z_count):
 
     traces_n = []
     for cell_type in set(nuclei_type_list):
-        traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False))
+        traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False,
+                                                legend_group="Damage" if cell_type in damage_type_list else "Cell"))
     trace_v = generate_other_scatter(zv_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=False,
-                                     show_legend=False)
+                                     show_legend=False, legend_group="Vessel & Skin")
     trace_s = generate_other_scatter(zs_df, key='s', name="Skin Surface", symbol_name='Skin', visible=False,
-                                     show_legend=False)
+                                     show_legend=False, legend_group="Vessel & Skin")
     traces_vessel_line = generate_line(zv_df_one, name="Distance-Blood Vessel", color='grey', visible=False,
-                                       show_legend=False)
-    traces_skin_line = generate_line(zs_df_one, name="Distance-Skin", color='grey', visible=False, show_legend=False)
+                                       show_legend=False, legend_group="Link")
+    traces_skin_line = generate_line(zs_df_one, name="Distance-Skin", color='grey', visible=False,
+                                     show_legend=False, legend_group="Link")
     traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
     for trace_n in traces_n:
         fig.add_trace(trace_n, 1, 1)
@@ -531,15 +554,6 @@ for layer in range(0, z_count):
 
 bin_size = 1
 bin_dict = dict(start=0, end=5000, size=bin_size)
-
-traces_histogram_all = go.Histogram(
-    x=n_df["vessel_distance"],
-    xbins=bin_dict,
-    opacity=0.1,
-    marker=dict(color="gray"),
-    showlegend=False,
-    name='All'
-)
 
 # curve fitting
 # from scipy import stats
@@ -581,7 +595,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
         fig.add_trace(go.Histogram(
             x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
             xbins=bin_dict,
-            opacity=0.5,
+            opacity=0.6,
             marker=dict(color=color_dict[hist_names[i]]),
             showlegend=False,
             name=cell_type_dict[hist_names[i]]
@@ -596,64 +610,19 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
         fig.add_trace(go.Scatter(x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
                                  y=n_df[f'{hist_names[i]}_pos'],
                                  mode='markers',
+                                 opacity=0.6,
                                  marker=dict(color=color_dict[hist_names[i]], symbol='line-ns-open'), showlegend=False,
                                  ), row=3, col=col)
-        # current_range = max(n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"])
-        # print(current_range)
-        # if current_range < 1000 and current_range > max_range:
-        #     max_range = current_range
 
     # some manual adjustments on the rugplot
     fig.update_yaxes(range=[-0.1 * (len(hist_names) + 1), 0], tickfont=dict(color='rgba(0,0,0,0)', size=1),
                      row=3, col=col)
     fig.update_xaxes(tickfont=dict(color='rgba(0,0,0,0)', size=1), row=2, col=col)
-    # fig.update_yaxes(range=[0, max_range * 1.2], row=2, col=col)
-    # fig.update_yaxes(range=[0, max_range * 1.2], row=3, col=col)
-
-fig['layout'].update(
-    # title='GE VCCF 3D',
-    scene=dict(
-        aspectmode='data'
-    ))
-
-annotations = [a.to_plotly_json() for a in fig["layout"]["annotations"]]
-for annotation in annotations:
-    annotation['x'] -= 0.0875
-    annotation['y'] -= 0.035
-# annotations.append(dict(
-#     x=100, y=50,  # annotation point
-#     xref='x1',
-#     yref='y1',
-#     text=f'a={curve_fit_all[0]:.2f},c={curve_fit_all[1]:.2f}',
-#     showarrow=False,
-# ))
-fig["layout"]["annotations"] = annotations
-
-# fig = go.Figure(contents, layout=layout)
-# fig.update_layout(showlegend=False, )
-fig.update_layout(legend=dict(
-    yanchor="top",
-    y=0.95,
-    xanchor="left",
-    x=0.05
-),
-    barmode='overlay', )
-fig.update_xaxes(title_text="Distance (um)", row=3, col=2)
-fig.update_yaxes(title_text="Count #", row=2, col=1)
-# fig.update_xaxes(range=[0, 200], row=2)
-# fig.update_xaxes(range=[0, 200], row=3)
-
-fig.update_yaxes(rangemode='tozero', row=2)
-fig.update_yaxes(rangemode='tozero', row=3)
-fig.update_xaxes(rangemode='tozero', row=2)
-fig.update_xaxes(rangemode='tozero', row=3)
-fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 
 sub_title_text = "[Glomerulus-level (~2000 matching gloms) \n/ Crypt-level (~160 matching crypts)]"
 title_text = f"Kidney/Colon - dice/recall/precision <br><sup>{sub_title_text}</sup>"
 
 # Add dropdown
-
 histogram_layout_buttons = list([
     dict(
         args=["barmode", "overlay"],
@@ -675,7 +644,7 @@ layer_select_buttons = []
 # Create and add slider
 steps = []
 for i in range(z_count + 1):
-    title = f"Slide {str(i)}" if i != 0 else "All slides"
+    title = f"{str(i)}" if i != 0 else "All"
     step = dict(
         label=title,
         method="update",
@@ -692,12 +661,51 @@ for i in range(z_count + 1):
     steps.append(step)
 layer_select_buttons = steps
 
+sliders = [dict(
+    active=0,
+    currentvalue={"prefix": "Slide: "},
+    pad={"t": 0, "b": 0},
+    steps=steps,
+    yanchor='top', y=1,
+    xanchor='right', x=1,
+    lenmode='fraction', len=0.25
+)]
+
+# layout update
+for annotation in fig['layout']['annotations'][:1]:
+    annotation['x'] = 0
+    annotation['xanchor'] = "left"
+    annotation['y'] = 1
+    annotation['yanchor'] = "top"
+    annotation['font'] = dict(
+        family="Arial, Bahnschrift",
+        size=24, )
+for annotation in fig['layout']['annotations'][1:]:
+    annotation['x'] += 0.25 - horizontal_spacing
+    annotation['xanchor'] = "right"
+    annotation['y'] -= 0.05
+    annotation['font'] = dict(
+        family="Arial, Bahnschrift",
+        size=18, )
+
+background_color = 'rgb(240,246,255)'
+fig.add_annotation(dict(text="Slide:", showarrow=False,
+                        x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
+fig.update_yaxes(rangemode='tozero', row=2)
+fig.update_yaxes(rangemode='tozero', row=3)
+fig.update_xaxes(rangemode='tozero', row=2)
+fig.update_xaxes(rangemode='tozero', row=3)
+fig.update_xaxes(ticklabelposition="inside", side="bottom",
+                 title=dict(text="Distance (um)", standoff=0, font_size=14), row=3, )
+fig.update_yaxes(ticklabelposition="inside", side="right",
+                 title=dict(text="Count #", standoff=0, font_size=14), row=2, )
+fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
     updatemenus=[
         dict(
             buttons=histogram_layout_buttons,
             direction="right",
-            pad={"r": 10, "t": 10},
+            pad={"r": 0, "t": 5},
             showactive=True,
             x=0,
             xanchor="left",
@@ -708,35 +716,42 @@ fig.update_layout(
         dict(
             buttons=layer_select_buttons,
             direction="down",
-            pad={"r": 10, "t": 10},
+            pad={"r": 0, "t": 5},
             showactive=True,
             x=1,
             xanchor="right",
-            y=1,
+            y=0.85,
             yanchor="top"
         ),
     ],
     font=dict(
-        family="Bahnschrift, Arial",
-        size=15,
+        family="Arial, Bahnschrift",
+        size=14,
         # color="RebeccaPurple"
-    )
+    ),
+    margin=dict(
+        l=25,
+        r=25,
+        b=10,
+        t=10,
+        pad=0
+    ),
+    legend=dict(
+        yanchor="top",
+        y=0.95,
+        xanchor="left",
+        x=0
+    ),
+    barmode='overlay',
+    sliders=sliders,
+    scene=dict(
+        aspectmode='data',
+        xaxis=dict(nticks=10, range=[x_min - x_margin, x_max + x_margin], backgroundcolor=background_color, ),
+        yaxis=dict(nticks=10, range=[y_min - y_margin, y_max + y_margin], backgroundcolor=background_color, ),
+        zaxis=dict(nticks=5, range=[z_min - z_margin, z_max + z_margin], backgroundcolor=background_color, ),
+    ),
+    plot_bgcolor=background_color,
 )
-
-sliders = [dict(
-    active=10,
-    currentvalue={"prefix": "Slide: "},
-    pad={"t": 0, "b": -50},
-    steps=steps,
-    yanchor='top', y=1.1,
-    # xanchor='right', x=0,
-    # lenmode='fraction', len=0.25
-)]
-
-# fig.update_layout(
-#     sliders=sliders,
-#     # xaxis1_rangeslider_visible=True, xaxis1_rangeslider_thickness=0.1
-# )
 
 fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}.html"))
 if show_html:

@@ -623,6 +623,19 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
 sub_title_text = "[Glomerulus-level (~2000 matching gloms) \n/ Crypt-level (~160 matching crypts)]"
 title_text = f"Kidney/Colon - dice/recall/precision <br><sup>{sub_title_text}</sup>"
 
+# Invisble scale for keep space instant
+invisible_scale = go.Scatter3d(
+    name="",
+    visible=True,
+    showlegend=False,
+    opacity=0,
+    hoverinfo='none',
+    x=[x_min - x_margin, x_max + x_margin],
+    y=[y_min - y_margin, y_max + y_margin],
+    z=[z_min - z_margin, z_max + z_margin],
+)
+fig.add_trace(invisible_scale)
+
 # Add dropdown
 histogram_layout_buttons = list([
     dict(
@@ -739,6 +752,7 @@ fig.update_layout(
         pad=0
     ),
     legend=dict(
+        groupclick="toggleitem",
         yanchor="top",
         y=0.95,
         xanchor="left",

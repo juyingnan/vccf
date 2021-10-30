@@ -6,7 +6,7 @@ def try_parse_int(s, base=10, val=None):
 
 
 target_root_path = r"G:\GE\skin_12_data"
-cell_file_path = r"C:\Users\bunny\Desktop\ge_temp\Centroids_Oct2021.csv"
+cell_file_path = r"C:\Users\bunny\Desktop\ge_temp\Centroids_Oct_29_21.csv"
 
 # bv_file = open(bv_file_path, 'r')
 # bv_lines = bv_file.readlines()
@@ -28,6 +28,7 @@ type_abr = {
     "Blood Vessels": "CD31",
 }
 headline = "ID,X,Y,Z,cell_type\n"
+skin_id = 0
 
 current_region = ""
 current_type = ""
@@ -51,7 +52,11 @@ for line_content in cell_lines:
         assert current_region != ""
         assert current_type != ""
         if current_type in type_abr:
-            cells[current_region][current_type].append(line + "," + type_abr[current_type])
+            if current_type == "Skin mask":
+                cells[current_region][current_type].append(f"{skin_id},{line},{type_abr[current_type]}")
+                skin_id += 1
+            else:
+                cells[current_region][current_type].append(f"{line},{type_abr[current_type]}")
         else:
             print(f"{current_region}, {current_type} not in the type dict")
 

@@ -18,6 +18,7 @@ cells = {}
 type_abr = {
     # "_TRegulatory": "T-Reg",
     "Macrophage": "CD68",
+    "CD68": "CD68",
     "TKiller": "T-Killer",
     "TRegulator": "T-Reg",
     "THelper": "T-Helper",
@@ -26,6 +27,7 @@ type_abr = {
     "DDB2": "DDB2",
     "Skin mask": "Skin",
     "Blood Vessels": "CD31",
+    "CD31": "CD31",
 }
 headline = "ID,X,Y,Z,cell_type\n"
 skin_id = 0
@@ -44,21 +46,58 @@ for line_content in cell_lines:
         continue
     elif line.strip() in type_abr:
         assert current_region != ""
-        current_type = line
+        current_type = type_abr[line]
         cells[current_region][current_type] = []
-    elif line.startswith("Label"):
+    elif line.startswith("Label") or line.startswith('x1'):
         continue
     else:
         assert current_region != ""
         assert current_type != ""
-        if current_type in type_abr:
-            if current_type == "Skin mask":
-                cells[current_region][current_type].append(f"{skin_id},{line},{type_abr[current_type]}")
+        if current_type in type_abr.values():
+            if current_type == type_abr["Skin mask"]:
+                cells[current_region][current_type].append(f"{skin_id},{line},{current_type}")
                 skin_id += 1
             else:
-                cells[current_region][current_type].append(f"{line},{type_abr[current_type]}")
+                cells[current_region][current_type].append(f"{line},{current_type}")
         else:
             print(f"{current_region}, {current_type} not in the type dict")
+
+# temp additional data
+import os
+from os import walk
+
+temp_files = []
+temp_names = []
+temp_root_path = r"C:\Users\bunny\Desktop\ge_temp\temp_data"
+for (dirpath, dirnames, filenames) in walk(temp_root_path):
+    temp_files.extend([os.path.join(dirpath, filename) for filename in filenames])
+    temp_names.extend([filename for filename in filenames])
+
+for i in range(len(temp_files)):
+    name = temp_names[i].split('_')[0]
+    temp_file_path = temp_files[i]
+    current_region = ""
+    current_type = type_abr[name]
+    cell_file = open(temp_file_path, 'r')
+    cell_lines = cell_file.readlines()
+    for line_content in cell_lines:
+        line = line_content.strip().rstrip(",")
+        if len(line) == 0:
+            continue
+        if line.startswith("Region"):
+            if line not in cells:
+                cells[line] = {}
+            current_region = line
+            cells[current_region][current_type] = []
+            print(f"refreshing {current_type} - {current_region}")
+        else:
+            assert current_region != ""
+            assert current_type != ""
+            if current_type in type_abr.values():
+                cells[current_region][current_type].append(f"{line},{current_type}")
+            else:
+                print(f"{current_region}, {current_type} not in the type dict")
+    print("-----------------")
 
 # write csv
 for region in cells:
@@ -87,5 +126,5 @@ for region in cells:
                       "P53",
                       "KI67",
                       "DDB2", ]:
-        print(f"{len(cells[region][cell_type])}\t", end='')
+        print(f"{len(cells[region][type_abr[cell_type]])}\t", end='')
     print()

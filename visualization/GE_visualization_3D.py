@@ -37,7 +37,7 @@ def generate_one_line_df(df, key):
     return l_df_one
 
 
-def generate_nuclei_scatter(df, ct, show_legend=True, legend_group=""):
+def generate_nuclei_scatter(df, ct, visible=True, show_legend=True, legend_group=""):
     return go.Scatter3d(x=df[df['type'] == ct]["nx"],
                         y=df[df['type'] == ct]["ny"],
                         z=df[df['type'] == ct]["nz"],
@@ -54,8 +54,8 @@ def generate_nuclei_scatter(df, ct, show_legend=True, legend_group=""):
                             line=dict(
                                 color=df[df['type'] == ct]["color"],
                                 width=0
-                            )
-                        ))
+                            )),
+                        visible=visible)
 
 
 def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend=True, legend_group=""):
@@ -92,18 +92,6 @@ def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_lege
                         visible=visible)
 
 
-# prs = Presentation(r'C:\Users\bunny\Desktop\KidneyAnnotated-GW.pptx')
-# print(prs.slide_height, prs.slide_width)
-# slide = prs.slides[0]
-#
-# shapes = slide.shapes
-#
-# print(len(shapes))
-#
-# unit_per_um = 1024646 / 50
-# unit_per_pixel = 28346400 / 2232
-# pixel_per_um = unit_per_um / unit_per_pixel
-#
 nuclei_id_list = list()
 nuclei_type_list = list()
 nuclei_x_list = list()
@@ -129,9 +117,6 @@ scale = 16 * micro_per_pixel
 
 top_left = [0, 0]
 bottom_right = [1000000, 1000000]
-# top_left = [5350 * micro_per_pixel, 3900 * micro_per_pixel]
-# bottom_right = [7150 * micro_per_pixel, 4700 * micro_per_pixel]
-
 
 region_index = 1
 show_html = True
@@ -193,7 +178,7 @@ for i in range(len(n_columns['X'])):
 #             nuclei_image[i + 1][j + 1] *= 0
 #             nuclei_id_list.append(_nid)
 #             _nid += 1
-print(len(nuclei_x_list))
+print("Nuclei & Damage count: ", len(nuclei_x_list))
 x_min, x_max = min(nuclei_x_list), max(nuclei_x_list)
 y_min, y_max = min(nuclei_y_list), max(nuclei_y_list)
 z_min, z_max = min(nuclei_z_list), max(nuclei_z_list)
@@ -212,10 +197,21 @@ skin_output_path = os.path.join(output_root_path, skin_output_name)
 
 damage_type_list = ['P53', 'KI67', 'DDB2']
 
+# reduce skin size
+print(f"skin x min/max: {min(skin_x_list)} - {max(skin_x_list)}")
+print(f"skin y min/max: {min(skin_y_list)} - {max(skin_y_list)}")
+print(f"skin z min/max: {min(skin_z_list)} - {max(skin_z_list)}")
+skin_sampling_rate = 100
+print(f"Original skin size: {len(skin_x_list)}")
+skin_x_list = skin_x_list[::skin_sampling_rate]
+skin_y_list = skin_y_list[::skin_sampling_rate]
+skin_z_list = skin_z_list[::skin_sampling_rate]
+print(f"Sampled skin size: {len(skin_x_list)}")
+
 # calculate blood vessel distance
 for nid in range(len(nuclei_id_list)):
     _min_vessel_dist = 100 * scale
-    _min_skin_dist = 1000 * scale
+    _min_skin_dist = 100 * scale
     _min_vessel_x = 0
     _min_vessel_y = 0
     _min_vessel_z = 0
@@ -228,15 +224,10 @@ for nid in range(len(nuclei_id_list)):
     if nuclei_type_list[nid] in damage_type_list:
         _min_vessel_dist = -1
         _has_near = False
-        # vessel for skin temp
-        # for v in range(len(skin_x_list)):
-        #     _sx = skin_x_list[v]
-        #     _sy = skin_y_list[v]
-        #     _sz = skin_z_list[v]
-        for v in range(len(vessel_x_list)):
-            _sx = vessel_x_list[v]
-            _sy = vessel_y_list[v]
-            _sz = vessel_z_list[v]
+        for v in range(len(skin_x_list)):
+            _sx = skin_x_list[v]
+            _sy = skin_y_list[v]
+            _sz = skin_z_list[v]
             if abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
                 _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
                 if _dist < _min_skin_dist:
@@ -274,12 +265,12 @@ for nid in range(len(nuclei_id_list)):
     nuclei_nearest_skin_z_list.append(_min_skin_z)
     if nid % 100 == 0:
         print('\r' + str(nid), end='')
+print()
 
-print(len(nuclei_id_list))
-# assert len(nuclei_id_list) == len(nuclei_x_list) == len(nuclei_y_list) == len(nuclei_z_list) == \
-#        len(nuclei_vessel_distance_list) == len(nuclei_skin_distance_list) == \
-#        len(nuclei_nearest_vessel_x_list) == (nuclei_nearest_vessel_y_list) == (nuclei_nearest_vessel_z_list) == \
-#        len(nuclei_nearest_skin_x_list) == (nuclei_nearest_skin_y_list) == (nuclei_nearest_skin_z_list)
+assert len(nuclei_id_list) == len(nuclei_x_list) == len(nuclei_y_list) == len(nuclei_z_list) == \
+       len(nuclei_vessel_distance_list) == len(nuclei_skin_distance_list) == \
+       len(nuclei_nearest_vessel_x_list) == len(nuclei_nearest_vessel_y_list) == len(nuclei_nearest_vessel_z_list) == \
+       len(nuclei_nearest_skin_x_list) == len(nuclei_nearest_skin_y_list) == len(nuclei_nearest_skin_z_list)
 
 my_csv.write_csv(nuclei_output_path,
                  [nuclei_id_list,
@@ -350,7 +341,7 @@ size_dict = {
     'P53': 16,
     'KI67': 16,
     'DDB2': 16,
-    'Skin': 16,
+    'Skin': 6,
 }
 
 cell_type_dict = {
@@ -464,7 +455,10 @@ s_data["sz"] = skin_z_list
 s_data["color"] = s_color
 s_data["size"] = s_size
 s_df = pd.DataFrame(s_data)
+skin_display_rate = 10
+s_df = s_df[s_df.index % skin_display_rate == 0]
 print(s_df)
+print(f"Displayed skin size: {len(s_df)}")
 
 # https://stackoverflow.com/questions/56723792/plotly-how-to-efficiently-plot-a-large-number-of-line-shapes-where-the-points-a
 
@@ -486,15 +480,15 @@ trace_v = generate_other_scatter(v_df, key='v', name="Blood Vessel", symbol_name
                                  legend_group="Vessel & Skin")
 trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible='legendonly',
                                  legend_group="Vessel & Skin")
-traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color='grey', visible=True,
+traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color=color_dict['CD31'], visible=True,
                                    legend_group="Link")
-traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color='grey', visible='legendonly',
+traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color=color_dict['Skin'], visible='legendonly',
                                  legend_group="Link")
 traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
 
 hist_subtitle = '<br><sup>Histogram</sup>'
-horizontal_spacing = 0.02
+horizontal_spacing = 0.03
 fig = make_subplots(
     rows=3, cols=2,
     column_widths=[0.5, 0.5],
@@ -535,7 +529,7 @@ for layer in range(0, z_count):
 
     traces_n = []
     for cell_type in set(nuclei_type_list):
-        traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False,
+        traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
                                                 legend_group="Damage" if cell_type in damage_type_list else "Cell"))
     trace_v = generate_other_scatter(zv_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=False,
                                      show_legend=False, legend_group="Vessel & Skin")
@@ -552,8 +546,8 @@ for layer in range(0, z_count):
 # bin_width = 10
 # nbins = math.ceil((n_df["distance"].max() - n_df["distance"].min()) / bin_width)
 
-bin_size = 1
-bin_dict = dict(start=0, end=5000, size=bin_size)
+bin_size = 3
+bin_dict = dict(start=0, end=200, size=bin_size)
 
 # curve fitting
 # from scipy import stats
@@ -703,17 +697,18 @@ for annotation in fig['layout']['annotations'][1:]:
         size=18, )
 
 background_color = 'rgb(240,246,255)'
-fig.add_annotation(dict(text="Slide:", showarrow=False,
-                        x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
+# fig.add_annotation(dict(text="Slide:", showarrow=False,
+#                         x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
 fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
-fig.update_xaxes(ticklabelposition="inside", side="bottom",
-                 title=dict(text="Distance (um)", standoff=5, font_size=14), row=3, )
+fig.update_xaxes(ticklabelposition="outside", side="bottom",
+                 title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
+# fig.update_xaxes(range=[0, 50], row=3, col=2)
 fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
-fig.update_yaxes(ticklabelposition="inside", side="right",
-                 title=dict(text="Count #", standoff=5, font_size=14), row=2, )
+fig.update_yaxes(ticklabelposition="outside", side="left",
+                 title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
     updatemenus=[
@@ -728,16 +723,16 @@ fig.update_layout(
             yanchor="bottom"
         ),
 
-        dict(
-            buttons=layer_select_buttons,
-            direction="down",
-            pad={"r": 0, "t": 5},
-            showactive=True,
-            x=1,
-            xanchor="right",
-            y=0.85,
-            yanchor="top"
-        ),
+        # dict(
+        #     buttons=layer_select_buttons,
+        #     direction="down",
+        #     pad={"r": 0, "t": 5},
+        #     showactive=True,
+        #     x=1,
+        #     xanchor="right",
+        #     y=0.85,
+        #     yanchor="top"
+        # ),
     ],
     font=dict(
         family="Arial, Bahnschrift",

@@ -212,15 +212,15 @@ print(f"Sampled skin size: {len(skin_x_list)}")
 for nid in range(len(nuclei_id_list)):
     _min_vessel_dist = 100 * scale
     _min_skin_dist = 100 * scale
-    _min_vessel_x = 0
-    _min_vessel_y = 0
-    _min_vessel_z = 0
-    _min_skin_x = 0
-    _min_skin_y = 0
-    _min_skin_z = 0
     _nx = nuclei_x_list[nid]
     _ny = nuclei_y_list[nid]
     _nz = nuclei_z_list[nid]
+    _min_vessel_x = _nx
+    _min_vessel_y = _ny
+    _min_vessel_z = _nz
+    _min_skin_x = _nx
+    _min_skin_y = _ny
+    _min_skin_z = _nz
     if nuclei_type_list[nid] in damage_type_list:
         _min_vessel_dist = -1
         _has_near = False

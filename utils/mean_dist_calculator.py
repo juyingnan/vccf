@@ -2,11 +2,14 @@ import statistics
 
 target_root_path = r"G:\GE\skin_12_data"
 
-for i in range(4):
+print("Region", end='')
+for i in range(5):
     print("\t\tAverage\tMedian\t%", end='')
 print()
 
-for region_id in [11, 3, 6, 8, 9, 1, 12, 5, 4, 2, 10, 7]:
+cell_types = ['all', 'CD68', 'T-Helper', 'T-Killer', 'T-Reg']
+region_list = [11, 3, 8, 9, 1, 12, 5, 4, 2, 10, 7]
+for region_id in region_list:
     target_file_path = target_root_path + rf"\region_{region_id}\nuclei.csv"
 
     cell_file = open(target_file_path, 'r')
@@ -19,11 +22,12 @@ for region_id in [11, 3, 6, 8, 9, 1, 12, 5, 4, 2, 10, 7]:
         content = line.split(',')
         type = content[4]
         distance = content[5]
-        if type not in distances:
-            distances[type] = []
-        else:
-            distances[type].append(float(distance))
-            distances['all'].append(float(distance))
+        if type in cell_types:
+            if type not in distances:
+                distances[type] = []
+            else:
+                distances[type].append(float(distance))
+                distances['all'].append(float(distance))
 
     # print("Region ", region_id)
     # for key in distances:
@@ -31,8 +35,8 @@ for region_id in [11, 3, 6, 8, 9, 1, 12, 5, 4, 2, 10, 7]:
     #     print("\t\tAverage Distance: ", statistics.mean(distances[key]))
     #     print("\t\tMedian Distance: ", statistics.median(distances[key]))
 
-    print("Region ", region_id, end='')
-    for key in ['all', 'CD68', 'T-Helper', 'T-Killer']:
+    print(region_id, end='')
+    for key in cell_types:
         print("\t", key, end='')
         if key in distances:
             dis_mean = statistics.mean(distances[key])
@@ -100,7 +104,7 @@ for region_id in [11, 3, 6, 8, 9, 1, 12, 5, 4, 2, 10, 7]:
 # print()
 #
 # distances = {'all': []}
-# for region_id in range(1, 13):
+# for region_id in region_list:
 #     target_file_path = target_root_path + rf"\region_{region_id}\nuclei.csv"
 #
 #     cell_file = open(target_file_path, 'r')
@@ -111,14 +115,15 @@ for region_id in [11, 3, 6, 8, 9, 1, 12, 5, 4, 2, 10, 7]:
 #         content = line.split(',')
 #         type = content[4]
 #         distance = content[5]
-#         if type not in distances:
-#             distances[type] = []
-#         else:
-#             distances[type].append(float(distance))
-#             distances['all'].append(float(distance))
+#         if type in cell_types:
+#             if type not in distances:
+#                 distances[type] = []
+#             else:
+#                 distances[type].append(float(distance))
+#                 distances['all'].append(float(distance))
 #
 # print("All ", end='')
-# for key in ['all', 'CD68', 'T-Reg', 'T-Helper']:
+# for key in cell_types:
 #     print("\t", key, end='')
 #     print(f"\t{statistics.mean(distances[key])}", end='')
 #     print(f"\t{statistics.median(distances[key])}", end='')

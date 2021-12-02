@@ -201,17 +201,39 @@ damage_type_list = ['P53', 'KI67', 'DDB2']
 print(f"skin x min/max: {min(skin_x_list)} - {max(skin_x_list)}")
 print(f"skin y min/max: {min(skin_y_list)} - {max(skin_y_list)}")
 print(f"skin z min/max: {min(skin_z_list)} - {max(skin_z_list)}")
-skin_sampling_rate = 100
+skin_sampling_rate = 777
 print(f"Original skin size: {len(skin_x_list)}")
-skin_x_list = skin_x_list[::skin_sampling_rate]
-skin_y_list = skin_y_list[::skin_sampling_rate]
-skin_z_list = skin_z_list[::skin_sampling_rate]
+# skin_x_list = skin_x_list[::skin_sampling_rate]
+# skin_y_list = skin_y_list[::skin_sampling_rate]
+# skin_z_list = skin_z_list[::skin_sampling_rate]
+# get the real skin part
+temp_dict = {}
+for i in range(len(skin_x_list)):
+    if (skin_y_list[i], skin_z_list[i]) not in temp_dict:
+        temp_dict[(skin_y_list[i], skin_z_list[i])] = skin_x_list[i]
+    else:
+        if temp_dict[(skin_y_list[i], skin_z_list[i])] > skin_x_list[i]:
+            temp_dict[(skin_y_list[i], skin_z_list[i])] = skin_x_list[i]
+# temp_xyz = [[skin_x_list[i], skin_y_list[i], skin_z_list[i]] for i in range(len(skin_x_list))]
+# temp_xyz = sorted(temp_xyz, key=lambda x: x[0])
+# sample_length = int(len(temp_xyz) // skin_sampling_rate)
+# temp_xyz = temp_xyz[:sample_length]
+# skin_x_list = [temp_xyz[i][0] for i in range(len(temp_xyz))]
+# skin_y_list = [temp_xyz[i][1] for i in range(len(temp_xyz))]
+# skin_z_list = [temp_xyz[i][2] for i in range(len(temp_xyz))]
+skin_x_list = []
+skin_y_list = []
+skin_z_list = []
+for key in temp_dict:
+    skin_y_list.append(key[0])
+    skin_z_list.append(key[1])
+    skin_x_list.append(temp_dict[key])
 print(f"Sampled skin size: {len(skin_x_list)}")
 
 # calculate blood vessel distance
 for nid in range(len(nuclei_id_list)):
     _min_vessel_dist = 100 * scale
-    _min_skin_dist = 100 * scale
+    _min_skin_dist = 5000 * scale
     _nx = nuclei_x_list[nid]
     _ny = nuclei_y_list[nid]
     _nz = nuclei_z_list[nid]
@@ -341,7 +363,7 @@ size_dict = {
     'P53': 16,
     'KI67': 16,
     'DDB2': 16,
-    'Skin': 6,
+    'Skin': 8,
 }
 
 cell_type_dict = {
@@ -455,7 +477,7 @@ s_data["sz"] = skin_z_list
 s_data["color"] = s_color
 s_data["size"] = s_size
 s_df = pd.DataFrame(s_data)
-skin_display_rate = 10
+skin_display_rate = 1
 s_df = s_df[s_df.index % skin_display_rate == 0]
 print(s_df)
 print(f"Displayed skin size: {len(s_df)}")
@@ -478,7 +500,7 @@ for cell_type in set(nuclei_type_list):
                                             legend_group="Damage" if cell_type in damage_type_list else "Cell"))
 trace_v = generate_other_scatter(v_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=True,
                                  legend_group="Vessel & Skin")
-trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible='legendonly',
+trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible=True,
                                  legend_group="Vessel & Skin")
 traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color=color_dict['CD31'], visible=True,
                                    legend_group="Link")
@@ -549,6 +571,9 @@ for layer in range(0, z_count):
 bin_size = 3
 bin_dict = dict(start=0, end=200, size=bin_size)
 
+sbin_size = 20
+sbin_dict = dict(start=0, end=5000, size=sbin_size)
+
 # curve fitting
 # from scipy import stats
 #
@@ -577,7 +602,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
             hist_data.append(data)
             hist_names.append(cell_type)
 
-    fig2 = ff.create_distplot(hist_data, hist_names, bin_size=bin_size,
+    fig2 = ff.create_distplot(hist_data, hist_names, bin_size=bin_size if distance_type == 'vessel' else sbin_size,
                               histnorm='probability')  # , curve_type='normal')
 
     max_range = 1
@@ -588,7 +613,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
         #                            ), row=2, col=col)
         fig.add_trace(go.Histogram(
             x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
-            xbins=bin_dict,
+            xbins=bin_dict if distance_type == 'vessel' else sbin_dict,
             opacity=0.6,
             marker=dict(color=color_dict[hist_names[i]]),
             showlegend=False,
@@ -740,10 +765,10 @@ fig.update_layout(
         # color="RebeccaPurple"
     ),
     margin=dict(
-        l=25,
-        r=25,
-        b=10,
-        t=10,
+        l=5,
+        r=5,
+        b=5,
+        t=5,
         pad=0
     ),
     legend=dict(
@@ -757,9 +782,9 @@ fig.update_layout(
     sliders=sliders,
     scene=dict(
         aspectmode='data',
-        xaxis=dict(nticks=10, range=[x_min - x_margin, x_max + x_margin], backgroundcolor=background_color, ),
-        yaxis=dict(nticks=10, range=[y_min - y_margin, y_max + y_margin], backgroundcolor=background_color, ),
-        zaxis=dict(nticks=5, range=[z_min - z_margin, z_max + z_margin], backgroundcolor=background_color, ),
+        xaxis=dict(nticks=10, backgroundcolor=background_color, ),
+        yaxis=dict(nticks=10, backgroundcolor=background_color, ),
+        zaxis=dict(nticks=5, backgroundcolor=background_color, ),
     ),
     plot_bgcolor=background_color,
 )

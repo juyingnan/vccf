@@ -126,29 +126,6 @@ if __name__ == '__main__':
     n_columns['color'].append(color_dict["placeholder"])
     n_columns['nuclei'].append(False)
 
-    cell_type_pool = [
-        'Ascending Thin Limb to Thick Ascending Limb Cell',
-        'Ascending Thin Limb Cell',
-        'Proximal Tubule Cell',
-        'Fibroblast',
-        'Thick Ascending Limb Cell',
-        'Macrophage',
-        'Distal Convoluted Tubule Cell',
-        'Myofibroblast',
-        'Connecting Tubule',
-        'Principal Cell',
-        'Descending Thin Limb Cell',
-        'placeholder_0',
-        'Podocyte',
-        'placeholder_1',
-        'Endothelial Cell',
-        'placeholder_2',
-        'Vascular Smooth Muscle Cell and Pericyte'
-        'placeholder_3',
-        'Intercalated Alpha Cell',
-        'Intercalated Beta Cell',
-    ]
-
     data = dict()
     for header in n_headers:
         data[header] = n_columns[header]
@@ -167,13 +144,15 @@ if __name__ == '__main__':
     v_df = pd.DataFrame(data)
 
     # p.segment(x0='x', y0='y', x1='vx', source=n_df, y1='vy', color="ivory", alpha=0.4, line_width=1)
-    circle = p.circle(x='y', y='x', source=n_df[n_df['nuclei'] == True], color='color', alpha=0.5, size=10)
-    cross = p.cross(x='y', y='x', source=n_df[n_df['nuclei'] == False], color='color', alpha=0.5, size=10)
+    circle = p.circle(x='y', y='x', source=n_df[n_df['nuclei'] == True], color='color', alpha=0.5, size=6,
+                      line_width=2)
+    cross = p.cross(x='y', y='x', source=n_df[n_df['nuclei'] == False], color='color', alpha=0.5, size=6,
+                    line_width=2)
     p.segment(x0='y', y0='x', x1='vy', y1='vx', source=n_df[n_df['nuclei'] == True],
-              color="red",
-              alpha=0.2, line_width=1,
+              color="darkred",
+              alpha=0.8, line_width=2,
               )
-    p.scatter(x='vy', y='vx', source=v_df, fill_alpha=0.5, size=1,
+    p.scatter(x='vy', y='vx', source=v_df, fill_alpha=0.1, size=0.2,
               # marker=factor_mark('style_label', markers, roman_label),
               marker='circle',
               color='red', )

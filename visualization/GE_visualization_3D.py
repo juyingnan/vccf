@@ -118,11 +118,11 @@ scale = 16 * micro_per_pixel
 top_left = [0, 0]
 bottom_right = [1000000, 1000000]
 
-region_index = 1
+region_index = 10
 show_html = True
 
 if len(sys.argv) >= 2:
-    region_index = sys.argv[1]
+    region_index = int(sys.argv[1])
     show_html = False
 
 nuclei_root_path = rf'G:\GE\skin_12_data\region_{region_index}'
@@ -132,6 +132,36 @@ nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
 if len(sys.argv) >= 3:
     nuclei_file_path = sys.argv[2]
+
+skin_threshold_dict = {
+    1: 1000,
+    2: 1500,
+    3: 1000,
+    4: 1000,
+    5: 1000,
+    6: 1000,
+    7: 1000,
+    8: 1000,
+    9: 1000,
+    10: 700,
+    11: 1000,
+    12: 1000,
+}
+
+skin_offset_dict = {
+    1: [91, 71, 0],
+    2: [25, 153, 0],
+    3: [19, 54, 0],
+    4: [34, 58, 0],
+    5: [56, 30, 0],
+    6: [0, 0, 0],
+    7: [15, 43, 0],
+    8: [25, 26, 0],
+    9: [0, 42, 0],
+    10: [20, 42, 0],
+    11: [16, 54, 0],
+    12: [29, 2, 0],
+}
 
 n_headers, n_columns = my_csv.read_csv(nuclei_file_path)
 for i in range(0, 5):  # len(n_headers)):
@@ -150,9 +180,12 @@ for i in range(len(n_columns['X'])):
             vessel_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
             vessel_z_list.append(z * scale)
         elif n_columns['cell_type'][i] == 'Skin':
-            skin_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
-            skin_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
-            skin_z_list.append(z * scale)
+            offset_x, offset_y, offset_z = skin_offset_dict[region_index]
+            x_temp = (float(n_columns['X'][i]) + offset_x) * scale - top_left[0]
+            if x_temp < skin_threshold_dict[region_index]:
+                skin_x_list.append(x_temp)
+                skin_y_list.append((float(n_columns['Y'][i]) + offset_y) * scale - top_left[1])
+                skin_z_list.append(z * scale)
         else:
             nuclei_id_list.append(i)
             nuclei_type_list.append(n_columns['cell_type'][i])
@@ -246,20 +279,27 @@ for nid in range(len(nuclei_id_list)):
     if nuclei_type_list[nid] in damage_type_list:
         _min_vessel_dist = -1
         _has_near = False
-        for v in range(len(skin_x_list)):
-            _sx = skin_x_list[v]
-            _sy = skin_y_list[v]
-            _sz = skin_z_list[v]
-            if abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
-                _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
-                if _dist < _min_skin_dist:
-                    _has_near = True
-                    _min_skin_dist = _dist
-                    _min_skin_x = _sx
-                    _min_skin_y = _sy
-                    _min_skin_z = _sz
-        if not _has_near:
-            print("NO NEAR")
+        z_threshold = 1
+        y_threshold = 1.5
+        while not _has_near:
+            y_threshold += 0.5
+            if y_threshold > 5:
+                print("NO NEAR")
+                break
+            for v in range(len(skin_x_list)):
+                _sx = skin_x_list[v]
+                _sy = skin_y_list[v]
+                _sz = skin_z_list[v]
+                # add new criteria for skin
+                # if abs(_sz - _nz <= 1) and abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
+                if abs(_sz - _nz <= z_threshold) and abs(_nx - _sx) <= _min_skin_dist and abs(_ny - _sy) <= y_threshold:
+                    _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
+                    if _dist < _min_skin_dist:
+                        _has_near = True
+                        _min_skin_dist = _dist
+                        _min_skin_x = _sx
+                        _min_skin_y = _sy
+                        _min_skin_z = _sz
     else:
         _min_skin_dist = -1
         _has_near = False

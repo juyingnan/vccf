@@ -42,14 +42,14 @@ def generate_nuclei_scatter(df, ct, visible=True, show_legend=True, legend_group
                         y=df[df['type'] == ct]["ny"],
                         z=df[df['type'] == ct]["nz"],
                         mode="markers",
-                        name=cell_type_dict[cell_type],
+                        name=cell_dict[cell_type]['legend'],
                         showlegend=show_legend,
                         legendgroup=legend_group,
                         legendgrouptitle_text=legend_group,
                         marker=dict(
                             size=df[df['type'] == ct]["size"],
                             color=df[df['type'] == ct]["color"],
-                            symbol=marker_dict[ct],
+                            symbol=cell_dict[ct]['marker'],
                             opacity=0.75,
                             line=dict(
                                 color=df[df['type'] == ct]["color"],
@@ -68,7 +68,7 @@ def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend
                         marker=dict(
                             size=df["size"],
                             color=df["color"],
-                            symbol=marker_dict[symbol_name],
+                            symbol=cell_dict[symbol_name]['marker'],
                             opacity=0.5,
                             line=dict(
                                 color=df["color"],
@@ -91,6 +91,106 @@ def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_lege
                             width=width, ),
                         visible=visible)
 
+
+donor_dict = \
+    {
+        1: 3,
+        2: 6,
+        3: 9,
+        4: 12,
+        5: 11,
+        6: 8,
+        7: 5,
+        8: 2,
+        9: 1,
+        10: 4,
+        11: 7,
+        12: 10,
+    }
+
+cell_dict = {
+    'CD68': {
+        'legend': "Macrophage (CD68+)",
+        'short': "CD68+",
+        'group': "Immune Cells",
+        'color': "gold",
+        'marker': 'circle',
+        'size': 15.89,
+        'histogram_location': [3, 1],
+    },
+    'CD31': {
+        'legend': "Endothelial cells",
+        'short': "CD31",
+        'group': 'Vessel & Skin',
+        'color': "red",
+        'marker': 'circle',
+        'size': 16.83,
+        'histogram_location': [0, 0],
+    },
+    'T-Helper': {
+        'legend': "T-Helper Cells",
+        'short': "T-Helper",
+        'group': "Immune Cells",
+        'color': "blue",
+        'marker': 'circle',
+        'size': 16.96,
+        'histogram_location': [2, 2],
+    },
+    'T-Reg': {
+        'legend': "T-Regulatory Cells",
+        'short': "T-Reg",
+        'group': "Immune Cells",
+        'color': "mediumspringgreen",
+        'marker': 'circle',
+        'size': 17.75,
+        'histogram_location': [2, 3],
+    },
+    'T-Killer': {
+        'legend': "T-Killer Cells",
+        'short': "T-Killer",
+        'group': "Immune Cells",
+        'color': "purple",
+        'marker': 'circle',
+        'size': 16,
+        'histogram_location': [2, 4],
+    },
+    'P53': {
+        'legend': "P53",
+        'short': "P53",
+        'group': "UV Damage",
+        'color': "chocolate",
+        'marker': 'cross',
+        'size': 16,
+        'histogram_location': [3, 2],
+    },
+    'KI67': {
+        'legend': "KI67",
+        'short': "KI67",
+        'group': 'Proliferation',
+        'color': "cyan",
+        'marker': 'cross',
+        'size': 16,
+        'histogram_location': [3, 3],
+    },
+    'DDB2': {
+        'legend': "DDB2",
+        'short': "DDB2",
+        'group': "UV Damage",
+        'color': "olivedrab",
+        'marker': 'cross',
+        'size': 16,
+        'histogram_location': [3, 4],
+    },
+    'Skin': {
+        'legend': "Skin Surface",
+        'short': "Skin",
+        'group': 'Vessel & Skin',
+        'color': "darkgrey",
+        'marker': 'diamond',
+        'size': 5,
+        'histogram_location': [0, 0],
+    },
+}
 
 nuclei_id_list = list()
 nuclei_type_list = list()
@@ -118,7 +218,7 @@ scale = 16 * micro_per_pixel
 top_left = [0, 0]
 bottom_right = [1000000, 1000000]
 
-region_index = 10
+region_index = 3
 show_html = True
 
 if len(sys.argv) >= 2:
@@ -280,10 +380,10 @@ for nid in range(len(nuclei_id_list)):
         _min_vessel_dist = -1
         _has_near = False
         z_threshold = 1
-        y_threshold = 1.5
+        y_threshold = 2
         while not _has_near:
             y_threshold += 0.5
-            if y_threshold > 5:
+            if y_threshold >= 7.5:
                 print("NO NEAR")
                 break
             for v in range(len(skin_x_list)):
@@ -292,7 +392,10 @@ for nid in range(len(nuclei_id_list)):
                 _sz = skin_z_list[v]
                 # add new criteria for skin
                 # if abs(_sz - _nz <= 1) and abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
-                if abs(_sz - _nz <= z_threshold) and abs(_nx - _sx) <= _min_skin_dist and abs(_ny - _sy) <= y_threshold:
+                if _sx < _nx \
+                        and abs(_sz - _nz) <= z_threshold \
+                        and abs(_nx - _sx) <= _min_skin_dist \
+                        and abs(_ny - _sy) <= y_threshold:
                     _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
                     if _dist < _min_skin_dist:
                         _has_near = True
@@ -368,91 +471,22 @@ my_csv.write_csv(skin_output_path,
 # plt.hist(nuclei_distance_list, bins=100)
 # plt.show()
 
-color_dict = {
-    'CD68': "gold",
-    'Macrophage': "gold",
-    'CD31': "red",
-    'Blood Vessel': "red",
-    'T-Helper': "blue",
-    'T-Reg': "mediumspringgreen",
-    'T-Regulatory': "mediumspringgreen",
-    'T-Regulator': "mediumspringgreen",
-    'T-Killer': "purple",
+cell_dict['Macrophage'] = cell_dict['CD68']
+cell_dict['Blood Vessel'] = cell_dict['CD31']
+cell_dict['T-Regulatory'] = cell_dict['T-Reg']
+cell_dict['T-Regulator'] = cell_dict['T-Reg']
 
-    'P53': "chocolate",
-    'KI67': "cyan",
-    'DDB2': "olivedrab",
-    'Skin': "darkgrey"
-}
-n_color = [color_dict[cell_type] for cell_type in nuclei_type_list]
-v_color = [color_dict['CD31']] * len(vessel_x_list)
-s_color = [color_dict['Skin']] * len(skin_x_list)
-
-size_dict = {
-    'CD68': 15.89,
-    'Macrophage': 15.89,
-    'CD31': 16.83,
-    'Blood Vessel': 16.83,
-    'T-Helper': 16.96,
-    'T-Reg': 17.75,
-    'T-Regulatory': 17.75,
-    'T-Regulator': 17.75,
-
-    # placeholder, not accurate
-    'T-Killer': 16,
-    'P53': 16,
-    'KI67': 16,
-    'DDB2': 16,
-    'Skin': 8,
-}
-
-cell_type_dict = {
-    'CD68': "Macrophage / CD68",
-    'Macrophage': "Macrophage / CD68",
-    'CD31': "Blood Vessel",
-    'Blood Vessel': "Blood Vessel",
-    'T-Helper': "T-Helper",
-    'T-Reg': "T-Regulator",
-    'T-Regulatory': "T-Regulator",
-    'T-Regulator': "T-Regulator",
-    'T-Killer': "T-Killer",
-    "P53": "P53",
-    "KI67": "KI67",
-    "DDB2": "DDB2",
-    'Skin': "Skin Surface",
-}
-
-histogram_location_dict = {
-    'T-Helper': [2, 2],
-    'T-Reg': [2, 3],
-    'T-Regulator': [2, 3],
-    'T-Killer': [2, 4],
-    'CD68': [3, 1],
-    "Macrophage / CD68": [3, 1],
-    "P53": [3, 2],
-    "KI67": [3, 3],
-    "DDB2": [3, 4],
-}
+n_color = [cell_dict[cell_type]['color'] for cell_type in nuclei_type_list]
+v_color = [cell_dict['CD31']['color']] * len(vessel_x_list)
+s_color = [cell_dict['Skin']['color']] * len(skin_x_list)
 
 # marker options:
 # ['circle', 'circle-open', 'square', 'square-open', 'diamond', 'diamond-open', 'cross', 'x']
-marker_dict = {
-    'T-Helper': 'circle',
-    'T-Reg': 'circle',
-    'T-Regulator': 'circle',
-    'T-Killer': 'circle',
-    'CD68': 'circle',
-    "Macrophage / CD68": 'circle',
-    'CD31': 'circle',
-    "P53": 'cross',
-    "KI67": 'cross',
-    "DDB2": 'cross',
-    "Skin": 'diamond',
-}
 
-n_size = [size_dict[cell_type] / 2 for cell_type in nuclei_type_list]
-v_size = [size_dict['CD31'] / 2] * len(vessel_x_list)
-s_size = [size_dict['Skin'] / 2] * len(skin_x_list)
+
+n_size = [cell_dict[cell_type]['size'] / 2 for cell_type in nuclei_type_list]
+v_size = [cell_dict['CD31']['size'] / 2] * len(vessel_x_list)
+s_size = [cell_dict['Skin']['size'] / 2] * len(skin_x_list)
 # fig = plt.figure(figsize=(20, 20))
 # ax = fig.add_subplot(111, projection='3d')
 # ax._axis3don = False
@@ -537,18 +571,19 @@ print(s_df_one)
 traces_n = []
 for cell_type in set(nuclei_type_list):
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
-                                            legend_group="Damage" if cell_type in damage_type_list else "Cell"))
+                                            legend_group=cell_dict[cell_type]['group']))
 trace_v = generate_other_scatter(v_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=True,
                                  legend_group="Vessel & Skin")
 trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible=True,
                                  legend_group="Vessel & Skin")
-traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color=color_dict['CD31'], visible=True,
-                                   legend_group="Link")
-traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color=color_dict['Skin'], visible='legendonly',
+traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color=cell_dict['CD31']['color'],
+                                   visible=True, legend_group="Link")
+traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color=cell_dict['Skin']['color'], visible='legendonly',
                                  legend_group="Link")
 traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
 
+main_subtitle = f'<br><sup>Region {region_index} / Donor {donor_dict[region_index]}</sup>'
 hist_subtitle = '<br><sup>Histogram</sup>'
 horizontal_spacing = 0.03
 fig = make_subplots(
@@ -561,7 +596,7 @@ fig = make_subplots(
         [{"type": "Scatter"}, {"type": "Scatter"}],
     ],
     horizontal_spacing=horizontal_spacing, vertical_spacing=0.02, shared_xaxes=True,
-    subplot_titles=[f'VCCF 3D - Region {region_index}',
+    subplot_titles=[f'Vascular Common Coordinate Framework 3D Visualization {main_subtitle}',
                     f'Distance to Blood Vessel{hist_subtitle}',
                     f'Distance to Skin{hist_subtitle}', ],
 )
@@ -611,7 +646,7 @@ for layer in range(0, z_count):
 bin_size = 3
 bin_dict = dict(start=0, end=200, size=bin_size)
 
-sbin_size = 20
+sbin_size = 10
 sbin_dict = dict(start=0, end=5000, size=sbin_size)
 
 # curve fitting
@@ -655,22 +690,23 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
             x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
             xbins=bin_dict if distance_type == 'vessel' else sbin_dict,
             opacity=0.6,
-            marker=dict(color=color_dict[hist_names[i]]),
+            marker=dict(color=cell_dict[hist_names[i]]['color']),
             showlegend=False,
-            name=cell_type_dict[hist_names[i]]
+            name=cell_dict[hist_names[i]]['legend']
         ), row=2, col=col)
         line = fig2['data'][len(hist_data) + i]
         line['y'] = line['y'] * len(hist_data[i])  # * bin_size *
         if not any(y > 1e5 for y in line['y']):
             fig.add_trace(go.Scatter(line,
-                                     line=dict(color=color_dict[hist_names[i]], width=2), showlegend=False,
+                                     line=dict(color=cell_dict[hist_names[i]]['color'], width=2), showlegend=False,
                                      ), row=2, col=col)
         n_df[f'{hist_names[i]}_pos'] = 0.1 * (i + 1)
         fig.add_trace(go.Scatter(x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
                                  y=n_df[f'{hist_names[i]}_pos'],
                                  mode='markers',
                                  opacity=0.6,
-                                 marker=dict(color=color_dict[hist_names[i]], symbol='line-ns-open'), showlegend=False,
+                                 marker=dict(color=cell_dict[hist_names[i]]['color'], symbol='line-ns-open'),
+                                 showlegend=False,
                                  ), row=3, col=col)
 
     # some manual adjustments on the rugplot
@@ -770,7 +806,8 @@ fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
                  title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
-# fig.update_xaxes(range=[0, 50], row=3, col=2)
+fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
+fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",
                  title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)

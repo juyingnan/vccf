@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     index = 1
     p = figure(match_aspect=True,
-               plot_width=int(3727 * index), plot_height=int(2348 * index),
+               plot_width=int(7454 * index), plot_height=int(4711 * index),
                tools=tools_list, output_backend="svg",
                # title='nuclei/vessel distance',
                )
@@ -113,6 +113,8 @@ if __name__ == '__main__':
 
     p.segment(x0='x', y0='y', x1='vx', source=n_df, y1='vy', color="ivory", alpha=0.4, line_width=1)
     circle = p.circle(x='x', y='y', source=n_df, color='color', alpha=0.5, size=2.5)
+    circle2 = p.circle(x=[0,7454], y=[0,4711], color='red', alpha=1, size=10)
+
     g1_hover = HoverTool(renderers=[circle], tooltips=[('X', "@x"), ('Y', "@y"), ('distance', "@distance")])
     p.add_tools(g1_hover)
 

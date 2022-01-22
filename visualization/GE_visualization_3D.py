@@ -119,7 +119,7 @@ cell_dict = {
         'histogram_location': [3, 1],
     },
     'CD31': {
-        'legend': "Endothelial cells",
+        'legend': "Endothelial cells (CD31)",
         'short': "CD31",
         'group': 'Vessel & Skin',
         'color': "red",
@@ -128,7 +128,7 @@ cell_dict = {
         'histogram_location': [0, 0],
     },
     'T-Helper': {
-        'legend': "T-Helper Cells",
+        'legend': "T-Helper Cells (CD4)",
         'short': "T-Helper",
         'group': "Immune Cells",
         'color': "blue",
@@ -137,7 +137,7 @@ cell_dict = {
         'histogram_location': [2, 2],
     },
     'T-Reg': {
-        'legend': "T-Regulatory Cells",
+        'legend': "T-Regulatory Cells (FOXP3)",
         'short': "T-Reg",
         'group': "Immune Cells",
         'color': "mediumspringgreen",
@@ -146,7 +146,7 @@ cell_dict = {
         'histogram_location': [2, 3],
     },
     'T-Killer': {
-        'legend': "T-Killer Cells",
+        'legend': "T-Killer Cells (CD8)",
         'short': "T-Killer",
         'group': "Immune Cells",
         'color': "purple",
@@ -366,7 +366,7 @@ print(f"Sampled skin size: {len(skin_x_list)}")
 # calculate blood vessel distance
 for nid in range(len(nuclei_id_list)):
     _min_vessel_dist = 100 * scale
-    _min_skin_dist = 5000 * scale
+    _min_skin_dist = 50000 * scale
     _nx = nuclei_x_list[nid]
     _ny = nuclei_y_list[nid]
     _nz = nuclei_z_list[nid]
@@ -385,6 +385,7 @@ for nid in range(len(nuclei_id_list)):
             y_threshold += 0.5
             if y_threshold >= 7.5:
                 print("NO NEAR")
+                _min_skin_dist = 0
                 break
             for v in range(len(skin_x_list)):
                 _sx = skin_x_list[v]
@@ -431,6 +432,76 @@ for nid in range(len(nuclei_id_list)):
     if nid % 100 == 0:
         print('\r' + str(nid), end='')
 print()
+
+# calculate both distance
+# for nid in range(len(nuclei_id_list)):
+#     _min_vessel_dist = 100 * scale
+#     _min_skin_dist = 50000 * scale
+#     _nx = nuclei_x_list[nid]
+#     _ny = nuclei_y_list[nid]
+#     _nz = nuclei_z_list[nid]
+#     _min_vessel_x = _nx
+#     _min_vessel_y = _ny
+#     _min_vessel_z = _nz
+#     _min_skin_x = _nx
+#     _min_skin_y = _ny
+#     _min_skin_z = _nz
+#     # if nuclei_type_list[nid] in damage_type_list:
+#     # _min_vessel_dist = -1
+#     _has_near = False
+#     z_threshold = 1
+#     y_threshold = 2
+#     while not _has_near:
+#         y_threshold += 0.5
+#         if y_threshold >= 7.5:
+#             print("NO NEAR")
+#             _min_skin_dist = 0
+#             break
+#         for v in range(len(skin_x_list)):
+#             _sx = skin_x_list[v]
+#             _sy = skin_y_list[v]
+#             _sz = skin_z_list[v]
+#             # add new criteria for skin
+#             # if abs(_sz - _nz <= 1) and abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
+#             if _sx < _nx \
+#                     and abs(_sz - _nz) <= z_threshold \
+#                     and abs(_nx - _sx) <= _min_skin_dist \
+#                     and abs(_ny - _sy) <= y_threshold:
+#                 _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
+#                 if _dist < _min_skin_dist:
+#                     _has_near = True
+#                     _min_skin_dist = _dist
+#                     _min_skin_x = _sx
+#                     _min_skin_y = _sy
+#                     _min_skin_z = _sz
+#     # else:
+#     # _min_skin_dist = -1
+#     _has_near = False
+#     for v in range(len(vessel_x_list)):
+#         _vx = vessel_x_list[v]
+#         _vy = vessel_y_list[v]
+#         _vz = vessel_z_list[v]
+#         if abs(_nx - _vx) < _min_vessel_dist and abs(_ny - _vy) < _min_vessel_dist:
+#             _dist = math.sqrt((_nx - _vx) ** 2 + (_ny - _vy) ** 2 + (_nz - _vz) ** 2)
+#             if _dist < _min_vessel_dist:
+#                 _has_near = True
+#                 _min_vessel_dist = _dist
+#                 _min_vessel_x = _vx
+#                 _min_vessel_y = _vy
+#                 _min_vessel_z = _vz
+#     if not _has_near:
+#         print("NO NEAR")
+#     nuclei_vessel_distance_list.append(_min_vessel_dist)
+#     nuclei_nearest_vessel_x_list.append(_min_vessel_x)
+#     nuclei_nearest_vessel_y_list.append(_min_vessel_y)
+#     nuclei_nearest_vessel_z_list.append(_min_vessel_z)
+#     nuclei_skin_distance_list.append(_min_skin_dist)
+#     nuclei_nearest_skin_x_list.append(_min_skin_x)
+#     nuclei_nearest_skin_y_list.append(_min_skin_y)
+#     nuclei_nearest_skin_z_list.append(_min_skin_z)
+#     if nid % 100 == 0:
+#         print('\r' + str(nid), end='')
+# print()
 
 assert len(nuclei_id_list) == len(nuclei_x_list) == len(nuclei_y_list) == len(nuclei_z_list) == \
        len(nuclei_vessel_distance_list) == len(nuclei_skin_distance_list) == \
@@ -572,13 +643,14 @@ traces_n = []
 for cell_type in set(nuclei_type_list):
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
-trace_v = generate_other_scatter(v_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=True,
-                                 legend_group="Vessel & Skin")
+trace_v = generate_other_scatter(v_df, key='v', name="Endothelial Cells (CD31)", symbol_name='CD31', visible=True,
+                                 legend_group="Endothelial & Skin")
 trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible=True,
-                                 legend_group="Vessel & Skin")
-traces_vessel_line = generate_line(v_df_one, name="Distance-Blood Vessel", color=cell_dict['CD31']['color'],
+                                 legend_group="Endothelial & Skin")
+traces_vessel_line = generate_line(v_df_one, name="Distance-Endothelial Cells", color=cell_dict['CD31']['color'],
                                    visible=True, legend_group="Link")
-traces_skin_line = generate_line(s_df_one, name="Distance-Skin", color=cell_dict['Skin']['color'], visible='legendonly',
+traces_skin_line = generate_line(s_df_one, name="Distance-Skin Surface", color=cell_dict['Skin']['color'],
+                                 visible='legendonly',
                                  legend_group="Link")
 traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
@@ -597,8 +669,8 @@ fig = make_subplots(
     ],
     horizontal_spacing=horizontal_spacing, vertical_spacing=0.02, shared_xaxes=True,
     subplot_titles=[f'Vascular Common Coordinate Framework 3D Visualization {main_subtitle}',
-                    f'Distance to Blood Vessel{hist_subtitle}',
-                    f'Distance to Skin{hist_subtitle}', ],
+                    f'Distance to Endothelial Cells{hist_subtitle}',
+                    f'Distance to Skin Surface{hist_subtitle}', ],
 )
 for trace_n in traces_n:
     fig.add_trace(trace_n, 1, 1)
@@ -681,6 +753,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
                               histnorm='probability')  # , curve_type='normal')
 
     max_range = 1
+    n_df=n_df[n_df['skin_distance'] != 0]
     for i in range(len(hist_data)):
         hist = fig2['data'][i]
         # fig.add_trace(go.Histogram(x=fig2['data'][i]['x'],xbins=bin_dict,opacity=0.5,
@@ -798,6 +871,23 @@ for annotation in fig['layout']['annotations'][1:]:
         size=18, )
 
 background_color = 'rgb(240,246,255)'
+
+# background image
+# x = np.linspace(0,5, 128)
+# y = np.linspace(0,5, 128)
+# z = np.linspace(0,0, 128)
+# x, y = np.meshgrid(x, y)
+#
+# import skimage.io as sio
+#
+# image = sio.imread("https://raw.githubusercontent.com/empet/Discrete-Arnold-map/master/Images/cat-128.jpg") #(r"C:\Users\bunny\Desktop\S002_VHE_region_003_s.tif")
+# print(image.shape)
+# img = image[:, :, 1]
+# fig.add_surface(x=x, y=y, z=z,
+#                 surfacecolor=np.flipud(img),
+#                 colorscale='matter_r',
+#                 showscale=False, row=1, col=1)
+
 # fig.add_annotation(dict(text="Slide:", showarrow=False,
 #                         x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
 fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=2)

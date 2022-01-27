@@ -3,54 +3,11 @@ import plotly.graph_objects as go
 import pandas as pd
 from plotly.subplots import make_subplots
 from cell_defination import *
+from violin_defination import *
 
 target_root_path = r"G:\GE\skin_12_data"
 
 file_paths = []
-
-regions = [1, 2, 3, 4, 5,
-           # 6,
-           7, 8, 9, 10, 11, 12]
-# ages = ['72', '53', '38', '48', '33', '42', '69', '57', '60', '53_', '22', '32']
-ages = [72, 53, 38, 48, 33,
-        # 42,
-        69, 57, 60, 53.5, 22, 32]  # the second 53 -> 54
-genders = ['Male', 'Male', 'Male', 'Male', 'Female',
-           # 'Female',
-           'Male', 'Male', 'Male', 'Female', 'Female', 'Female', ]
-suns = ['Sun-Exposed', 'Non-Sun-Exposed', 'Sun-Exposed', 'Non-Sun-Exposed', 'Non-Sun-Exposed',
-        # 'Sun-Exposed',
-        'Non-Sun-Exposed', 'Sun-Exposed', 'Sun-Exposed', 'Non-Sun-Exposed', 'Sun-Exposed', 'Non-Sun-Exposed']
-olds = ['old', 'old', 'Young', 'Young', 'Young',
-        # 'Young',
-        'old', 'old', 'old', 'old', 'Young', 'Young']
-
-# color_dict = {'Sun-Exposed': 'orange',
-#               'Non-Sun-Exposed': 'blue'}
-
-color_dict = {'Sun-Exposed': 'black',
-              'Non-Sun-Exposed': 'grey',
-              '-Sun-Exposed': 'black',
-              '-Non-Sun-Exposed': 'grey',
-              'CD68-Sun-Exposed': 'orangered',
-              'CD68-Non-Sun-Exposed': 'orange',
-              'T-Helper-Sun-Exposed': 'midnightblue',
-              'T-Helper-Non-Sun-Exposed': 'royalblue',
-              'T-Reg-Sun-Exposed': 'darkolivegreen',
-              'T-Reg-Non-Sun-Exposed': 'mediumseagreen',
-              'T-Killer-Sun-Exposed': 'purple',
-              'T-Killer-Non-Sun-Exposed': 'violet',
-
-              'P53-Sun-Exposed': 'brown',
-              'P53-Non-Sun-Exposed': 'sandybrown',
-              'KI67-Sun-Exposed': 'dodgerblue',
-              'KI67-Non-Sun-Exposed': 'lightblue',
-              'DDB2-Sun-Exposed': 'darkgreen',
-              'DDB2-Non-Sun-Exposed': 'lightgreen',
-              }
-
-opacity_dict = {'Sun-Exposed': 0.7,
-                'Non-Sun-Exposed': 0.7}
 
 for region_id in regions:
     target_file_path = target_root_path + rf"\region_{region_id}\nuclei.csv"
@@ -60,8 +17,8 @@ data_list = []
 for index in range(len(regions)):
     file_path = file_paths[index]
     df = pd.read_csv(file_path, index_col=None, header=0)
-    for l, name in zip([regions, ages, genders, suns, olds], ["Region", "Age", "Gender", "Skin Type", "Age Group"]):
-        df[name] = [l[index]] * len(df)
+    for _list, name in zip([regions, ages, genders, suns, olds], ["Region", "Age", "Gender", "Skin Type", "Age Group"]):
+        df[name] = [_list[index]] * len(df)
     data_list.append(df)
 
 n_data = pd.concat(data_list, axis=0, ignore_index=True)

@@ -25,6 +25,11 @@ n_data = pd.concat(data_list, axis=0, ignore_index=True)
 
 print(n_data)
 
+threshold_distance = {
+    'cell': n_data['vessel_distance'].quantile(.98),
+    'damage': n_data['skin_distance'].quantile(.98)
+}
+
 cell_types = ['', 'CD68', 'T-Helper', 'T-Killer', 'T-Reg']
 damage_types = ['', 'P53', 'KI67', 'DDB2']
 
@@ -90,10 +95,6 @@ for item in ['cell', 'damage']:
 
     # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 
-    threshold_distance = {
-        'cell': n_data['vessel_distance'].quantile(.98),
-        'damage': n_data['skin_distance'].quantile(.98)
-    }
 
     distance_type = 'vessel_distance' if item == 'cell' else 'skin_distance'
     for cell_type in cell_type_list:

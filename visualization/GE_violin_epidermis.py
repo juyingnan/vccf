@@ -99,7 +99,7 @@ fig = make_subplots(
 
 distance_type = 'skin_distance'
 for cell_type in cell_type_list:
-    for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
+    for skin_type in [sun_type["S"], sun_type["N"]]:
         fig.add_trace(
             go.Violin(
                 x=n_data['Age'][(n_data['Skin Type'] == skin_type) & (n_data['type'].str.contains(cell_type)) &

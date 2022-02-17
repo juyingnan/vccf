@@ -10,7 +10,7 @@ target_root_path = r"G:\GE\skin_12_data"
 file_paths = []
 
 # no 12
-regions.pop()
+# regions.pop()
 
 for region_id in regions:
     target_file_path = target_root_path + rf"\region_{region_id}\nuclei_epidermis.csv"
@@ -134,6 +134,26 @@ for cell_type in cell_type_list:
 
 # fig.update_traces(meanline_visible=True,
 #                   scalemode='width')  # scale violin plot area with total count
+
+annotations = go.Scatter(
+    x=ages,
+    y=[1400, 1400, 1400, 1300, 1400, 1400, 1400, 1400, 1300, 1400],
+    marker={
+        "color": "LightBlue",
+        "line": {
+            "width": 0,
+        },
+        "size": 22
+    },
+    mode="markers+text",
+    opacity=0.7,
+    name='Region #',
+    text=[f"{x}" for x in regions], showlegend=True,
+    textfont={
+        "color": ["black" if sun == sun_type['S'] else "white" for sun in suns], }
+)
+fig.add_trace(annotations, row=1, col=1)
+
 title_dict = {
     'cell': {
         'main_subtitle': "from Cells to Endothelial Cells",

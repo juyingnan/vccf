@@ -95,7 +95,6 @@ for item in ['cell', 'damage']:
 
     # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 
-
     distance_type = 'vessel_distance' if item == 'cell' else 'skin_distance'
     for cell_type in cell_type_list:
         for skin_type in [sun_type["S"], sun_type["N"]]:
@@ -133,6 +132,27 @@ for item in ['cell', 'damage']:
 
     # fig.update_traces(meanline_visible=True,
     #                   scalemode='width')  # scale violin plot area with total count
+
+    annotations = go.Scatter(
+        x=ages,
+        y=[220, 220, 220, 200, 220, 220, 220, 220, 200, 220]
+        if item == 'cell' else [4000, 4000, 4000, 3700, 4000, 4000, 4000, 4000, 3700, 4000],
+        marker={
+            "color": "LightBlue",
+            "line": {
+                "width": 0,
+            },
+            "size": 22
+        },
+        mode="markers+text",
+        opacity=0.7,
+        name='Region #',
+        text=[f"{x}" for x in regions], showlegend=True,
+        textfont={
+            "color": ["black" if sun == sun_type['S'] else "white" for sun in suns], }
+    )
+    fig.add_trace(annotations, row=1, col=1)
+
     title_dict = {
         'cell': {
             'main_subtitle': "from Cells to Endothelial Cells",
@@ -159,7 +179,7 @@ for item in ['cell', 'damage']:
     fig.update_xaxes(title_text="Age", row=5, col=1)
     fig.update_yaxes(title_text=f"Nearest Distance {title_dict[item]['yaxis']}", row=3, col=1)
     fig.update_yaxes(title_text="Percentage", row=2, col=1, secondary_y=True)
-    fig.update_yaxes(range=[-49, 250] if item == 'cell' else [-999, 4200])
+    fig.update_yaxes(range=[-49, 250] if item == 'cell' else [-999, 4300])
 
     # subtitle location
     vertical_offset = 0.02

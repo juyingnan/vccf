@@ -11,25 +11,25 @@ file_paths = []
 
 place_holders = ["All"] * len(regions)
 
-point_position_dict = {'Sun-Exposed': 1.0,
-                       'Non-Sun-Exposed': -0.9,
-                       '-Sun-Exposed': 1.0,
-                       '-Non-Sun-Exposed': -0.9,
-                       'CD68-Sun-Exposed': 1.0,
-                       'CD68-Non-Sun-Exposed': -0.8,
-                       'T-Helper-Sun-Exposed': 1.1,
-                       'T-Helper-Non-Sun-Exposed': -0.9,
-                       'T-Reg-Sun-Exposed': 1.1,
-                       'T-Reg-Non-Sun-Exposed': -0.9,
-                       'T-Killer-Sun-Exposed': 1.1,
-                       'T-Killer-Non-Sun-Exposed': -0.95,
+point_position_dict = {sun_type["S"]: 1.0,
+                       sun_type["N"]: -1.0,
+                       f'-{sun_type["S"]}': 1.0,
+                       f'-{sun_type["N"]}': -1.0,
+                       f'CD68-{sun_type["S"]}': 0.9,
+                       f'CD68-{sun_type["N"]}': -0.9,
+                       f'T-Helper-{sun_type["S"]}': 1.0,
+                       f'T-Helper-{sun_type["N"]}': -1.0,
+                       f'T-Reg-{sun_type["S"]}': 1.0,
+                       f'T-Reg-{sun_type["N"]}': -1.0,
+                       f'T-Killer-{sun_type["S"]}': 1.0,
+                       f'T-Killer-{sun_type["N"]}': -1.1,
 
-                       'P53-Sun-Exposed': 0.8,
-                       'P53-Non-Sun-Exposed': -0.6,
-                       'KI67-Sun-Exposed': 0.6,
-                       'KI67-Non-Sun-Exposed': -1.1,
-                       'DDB2-Sun-Exposed': 0.7,
-                       'DDB2-Non-Sun-Exposed': -0.7,
+                       f'P53-{sun_type["S"]}': 0.6,
+                       f'P53-{sun_type["N"]}': -0.6,
+                       f'KI67-{sun_type["S"]}': 1.1,
+                       f'KI67-{sun_type["N"]}': -1.0,
+                       f'DDB2-{sun_type["S"]}': 0.7,
+                       f'DDB2-{sun_type["N"]}': -0.7,
                        }
 
 for region_id in regions:
@@ -101,7 +101,7 @@ for item in ['cell', 'damage']:
 
     fig = go.Figure()
     for cell_type in cell_type_list:
-        for skin_type in ['Sun-Exposed', 'Non-Sun-Exposed']:
+        for skin_type in [sun_type["S"], sun_type["N"]]:
             fig.add_trace(
                 go.Violin(
                     x=(
@@ -127,7 +127,7 @@ for item in ['cell', 'damage']:
                     name=skin_type,
                     points="all", opacity=opacity_dict[skin_type],
                     pointpos=point_position_dict[f'{cell_type}-{skin_type}'],
-                    side=('positive' if skin_type == 'Sun-Exposed' else 'negative'),
+                    side=('positive' if skin_type == sun_type["S"] else 'negative'),
                     legendgroup='All-region', showlegend=True, scalegroup='', scalemode='width',
                     jitter=0.05, marker_opacity=0.5, marker_size=1, line_width=1,
                     legendgrouptitle_text='All-region',

@@ -540,12 +540,12 @@ hist_subtitle = '<br><sup>Histogram</sup>'
 horizontal_spacing = 0.03
 fig = make_subplots(
     rows=3, cols=2,
-    column_widths=[0.5, 0.5],
+    column_widths=[1.0, 0],
     row_heights=[0.7, 0.2, 0.1],
     specs=[
         [{"type": "Scatter3d", "colspan": 2}, None, ],
-        [{"type": "Histogram"}, {"type": "Histogram"}],
-        [{"type": "Scatter"}, {"type": "Scatter"}],
+        [{"type": "Histogram"}, None],  # {"type": "Histogram"}
+        [{"type": "Scatter"}, None],  # {"type": "Scatter"}
     ],
     horizontal_spacing=horizontal_spacing, vertical_spacing=0.02, shared_xaxes=True,
     subplot_titles=[f'Vascular Common Coordinate Framework 3D Visualization {main_subtitle}',
@@ -617,8 +617,10 @@ sbin_dict = dict(start=0, end=5000, size=sbin_size)
 
 
 # add displot
-for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68'], ["P53", "KI67", "DDB2", ]],  # ]],
-                                         ['vessel', 'skin'], [1, 2]):
+# for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68'], ["P53", "KI67", "DDB2", ]],  # ]],
+#                                          ['vessel', 'skin'], [1, 2]):
+for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68'], ],
+                                         ['vessel', ], [1, ]):
     print(cell_list, distance_type, col)
     hist_data = []
     hist_names = []
@@ -761,7 +763,7 @@ fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
                  title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
 fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
-fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
+#fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",
                  title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)

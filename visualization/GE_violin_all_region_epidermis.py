@@ -161,7 +161,7 @@ fig.update_layout(
     violinmode='overlay',
     yaxis_zeroline=False)
 fig.update_yaxes(title_text=f"Nearest Distance {title_dict['damage']['yaxis']}")
-fig.update_yaxes(range=[-149, 1500])
+fig.update_yaxes(range=[-149, 599])
 
 fig.write_html(os.path.join(target_root_path, f"violin_damage_all_region_epidermis.html"))
 fig.show()

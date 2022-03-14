@@ -179,7 +179,7 @@ for item in ['cell', 'damage']:
     fig.update_xaxes(title_text="Age", row=5, col=1)
     fig.update_yaxes(title_text=f"Nearest Distance {title_dict[item]['yaxis']}", row=3, col=1)
     fig.update_yaxes(title_text="Percentage", row=2, col=1, secondary_y=True)
-    fig.update_yaxes(range=[-49, 250] if item == 'cell' else [-999, 4300])
+    fig.update_yaxes(range=[-49, 249] if item == 'cell' else [-999, 4300])
 
     # subtitle location
     vertical_offset = 0.02

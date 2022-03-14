@@ -17,7 +17,8 @@ donor_dict = \
 cell_dict = {
     'CD68': {
         'legend': "Macrophage (CD68+)",
-        'short': "CD68+",
+        'full': "Macrophage (CD68+)",
+        'short': "Macrophage",
         'group': "Immune Cells",
         'color': "gold",
         'marker': 'circle',
@@ -25,7 +26,8 @@ cell_dict = {
         'histogram_location': [3, 1],
     },
     'CD31': {
-        'legend': "Endothelial cells (CD31)",
+        'legend': "Endothelial cell",
+        'full': "Endothelial cell (CD31)",
         'short': "CD31",
         'group': 'Vessel & Skin',
         'color': "red",
@@ -34,7 +36,8 @@ cell_dict = {
         'histogram_location': [0, 0],
     },
     'T-Helper': {
-        'legend': "T-Helper Cells (CD4)",
+        'legend': "T helper (CD4)",
+        'full': "T-Helper Cells (CD4)",
         'short': "T-Helper",
         'group': "Immune Cells",
         'color': "blue",
@@ -43,7 +46,8 @@ cell_dict = {
         'histogram_location': [2, 2],
     },
     'T-Reg': {
-        'legend': "T-Regulatory Cells (FOXP3)",
+        'legend': "T reg (FOXP3)",
+        'full': "T-Regulatory Cells (FOXP3)",
         'short': "T-Reg",
         'group': "Immune Cells",
         'color': "mediumspringgreen",
@@ -52,7 +56,8 @@ cell_dict = {
         'histogram_location': [2, 3],
     },
     'T-Killer': {
-        'legend': "T-Killer Cells (CD8)",
+        'legend': "T killer (CD8)",
+        'full': "T-Killer Cells (CD8)",
         'short': "T-Killer",
         'group': "Immune Cells",
         'color': "purple",
@@ -62,6 +67,7 @@ cell_dict = {
     },
     'P53': {
         'legend': "P53",
+        'full': "P53",
         'short': "P53",
         'group': "UV Damage",
         'color': "chocolate",
@@ -71,6 +77,7 @@ cell_dict = {
     },
     'KI67': {
         'legend': "KI67",
+        'full': "KI67",
         'short': "KI67",
         'group': 'Proliferation',
         'color': "cyan",
@@ -80,6 +87,7 @@ cell_dict = {
     },
     'DDB2': {
         'legend': "DDB2",
+        'full': "DDB2",
         'short': "DDB2",
         'group': "UV Damage",
         'color': "olivedrab",
@@ -88,7 +96,8 @@ cell_dict = {
         'histogram_location': [3, 4],
     },
     'Skin': {
-        'legend': "Skin Surface",
+        'legend': "Skin surface",
+        'full': "Skin Surface",
         'short': "Skin",
         'group': 'Vessel & Skin',
         'color': "darkgrey",

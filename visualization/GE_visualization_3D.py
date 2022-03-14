@@ -522,15 +522,14 @@ traces_n = []
 for cell_type in set(nuclei_type_list):
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
-trace_v = generate_other_scatter(v_df, key='v', name="Endothelial Cells (CD31)", symbol_name='CD31', visible=True,
+trace_v = generate_other_scatter(v_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31', visible=True,
                                  legend_group="Endothelial & Skin")
-trace_s = generate_other_scatter(s_df, key='s', name="Skin Surface", symbol_name='Skin', visible=True,
+trace_s = generate_other_scatter(s_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin', visible=True,
                                  legend_group="Endothelial & Skin")
-traces_vessel_line = generate_line(v_df_one, name="Distance-Endothelial Cells", color=cell_dict['CD31']['color'],
-                                   visible=True, legend_group="Link")
-traces_skin_line = generate_line(s_df_one, name="Distance-Skin Surface", color=cell_dict['Skin']['color'],
-                                 visible='legendonly',
-                                 legend_group="Link")
+traces_vessel_line = generate_line(v_df_one, name=f"Distance-{cell_dict['CD31']['legend']}",
+                                   color=cell_dict['CD31']['color'], visible=True, legend_group="Link")
+traces_skin_line = generate_line(s_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
+                                 color=cell_dict['Skin']['color'], visible='legendonly', legend_group="Link")
 traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
 
@@ -549,8 +548,7 @@ fig = make_subplots(
     ],
     horizontal_spacing=horizontal_spacing, vertical_spacing=0.02, shared_xaxes=True,
     subplot_titles=[f'Vascular Common Coordinate Framework 3D Visualization {main_subtitle}',
-                    f'Distance to Endothelial Cells{hist_subtitle}',
-                    f'Distance to Skin Surface{hist_subtitle}', ],
+                    f'Distance to Endothelial Cells{hist_subtitle}', ],  # f'Distance to Skin Surface{hist_subtitle}',
 )
 for trace_n in traces_n:
     fig.add_trace(trace_n, 1, 1)
@@ -580,14 +578,14 @@ for layer in range(0, z_count):
     for cell_type in set(nuclei_type_list):
         traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
                                                 legend_group="Damage" if cell_type in damage_type_list else "Cell"))
-    trace_v = generate_other_scatter(zv_df, key='v', name="Blood Vessel", symbol_name='CD31', visible=False,
-                                     show_legend=False, legend_group="Vessel & Skin")
-    trace_s = generate_other_scatter(zs_df, key='s', name="Skin Surface", symbol_name='Skin', visible=False,
-                                     show_legend=False, legend_group="Vessel & Skin")
-    traces_vessel_line = generate_line(zv_df_one, name="Distance-Blood Vessel", color='grey', visible=False,
-                                       show_legend=False, legend_group="Link")
-    traces_skin_line = generate_line(zs_df_one, name="Distance-Skin", color='grey', visible=False,
-                                     show_legend=False, legend_group="Link")
+    trace_v = generate_other_scatter(zv_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31',
+                                     visible=False, show_legend=False, legend_group="Vessel & Skin")
+    trace_s = generate_other_scatter(zs_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin',
+                                     visible=False, show_legend=False, legend_group="Vessel & Skin")
+    traces_vessel_line = generate_line(zv_df_one, name=f"Distance-{cell_dict['CD31']['legend']}",
+                                       color='grey', visible=False, show_legend=False, legend_group="Link")
+    traces_skin_line = generate_line(zs_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
+                                     color='grey', visible=False, show_legend=False, legend_group="Link")
     traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
     for trace_n in traces_n:
         fig.add_trace(trace_n, 1, 1)
@@ -745,7 +743,7 @@ for annotation in fig['layout']['annotations'][:1]:
         family="Arial, Bahnschrift",
         size=24, )
 for annotation in fig['layout']['annotations'][1:]:
-    annotation['x'] += 0.25 - horizontal_spacing
+    annotation['x'] += 0.35 - horizontal_spacing
     annotation['xanchor'] = "right"
     annotation['y'] -= 0.05
     annotation['font'] = dict(
@@ -762,8 +760,9 @@ fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
                  title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
-fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
-#fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
+# fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
+fig.update_xaxes(range=[0, 210], row=3, col=1)
+# fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",
                  title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)

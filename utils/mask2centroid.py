@@ -17,15 +17,41 @@ Image.MAX_IMAGE_PIXELS = None
 non_nuclei_types = ['P53', 'KI67', 'DDB2']
 
 # read mask image
-root_path = r"C:\Users\bunny\Desktop\Region3_Slide88_Visualization"
-image_list = ['CD4_S88_AFRemoved_pyr16_region_003_Prob_DAPI_Seg_BinThresh_WSI_Masked_CD3_Masked.tif',
-              'CD68_S88_AFRemoved_pyr16_region_003_Prob_WSI_Masked.tif',
-              'CD8_S88_AFRemoved_pyr16_region_003_Prob_DAPI_Seg_BinThresh_WSI_Masked_CD3_Masked.tif',
-              'DDB2_S88_AFRemoved_pyr16_region_003_Prob_DAPI_Seg_BinThresh_WSI_Masked.tif',
-              'FOXP3_S88_AFRemoved_pyr16_region_003_Prob_DAPI_Seg_BinThresh_WSI_Masked_CD3_Masked.tif',
-              'KI67_S88_AFRemoved_pyr16_region_003_Prob_DAPI_Seg_BinThresh_WSI_Masked.tif',
-              'P53_S88_AFRemoved_pyr16_region_003_Prob_DAPI_Seg_BinThresh_WSI_Masked.tif',
+# root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region7\Slide78"
+# image_list = ['CD3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               "CD4_S78_AFRemoved_pyr16_region_007_Prob_2_thre.tif",
+#               'CD8_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               'CD68_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               'DDB2_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               'FOXP3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               'KI67_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               'P53_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+#               ]
+#blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_007_Prob.nii'
+
+root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region11\Slide78"
+image_list = ['CD3_S78_AFRemoved_pyr16_region_011_Prob.tif',
+              "CD4_S78_AFRemoved_pyr16_region_011_Prob_2.tif",
+              'CD8_S78_AFRemoved_pyr16_region_011_Prob.tif',
+              'CD68_S78_AFRemoved_pyr16_region_011_Prob.tif',
+              'DDB2_S78_AFRemoved_pyr16_region_011_Prob.tif',
+              'FOXP3_S78_AFRemoved_pyr16_region_011_Prob.tif',
+              'KI67_S78_AFRemoved_pyr16_region_011_Prob.tif',
+              'P53_S78_AFRemoved_pyr16_region_011_Prob.tif',
               ]
+blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_011_Prob.nii'
+
+threshold_list = [
+    0.5, #CD3 ?
+    #0.9, #CD4 1195
+    0.6, #CD8 28
+    0.6, #CD68 142
+    0.5, #DDB2 154
+    0.5, #FOXP3 106
+    0.95, #KI67 765
+    0.3, #P53 82
+]
+
 resize_index = 1
 if len(sys.argv) >= 2:
     image_path = sys.argv[1]
@@ -34,15 +60,15 @@ if len(sys.argv) >= 3:
 preview = False
 
 vessels = []
-blood_vessel_image_path = 'CD31_S88_AFRemoved_pyr16_region_003_Prob_WSI_Masked_BinThresh0.tif'
+
 blood_vessel_img = imageio.imread(os.path.join(root_path, blood_vessel_image_path))
 cell_type = blood_vessel_image_path.split('_')[0]
 if len(blood_vessel_img.shape) == 2:
     mask = blood_vessel_img
 else:
     mask = np.array(blood_vessel_img[:, :, 0])
-vessel_location = np.where(mask > 0.5)
-vessel_index = 10
+vessel_location = np.where(mask > 0.9)
+vessel_index = 5
 count = 0
 for x, y in zip(vessel_location[0], vessel_location[1]):
     count += 1
@@ -51,7 +77,9 @@ for x, y in zip(vessel_location[0], vessel_location[1]):
 print(f"{len(vessels)} vessels")
 
 cells = {}
-for img_item in image_list:
+for i in range(len(image_list)):
+    img_item = image_list[i]
+    threshold = 0.5# threshold_list[i]
     img_path = os.path.join(root_path, img_item)
     img = imageio.imread(img_path)
     cell_type = img_item.split('_')[0]
@@ -61,8 +89,8 @@ for img_item in image_list:
     if len(img.shape) == 2:
         mask = img
     else:
-        mask = np.array(img[:, :, 0])
-    mask = np.where(mask > 0.5, 1, 0)
+        mask = np.array(img[0, :, :])
+    mask = np.where(mask > threshold, 1, 0)
     # mask = resize(mask, (500,500), anti_aliasing=False)
 
     # get the contour
@@ -94,7 +122,9 @@ for img_item in image_list:
                 print("NO NEAR")
         cells[cell_type].append([x, y, vx, vy, distance])
 
-print(cells)
+# print(cells)
+for key in cells:
+    print(key, len(cells[key]))
 
 id = 0
 

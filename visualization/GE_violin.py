@@ -135,7 +135,7 @@ for item in ['cell', 'damage']:
 
     annotations = go.Scatter(
         x=ages,
-        y=[220, 220, 220, 200, 220, 220, 220, 220, 200, 220]
+        y=[220, 200, 220, 220, 220, 220, 220, 220, 200, 220]
         if item == 'cell' else [4000, 4000, 4000, 3700, 4000, 4000, 4000, 4000, 3700, 4000],
         marker={
             "color": "LightBlue",

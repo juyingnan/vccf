@@ -17,29 +17,29 @@ Image.MAX_IMAGE_PIXELS = None
 non_nuclei_types = ['P53', 'KI67', 'DDB2']
 
 # read mask image
-# root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region7\Slide78"
-# image_list = ['CD3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               "CD4_S78_AFRemoved_pyr16_region_007_Prob_2_thre.tif",
-#               'CD8_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               'CD68_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               'DDB2_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               'FOXP3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               'KI67_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               'P53_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-#               ]
-#blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_007_Prob.nii'
-
-root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region11\Slide78"
-image_list = ['CD3_S78_AFRemoved_pyr16_region_011_Prob.tif',
-              "CD4_S78_AFRemoved_pyr16_region_011_Prob_2.tif",
-              'CD8_S78_AFRemoved_pyr16_region_011_Prob.tif',
-              'CD68_S78_AFRemoved_pyr16_region_011_Prob.tif',
-              'DDB2_S78_AFRemoved_pyr16_region_011_Prob.tif',
-              'FOXP3_S78_AFRemoved_pyr16_region_011_Prob.tif',
-              'KI67_S78_AFRemoved_pyr16_region_011_Prob.tif',
-              'P53_S78_AFRemoved_pyr16_region_011_Prob.tif',
+root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region7\Slide78"
+image_list = ['CD3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+              "CD4_S78_AFRemoved_pyr16_region_007_Prob_2_thre.tif",
+              'CD8_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+              'CD68_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+              'DDB2_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+              'FOXP3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+              'KI67_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+              'P53_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
               ]
-blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_011_Prob.nii'
+blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_007_Prob.nii'
+
+# root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region11\Slide78"
+# image_list = ['CD3_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               "CD4_S78_AFRemoved_pyr16_region_011_Prob_2.tif",
+#               'CD8_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               'CD68_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               'DDB2_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               'FOXP3_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               'KI67_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               'P53_S78_AFRemoved_pyr16_region_011_Prob.tif',
+#               ]
+# blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_011_Prob.nii'
 
 threshold_list = [
     0.5, #CD3 ?

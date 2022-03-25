@@ -44,6 +44,8 @@ Virtual H&amp;E (pseudo colored DAPI and autofluorescence image) for all regions
 
 <img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/1.png" alt="alt text" title="image Title" />
 
+---
+
 #### **Explore Skin Tissue Data in 3D**
 
 All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12), see below skin organ webpage. For the final 10 datasets that were analyzed, **six were male** from the male, **and four were** female. Using the [E](https://portal.hubmapconsortium.org/organ/skin)[xploration User Interface](https://portal.hubmapconsortium.org/organ/skin) (EUI), you can:
@@ -148,8 +150,4 @@ You can explore all the 3D models of the CCF-HRA at [https://hubmapconsortium.gi
 <img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/8.png" alt="alt text" title="image Title" />
 
 The Visible Human Project skin, male (left) and female (right)
-
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/9.png" alt="alt text" title="image Title" />
-
-Last updated 3/24/2022_
 

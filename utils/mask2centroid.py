@@ -16,40 +16,54 @@ Image.MAX_IMAGE_PIXELS = None
 
 non_nuclei_types = ['P53', 'KI67', 'DDB2']
 
-# read mask image
-root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region7\Slide78"
-image_list = ['CD3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              "CD4_S78_AFRemoved_pyr16_region_007_Prob_2_thre.tif",
-              'CD8_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              'CD68_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              'DDB2_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              'FOXP3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              'KI67_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              'P53_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
-              ]
-blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_007_Prob.nii'
+image_index = 7
 
-# root_path = r"C:\Users\bunny\Desktop\ForYingnan\Region11\Slide78"
-# image_list = ['CD3_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               "CD4_S78_AFRemoved_pyr16_region_011_Prob_2.tif",
-#               'CD8_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               'CD68_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               'DDB2_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               'FOXP3_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               'KI67_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               'P53_S78_AFRemoved_pyr16_region_011_Prob.tif',
-#               ]
-# blood_vessel_image_path = 'CD31_S78_AFRemoved_pyr16_region_011_Prob.nii'
+image_info_dict = {
+    7: {
+        "root_path": r"C:\Users\bunny\Desktop\ForYingnan\Region7\Slide78",
+        "image_list": ['CD3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       #"CD4_S78_AFRemoved_pyr16_region_007_Prob_2.tif",
+                       "CD4_S78_AFRemoved_pyr16_region_007_Prob_2_lower.tif",
+                       'CD8_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       'CD68_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       'DDB2_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       #"dapi_Slide78_region007_nucseg_BinThreshi.tif",
+                       'FOXP3_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       'KI67_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       'P53_S78_AFRemoved_pyr16_region_007_Prob_thre.tif',
+                       ],
+        "blood_vessel_image_path": 'CD31_S78_AFRemoved_pyr16_region_007_Prob.nii'
+    },
+    11: {
+        "root_path": r"C:\Users\bunny\Desktop\ForYingnan\Region11\Slide78",
+        "image_list": ['CD3_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       "CD4_S78_AFRemoved_pyr16_region_011_Prob_2.tif",
+                       'CD8_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       'CD68_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       'DDB2_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       "dapi_Slide78_region011_nucseg_BinThreshi.tif",
+                       'FOXP3_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       'KI67_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       'P53_S78_AFRemoved_pyr16_region_011_Prob.tif',
+                       ],
+        "blood_vessel_image_path": 'CD31_S78_AFRemoved_pyr16_region_011_Prob.nii'
+    },
+}
+
+# read mask image
+root_path = image_info_dict[image_index]["root_path"]
+image_list = image_info_dict[image_index]["image_list"]
+blood_vessel_image_path = image_info_dict[image_index]["blood_vessel_image_path"]
 
 threshold_list = [
-    0.5, #CD3 ?
-    #0.9, #CD4 1195
-    0.6, #CD8 28
-    0.6, #CD68 142
-    0.5, #DDB2 154
-    0.5, #FOXP3 106
-    0.95, #KI67 765
-    0.3, #P53 82
+    0.5,  # CD3 ?
+    # 0.9, #CD4 1195
+    0.6,  # CD8 28
+    0.6,  # CD68 142
+    0.5,  # DDB2 154
+    0.5,  # FOXP3 106
+    0.95,  # KI67 765
+    0.3,  # P53 82
 ]
 
 resize_index = 1
@@ -79,7 +93,7 @@ print(f"{len(vessels)} vessels")
 cells = {}
 for i in range(len(image_list)):
     img_item = image_list[i]
-    threshold = 0.5# threshold_list[i]
+    threshold = 0.5  # threshold_list[i]
     img_path = os.path.join(root_path, img_item)
     img = imageio.imread(img_path)
     cell_type = img_item.split('_')[0]

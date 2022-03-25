@@ -39,12 +39,23 @@ if __name__ == '__main__':
                  "help"
     # "hover," \
 
-    # input_id = 'Region7'
-    # image_size = [14906, 9416]
-    input_id = 'Region11'
-    image_size = [20439, 9418]
+    image_info_dict = {
+        7: {
+            "input_id": 'Region7',
+            "image_size": [14906, 9416]
+        },
+        11: {
+            "input_id": 'Region11',
+            "image_size": [20440, 9418]
+        },
+    }
+
+    image_index = 7
     if len(sys.argv) >= 2:
-        input_id = sys.argv[1]
+        image_index = int(sys.argv[1])
+    input_id = image_info_dict[image_index]["input_id"]
+    image_size = image_info_dict[image_index]["image_size"]
+
     output_root_path = rf'C:\Users\bunny\Desktop\ForYingnan\{input_id}\Slide78'
     nuclei_output_name = 'nuclei.csv'
     nuclei_file_path = os.path.join(output_root_path, nuclei_output_name)
@@ -53,12 +64,14 @@ if __name__ == '__main__':
 
     output_file(os.path.join(output_root_path, f'{input_id}.html'))
 
-    index = 1
+    index = 2
     p = figure(match_aspect=True,
-               plot_width=int(4189 * index), plot_height=int(2352 * index),
+               plot_width=image_size[0] // index, plot_height=image_size[1] // index,
                tools=tools_list, output_backend="svg",
                # title='nuclei/vessel distance',
                )
+
+    p.min_border= 0
 
     p.background_fill_color = None
     p.border_fill_color = None
@@ -78,12 +91,13 @@ if __name__ == '__main__':
     #     data[header] = v_columns[header]
     # v_df = pd.DataFrame(data)
 
+    # DAPI (blue), CD3 (yellow), CD31 (cyan), CD68 (red), CD8 (lime), FOXP3 (white), and Ki67 (grey).
     color_dict = {
         'CD68': "red",
         'Macrophage': "red",
         'CD31': "cyan",
         'Blood Vessel': "cyan",
-        'T-Helper': "yellow",
+        'T-Helper': "magenta",
         'T-Reg': "white",
         'T-Regulatory': "white",
         'T-Regulator': "white",
@@ -92,10 +106,11 @@ if __name__ == '__main__':
         'KI67': "grey",
         'DDB2': "olivedrab",
         'Skin': "darkgrey",
-        "CD4": "yellow",
-        "CD3": "green",
+        "CD4": "magenta",
+        "CD3": "yellow",
         "CD8": "lime",
         "FOXP3": "white",
+        "dapi": "blue",
         "placeholder": "red",
     }
 

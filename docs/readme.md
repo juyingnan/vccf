@@ -119,7 +119,7 @@ External link to the 3D view for epithelial cells:
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - Immune Cell Distance from Endothelial Cells**
+**Vascular Common Coordinate Framework Visualization - Immune Cell Distance from skin surface**
 
 These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epithelial cells and distance to the skin surface.
 

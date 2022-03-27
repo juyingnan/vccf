@@ -10,7 +10,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 [Link to preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/2021.11.09.467810v1)
 
-Link to MATRICS-A code on GitHub(https://github.com/hubmapconsortium/MATRICS-A)
+[Link to MATRICS-A code on GitHub](https://github.com/hubmapconsortium/MATRICS-A)
 
 [Link to VCCF code on GitHub](https://github.com/hubmapconsortium/vccf-visualization-2022)
 

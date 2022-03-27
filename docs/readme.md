@@ -93,7 +93,7 @@ These interactive violin plots show the distribution of distances of immune cell
 
 The interactive violin plots combine a box plot and a density plot to display the probability density of the cell damage and proliferation markers within the epithelial region and their distance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
 
-[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/)
+[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 

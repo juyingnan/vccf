@@ -526,7 +526,7 @@ traces_skin_line = generate_line(s_df_one, name=f"Distance-{cell_dict['Skin']['l
 traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
 
-image_hyperlink = f'https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/vheimages/S002_VHE_region_0{region_index:02d}.jpg'
+image_hyperlink = f'https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_0{region_index:02d}.jpg'
 main_subtitle = f'<br><sup>Region {region_index} / Donor {donor_dict[region_index]}  <a href="{image_hyperlink}">Virtual H&E Image Preview</a></sup>'
 hist_subtitle = '<br><sup>Histogram</sup>'
 horizontal_spacing = 0.03

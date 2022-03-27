@@ -1,4 +1,3 @@
-<!---# **Companion Website for &quot;Human Digital Twin: Automated Cell Type Distance Computation and 3D Atlas Construction in Multiplexed Skin Biopsies&quot;**-->
 # **Companion Website for &quot;Human Digital Twin: Automated Cell Type Distance Computation and 3D Atlas Construction in Multiplexed Skin Biopsies&quot;**
 
 Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2</sup>,Jonhan Ho<sup>4</sup>, Arivarasan Karunamurthy<sup>4</sup>, Chrystal Chadwick<sup>2</sup>, Sanghee Cho<sup>2</sup>, Rachel Rose<sup>2</sup>, Alex Corwin<sup>2</sup>, Eric Williams<sup>2</sup>, Christine Surrette<sup>2</sup>, Jessica Martinez<sup>2</sup>, Anup Sood<sup>2</sup>, Yousef Al-Kofahi<sup>2</sup>, Louis Falo<sup>4</sup>, Katy Börner<sup>3,5</sup>, Fiona Ginty<sup>2,5</sup>
@@ -11,9 +10,9 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 [Link to preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/2021.11.09.467810v1)
 
-Link to MATRICS-A code on GitHub - place holder for Soumya&#39;s code
+[Link to MATRICS-A code on GitHub](https://github.com/hubmapconsortium/MATRICS-A)
 
-[Link to VCCF code on GitHub](https://github.com/juyingnan/vccf_visualization)
+[Link to VCCF code on GitHub](https://github.com/hubmapconsortium/vccf-visualization-2022)
 
 Link to Data Collection on HuBMAP Portal
 
@@ -41,9 +40,9 @@ Link to Data Collection on HuBMAP Portal
 
 Virtual H&amp;E (pseudo colored DAPI and autofluorescence image) for all regions. Region 10 shown below. Each 3D view has a link to a single virtual H&amp;E image for reference.
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/vheimages/S002_VHE_region_004.jpg)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_004.jpg)
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/1.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/1.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -56,9 +55,9 @@ All tissue datasets used in this study can be explored in their three-dimensiona
 - **Registered Blocks** : It is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections.
 - **Data** : Using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://www.google.com/url?q=https://portal.hubmapconsortium.org/organ/skin)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://portal.hubmapconsortium.org/organ/skin)
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/2.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/2.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -72,9 +71,9 @@ Link to Experimental ASCT+B Metadata:
 
 [https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0](https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0)
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.1&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D0&comparisonName=GE%20Skin%20Paper&comparisonColor=%23ff8000&comparisonHasFile=false)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.1&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D0&comparisonName=GE%20Skin%20Paper&comparisonColor=%23ff8000&comparisonHasFile=false)
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/3.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/3.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -82,11 +81,11 @@ Link to Experimental ASCT+B Metadata:
 
 These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
 
-[Link to violin plots for immune cell distances from endothelial cells](https://juyingnan.github.io/vccf_visualization.io/)
+[Link to violin plots for immune cell distances from endothelial cells](https://hubmapconsortium.github.io/vccf-visualization-release/html/violin_cell.html)
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://juyingnan.github.io/vccf_visualization.io/html/violin_cell.html)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/violin_cell.html)
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/4.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/4.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -94,11 +93,11 @@ These interactive violin plots show the distribution of distances of immune cell
 
 The interactive violin plots combine a box plot and a density plot to display the probability density of the cell damage and proliferation markers within the epithelial region and their distance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
 
-[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/)
+[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/violin_damage_epidermis.html)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/5.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/5.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -108,15 +107,15 @@ These interactive plots show the 3D view of the skin and the distribution of p53
 
 External link to the 3D view for epithelial cells:
 
-[Region 1](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_1.htmltml/region_1.html) / [Region 2](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_2.htmlhtml) / [Region 3](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_3.html/html/region_3.html) / [Region 4](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_4.htmlegion_4.html) / [Region 5](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_5.htmlml/region_5.html) /
+[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_1.htmltml/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_2.htmlhtml) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_3.html/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_4.htmlegion_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_5.htmlml/region_5.html) /
 
-[Region 7](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_7.html) / [Region 8](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_8.htmltml/region_8.html) / [Region 9](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_9.html.io/html/region_9.html) / [Region 10](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_10.html/region_10.html) / [Region 11](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_11.html)
+[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_8.htmltml/region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_9.html.io/html/region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_10.html/region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://juyingnan.github.io/vccf_visualization.io/html/epidermis/epidermis_region_11.html)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
 
 Example Region 11: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/6.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/6.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -126,15 +125,15 @@ These interactive plots show the 3D view of the skin and the distribution of p53
 
 External link to the 3D view for epithelial cells:
 
-[Region 1](https://juyingnan.github.io/vccf_visualization.io/html/region_1.html) / [Region 2](https://juyingnan.github.io/vccf_visualization.io/html/region_2.html) / [Region 3](https://juyingnan.github.io/vccf_visualization.io/html/region_3.html) / [Region 4](https://juyingnan.github.io/vccf_visualization.io/html/region_4.html) / [Region 5](https://juyingnan.github.io/vccf_visualization.io/html/region_5.html) /
+[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_2.html) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_5.html) /
 
-[Region 7](https://juyingnan.github.io/vccf_visualization.io/html/region_7.html) / [Region 8](https://juyingnan.github.io/vccf_visualization.io/html/region_8.html) / [Region 9](https://juyingnan.github.io/vccf_visualization.io/html/region_9.html) / [Region 10](https://juyingnan.github.io/vccf_visualization.io/html/region_10.html) / [Region 11](https://juyingnan.github.io/vccf_visualization.io/html/region_11.html)
+[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_11.html)
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/button_load.png" />](https://juyingnan.github.io/vccf_visualization.io/html/region_11.html)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_11.html)
 
 **Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell**
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/7.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/7.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -148,7 +147,7 @@ On March 12, 2022, a total of 50 reference organs--including the human skin--bec
 
 You can explore all the 3D models of the CCF-HRA at [https://hubmapconsortium.github.io/ccf/pages/ccf-3d-reference-library.html](https://hubmapconsortium.github.io/ccf/pages/ccf-3d-reference-library.html)
 
-<img src="https://raw.githubusercontent.com/juyingnan/vccf_visualization.io/main/Companion%20Website%20Demo/images/8.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/8.png" alt="alt text" title="image Title" />
 
 The Visible Human Project skin, male (left) and female (right)
 

@@ -57,7 +57,7 @@ All tissue datasets used in this study can be explored in their three-dimensiona
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://www.google.com/url?q=https://portal.hubmapconsortium.org/organ/skin)
 
-<img src="https://raw.githubusercontent.co/hubmapconsortium/vccf-visualization-2022/main/docs/images/2.png" alt="alt text" title="image Title" />
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/2.png" alt="alt text" title="image Title" />
 
 ---
 

@@ -40,6 +40,8 @@ Link to Data Collection on HuBMAP Portal
 
 Virtual H&amp;E (pseudo colored DAPI and autofluorescence image) for all regions. Region 10 shown below. Each 3D view has a link to a single virtual H&amp;E image for reference.
 
+Images are also accessible at [vccf-visualization-release/vheimages at main · hubmapconsortium/vccf-visualization-release · GitHub](https://github.com/hubmapconsortium/vccf-visualization-release/tree/main/vheimages)
+
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_004.jpg)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/1.png" alt="alt text" title="image Title" />

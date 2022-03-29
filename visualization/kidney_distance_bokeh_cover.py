@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     output_file(os.path.join(output_root_path, f'{input_id}.html'))
 
-    index = 2
+    index = 1
     p = figure(match_aspect=True,
                plot_width=image_size[0] // index, plot_height=image_size[1] // index,
                tools=tools_list, output_backend="svg",

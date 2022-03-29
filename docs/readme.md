@@ -79,7 +79,7 @@ Link to Experimental ASCT+B Metadata:
 
 ---
 
-**Violin Charts for Immune Cells**
+**Violin Charts for Epithelial Cells**
 
 These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
 
@@ -91,7 +91,7 @@ These interactive violin plots show the distribution of distances of immune cell
 
 ---
 
-#### **Violin Charts for Epithelial Cells**
+#### **Violin Charts for Immune Cells**
 
 The interactive violin plots combine a box plot and a density plot to display the probability density of the cell damage and proliferation markers within the epithelial region and their distance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
 
@@ -109,24 +109,6 @@ These interactive plots show the 3D view of the skin and the distribution of p53
 
 External link to the 3D view for epithelial cells:
 
-[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_1.htmltml/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_2.htmlhtml) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_3.html/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_4.htmlegion_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_5.htmlml/region_5.html) /
-
-[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_8.htmltml/region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_9.html.io/html/region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_10.html/region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
-
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
-
-Example Region 11: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface
-
-<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/6.png" alt="alt text" title="image Title" />
-
----
-
-**Vascular Common Coordinate Framework Visualization - Immune Cell Distance from Endothelial Cells**
-
-These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epithelial cells and distance to the skin surface.
-
-External link to the 3D view for epithelial cells:
-
 [Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_2.html) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_5.html) /
 
 [Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_11.html)
@@ -136,6 +118,24 @@ External link to the 3D view for epithelial cells:
 **Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell**
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/7.png" alt="alt text" title="image Title" />
+
+---
+
+**Vascular Common Coordinate Framework Visualization - Immune Cell Distance from skin surface**
+
+These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epithelial cells and distance to the skin surface.
+
+External link to the 3D view for epithelial cells:
+
+[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_1.htmltml/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_2.htmlhtml) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_3.html/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_4.htmlegion_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_5.htmlml/region_5.html) /
+
+[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_8.htmltml/region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_9.html.io/html/region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_10.html/region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
+
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
+
+Example Region 11: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/6.png" alt="alt text" title="image Title" />
 
 ---
 

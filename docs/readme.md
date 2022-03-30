@@ -79,9 +79,9 @@ Link to Experimental ASCT+B Metadata:
 
 ---
 
-**Violin Charts for Epithelial Cells**
+#### **Violin Charts for Immune Cells**
 
-These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
+These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages) to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
 
 [Link to violin plots for immune cell distances from endothelial cells](https://hubmapconsortium.github.io/vccf-visualization-release/html/violin_cell.html)
 
@@ -91,7 +91,7 @@ These interactive violin plots show the distribution of distances of immune cell
 
 ---
 
-#### **Violin Charts for Immune Cells**
+**Violin Charts for Epithelial Cells**
 
 The interactive violin plots combine a box plot and a density plot to display the probability density of the cell damage and proliferation markers within the epithelial region and their distance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
 
@@ -103,11 +103,11 @@ The interactive violin plots combine a box plot and a density plot to display th
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - Epithelial Cells**
+**Vascular Common Coordinate Framework Visualization - Immune Cell Distance Endothelial Cells**
 
-These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epithelial cells and distance to the skin surface.
+These interactive plots show the 3D view of the skin and the distribution of immune cells (T helper, T killer, T reg, macrophages) and distance to the endothelial cells.
 
-External link to the 3D view for epithelial cells:
+External link to the 3D view for immune cells:
 
 [Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_2.html) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_5.html) /
 
@@ -121,7 +121,7 @@ External link to the 3D view for epithelial cells:
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - Immune Cell Distance from skin surface**
+**Vascular Common Coordinate Framework Visualization - Epithelial Cells**
 
 These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epithelial cells and distance to the skin surface.
 

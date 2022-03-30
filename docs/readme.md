@@ -81,7 +81,7 @@ Link to Experimental ASCT+B Metadata:
 
 #### **Violin Charts for Immune Cells**
 
-These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
+These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages) to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
 
 [Link to violin plots for immune cell distances from endothelial cells](https://hubmapconsortium.github.io/vccf-visualization-release/html/violin_cell.html)
 

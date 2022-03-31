@@ -8,7 +8,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 ---
 
-[Link to preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/2021.11.09.467810v1)
+[Link to preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/2022.03.30.486438v1)
 
 [Link to MATRICS-A code on GitHub](https://github.com/hubmapconsortium/MATRICS-A)
 

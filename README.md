@@ -14,7 +14,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 [Link to VCCF code on GitHub](https://github.com/hubmapconsortium/vccf-visualization-2022)
 
-Link to Data Collection on HuBMAP Portal
+[Link to Data Collection on HuBMAP Portal](https://portal.hubmapconsortium.org/browse/collection/34b068d4a926f77fd98b3d968b6c172f)
 
 ---
 

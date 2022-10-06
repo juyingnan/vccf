@@ -1,13 +1,13 @@
 regions = [1, 2, 3, 4, 5,
            # 6,
-           7, 8, 9, 10, 11, ]  # 12]
+           7, 8, 9, 10, 11, 12]  # 12]
 # ages = ['72', '53', '38', '48', '33', '42', '69', '57', '60', '53_', '22', '32']
 ages = [72, 52, 38, 48, 33,
         # 42,
-        69, 57, 60, 53, 41, ]  # 32]
+        69, 57, 60, 53, 41, 32]
 genders = ['Male', 'Male', 'Male', 'Male', 'Female',
            # 'Female',
-           'Male', 'Male', 'Male', 'Female', 'Female', ]  # 'Female', ]
+           'Male', 'Male', 'Male', 'Female', 'Female', 'Female', ]
 # suns = ['Sun-Exposed', 'Non-Sun-Exposed', 'Sun-Exposed', 'Non-Sun-Exposed', 'Non-Sun-Exposed',
 #         # 'Sun-Exposed',
 #         'Non-Sun-Exposed', 'Sun-Exposed', 'Sun-Exposed', 'Non-Sun-Exposed', 'Sun-Exposed', 'Non-Sun-Exposed']

@@ -6,7 +6,7 @@ import plotly.figure_factory as ff
 from cell_defination import *
 from violin_defination import *
 
-postfix_list = ['', '_3d', '_f2d', '_2d']
+postfix_list = ['', '_3d', '_s2d', '_2d']
 for compare_postfix in [postfix_list[2], postfix_list[3]]:
     applied_postfix_list = [postfix_list[1], compare_postfix]
     data_list = []
@@ -35,8 +35,8 @@ for compare_postfix in [postfix_list[2], postfix_list[3]]:
     horizontal_spacing = 0.03
     title_list = []
 
-    bin_size = 3
-    bin_dict = dict(start=0, end=1000, size=bin_size)
+    bin_size = 20
+    bin_dict = dict(start=0, end=700, size=bin_size)
 
     sbin_size = 10
     sbin_dict = dict(start=0, end=5000, size=sbin_size)
@@ -98,9 +98,14 @@ for compare_postfix in [postfix_list[2], postfix_list[3]]:
             if len(hist_names) == 0:
                 continue
 
+            # import plotly.express as px
+            #
+            # fig2 = px.histogram(x=hist_data, y=hist_names,
+            #                     bin_size=bin_size if distance_type == 'vessel' else sbin_size,
+            #                     histnorm='probability')
             fig2 = ff.create_distplot(hist_data, hist_names,
                                       bin_size=bin_size if distance_type == 'vessel' else sbin_size,
-                                      histnorm='probability')  # , curve_type='normal')
+                                      curve_type='kde')
 
             max_range = 1
             r_data = r_data[r_data['skin_distance'] != 0]
@@ -119,12 +124,11 @@ for compare_postfix in [postfix_list[2], postfix_list[3]]:
                     name=cell_dict[hist_names[i].split('_')[1]]['legend']
                 ), row=row, col=col)
                 line = fig2['data'][len(hist_data) + i]
-                line['y'] = line['y'] * len(hist_data[i])  # * bin_size *
-                if not any(y > 1e5 for y in line['y']):
-                    fig.add_trace(go.Scatter(line,
-                                             line=dict(color=cell_dict[hist_names[i].split('_')[1]]['color'], width=2),
-                                             showlegend=False,
-                                             ), row=row, col=col)
+                line['y'] = line['y'] * len(hist_data[i])  * bin_size
+                fig.add_trace(go.Scatter(line,
+                                         line=dict(color=cell_dict[hist_names[i].split('_')[1]]['color'], width=2),
+                                         showlegend=False,
+                                         ), row=row, col=col)
                 r_data[f'{hist_names[i]}_pos'] = 0.1 * (i + 1)
                 fig.add_trace(go.Scatter(x=r_data[(r_data['new_type'] == hist_names[i]) &
                                                   (r_data[f"{distance_type}_distance"] < threshold)][

@@ -121,7 +121,7 @@ cell_dict = {
         'size': 5,
         'histogram_location': [0, 0],
     },
-    'f2d': {
+    's2d': {
         'legend': "2D from 3D data",
         'group': 'Vessel & Skin',
         'color': "darkgoldenrod",

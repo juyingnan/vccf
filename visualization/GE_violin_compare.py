@@ -5,7 +5,7 @@ from plotly.subplots import make_subplots
 from cell_defination import *
 from violin_defination import *
 
-postfix_list = ['', '_3d', '_f2d', '_2d']
+postfix_list = ['', '_3d', '_s2d', '_2d']
 for compare_postfix in [postfix_list[2], postfix_list[3]]:
     applied_postfix_list = [postfix_list[1], compare_postfix]
     data_list = []

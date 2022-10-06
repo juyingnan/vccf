@@ -51,4 +51,4 @@ opacity_dict = {sun_type["S"]: 0.7,
 
 compare_opacity_dict = {'_3d': 0.8,
                         '_2d': 0.4,
-                        '_f2d': 0.4}
+                        '_s2d': 0.4}

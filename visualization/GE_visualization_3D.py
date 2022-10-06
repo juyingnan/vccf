@@ -120,7 +120,7 @@ if len(sys.argv) >= 2:
     region_index = int(sys.argv[1])
     show_html = False
 
-nuclei_root_path = rf'G:\GE\skin_12_data\region_{region_index}'
+nuclei_root_path = rf'G:\GE\skin_12_data_2d\region_{region_index}'
 nuclei_file_name = rf'centroids.csv'
 
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
@@ -248,7 +248,7 @@ print(f"Sampled skin size: {len(skin_x_list)}")
 
 # calculate blood vessel distance
 for nid in range(len(nuclei_id_list)):
-    _min_vessel_dist = 100 * scale
+    _min_vessel_dist = 1000 * scale
     _min_skin_dist = 50000 * scale
     _nx = nuclei_x_list[nid]
     _ny = nuclei_y_list[nid]
@@ -262,7 +262,7 @@ for nid in range(len(nuclei_id_list)):
     if nuclei_type_list[nid] in damage_type_list:
         _min_vessel_dist = -1
         _has_near = False
-        z_threshold = 1
+        z_threshold = 0.5
         y_threshold = 2
         while not _has_near:
             y_threshold += 0.5
@@ -294,7 +294,7 @@ for nid in range(len(nuclei_id_list)):
             _vx = vessel_x_list[v]
             _vy = vessel_y_list[v]
             _vz = vessel_z_list[v]
-            if abs(_nx - _vx) < _min_vessel_dist and abs(_ny - _vy) < _min_vessel_dist:
+            if abs(_nx - _vx) < _min_vessel_dist and abs(_ny - _vy) < _min_vessel_dist and abs(_nz - _vz) <= 0.5:
                 _dist = math.sqrt((_nx - _vx) ** 2 + (_ny - _vy) ** 2 + (_nz - _vz) ** 2)
                 if _dist < _min_vessel_dist:
                     _has_near = True

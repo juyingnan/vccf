@@ -249,15 +249,16 @@ fig.update_layout(
 for trace_n in traces_n:
     fig.add_trace(trace_n)
 
-for i in range(len(nuclei_types)):
-    cell_type = nuclei_types[i]
-    color = cell_dict[cell_type]['color']
-    mesh_test = traces_n[i]
-    _3d_test = go.Mesh3d(x=mesh_test.x, y=mesh_test.y, z=mesh_test.z,
-                         alphahull=7, name=nuclei_types[i] + ' Mesh',
-                         color=color, opacity=0.150, legendgroup='Cluster Mesh', showlegend=True,
-                         visible=True if i == 0 else False)
-    fig.add_trace(_3d_test)
+for alpha in range(-1, 11):
+    for i in range(len(nuclei_types)):
+        cell_type = nuclei_types[i]
+        color = cell_dict[cell_type]['color']
+        mesh_test = traces_n[i]
+        _3d_test = go.Mesh3d(x=mesh_test.x, y=mesh_test.y, z=mesh_test.z,
+                             alphahull=alpha, name=nuclei_types[i] + ' Mesh',
+                             color=color, opacity=0.150, legendgroup='Cluster Mesh', showlegend=True,
+                             visible=True if alpha == -1 else False)
+        fig.add_trace(_3d_test)
 
 # Invisble scale for keep space instant
 invisible_scale = go.Scatter3d(
@@ -273,23 +274,33 @@ invisible_scale = go.Scatter3d(
 fig.add_trace(invisible_scale)
 
 steps = []
-for i in range(len(nuclei_types)):
-    title = nuclei_types[i]
+for i in range(-1, 11):
+    title = str(i)
     step = dict(
         label=title,
         method="update",
         args=[{"visible": [False] * len(fig.data),
-               # "showlegend": [False] * len(fig.data)
+               "showlegend": [False] * len(fig.data)
                },
               # {"title": ""},
               ],  # layout attribute
     )
     for f in range(main_fig_count):
         step["args"][0]["visible"][f] = True
-        # step["args"][0]["showlegend"][f] = True
-    step["args"][0]["visible"][i + main_fig_count] = True
+        step["args"][0]["showlegend"][f] = True
+        step["args"][0]["visible"][(i + 2) * main_fig_count + f] = True
+        step["args"][0]["showlegend"][(i + 2) * main_fig_count + f] = True
     steps.append(step)
-histogram_layout_buttons = steps
+
+sliders = [dict(
+    active=0,
+    currentvalue={"prefix": "Slide: "},
+    pad={"t": 0, "b": 0},
+    steps=steps,
+    yanchor='top', y=1,
+    xanchor='right', x=1,
+    lenmode='fraction', len=0.25
+)]
 
 # layout update
 for annotation in fig['layout']['annotations'][:1]:
@@ -311,18 +322,19 @@ for annotation in fig['layout']['annotations'][1:]:
 background_color = 'rgb(240,246,255)'
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
-    updatemenus=[
-        dict(
-            buttons=histogram_layout_buttons,
-            direction="down",
-            pad={"r": 0, "t": 5},
-            showactive=True,
-            x=0.9,
-            xanchor="right",
-            y=0.9,
-            yanchor="top"
-        ),
-    ],
+    # updatemenus=[
+    #     dict(
+    #         buttons=histogram_layout_buttons,
+    #         direction="down",
+    #         pad={"r": 0, "t": 5},
+    #         showactive=True,
+    #         x=0.9,
+    #         xanchor="right",
+    #         y=0.9,
+    #         yanchor="top"
+    #     ),
+    # ],
+    sliders=sliders,
     font=dict(
         family="Arial, Bahnschrift",
         size=14,

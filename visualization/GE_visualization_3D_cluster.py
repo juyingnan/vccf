@@ -90,9 +90,6 @@ nuclei_file_name = rf'centroids.csv'
 
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
-if len(sys.argv) >= 3:
-    nuclei_file_path = sys.argv[2]
-
 skin_threshold_dict = {
     1: 1000,
     2: 1500,

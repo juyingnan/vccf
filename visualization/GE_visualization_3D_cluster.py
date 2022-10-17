@@ -67,6 +67,7 @@ skin_x_list, skin_y_list, skin_z_list = [], [], []
 z_list = [77, 78, 79, 80, 81, 83, 84, 85, 86, 88, 89, 90, 91, 92, 94, 95, 96, 97, 98, 99, 100, 101]
 micro_per_pixel = 0.325
 scale = 16 * micro_per_pixel
+z_scale = 5
 
 top_left = [0, 0]
 bottom_right = [1000000, 1000000]
@@ -74,9 +75,15 @@ bottom_right = [1000000, 1000000]
 region_index = 3
 show_html = True
 
+cell_type_list = ['CD68', 'T-Helper', 'T-Killer', 'T-Reg']
+damage_type_list = ['P53', 'KI67', 'DDB2']
+filter = 'all'
+
 if len(sys.argv) >= 2:
     region_index = int(sys.argv[1])
     show_html = False
+if len(sys.argv) >= 3:
+    filter = sys.argv[2]
 
 nuclei_root_path = rf'G:\GE\skin_12_data\region_{region_index}'
 nuclei_file_name = rf'centroids.csv'
@@ -131,20 +138,20 @@ for i in range(len(n_columns['X'])):
         if n_columns['cell_type'][i] == 'CD31':
             vessel_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
             vessel_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
-            vessel_z_list.append(z * scale)
+            vessel_z_list.append(z * scale * z_scale)
         elif n_columns['cell_type'][i] == 'Skin':
             offset_x, offset_y, offset_z = skin_offset_dict[region_index]
             x_temp = (float(n_columns['X'][i]) + offset_x) * scale - top_left[0]
             if x_temp < skin_threshold_dict[region_index]:
                 skin_x_list.append(x_temp)
                 skin_y_list.append((float(n_columns['Y'][i]) + offset_y) * scale - top_left[1])
-                skin_z_list.append(z * scale)
+                skin_z_list.append(z * scale * z_scale)
         else:
             nuclei_id_list.append(i)
             nuclei_type_list.append(n_columns['cell_type'][i])
             nuclei_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
             nuclei_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
-            nuclei_z_list.append(z * scale)
+            nuclei_z_list.append(z * scale * z_scale)
 # nuclei_class_list = [int(value) for value in n_columns['Class']]
 
 # nuclei_image = io.imread('../images/nuclei_ml.png')  # [::-1, :]
@@ -174,8 +181,6 @@ y_margin = (y_max - y_min) * margin_index
 z_margin = (z_max - z_min) * margin_index * 2
 
 output_root_path = nuclei_root_path
-
-damage_type_list = ['P53', 'KI67', 'DDB2']
 
 n_color = [cell_dict[cell_type]['color'] for cell_type in nuclei_type_list]
 v_color = [cell_dict['CD31']['color']] * len(vessel_x_list)
@@ -229,6 +234,13 @@ n_df = pd.DataFrame(n_data)
 print(n_df)
 
 nuclei_types = list(set(nuclei_type_list))
+result_path = f"cluster_region_{region_index}.html"
+if filter == 'damage':
+    nuclei_types = list(set(nuclei_types).intersection(damage_type_list))
+    result_path = f"cluster_region_{region_index}_damage.html"
+elif filter == 'cell':
+    nuclei_types = list(set(nuclei_types).intersection(cell_type_list))
+    result_path = f"cluster_region_{region_index}_cell.html"
 nuclei_types.sort()
 print(nuclei_types)
 
@@ -363,6 +375,6 @@ fig.update_layout(
     plot_bgcolor=background_color,
 )
 
-fig.write_html(os.path.join(nuclei_root_path, f"cluster_region_{region_index}.html"))
+fig.write_html(os.path.join(nuclei_root_path, result_path))
 if show_html:
     fig.show()

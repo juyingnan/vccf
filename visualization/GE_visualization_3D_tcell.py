@@ -93,6 +93,7 @@ def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_lege
                         visible=visible)
 
 
+postfix = 'thelper'
 nuclei_id_list = list()
 nuclei_type_list = list()
 nuclei_x_list, nuclei_y_list, nuclei_z_list = [], [], []
@@ -220,11 +221,11 @@ y_margin = (y_max - y_min) * margin_index
 z_margin = (z_max - z_min) * margin_index * 2
 
 output_root_path = nuclei_root_path
-nuclei_output_name = 'nuclei.csv'
+nuclei_output_name = f'nuclei_{postfix}.csv'
 nuclei_output_path = os.path.join(output_root_path, nuclei_output_name)
-vessel_output_name = 'vessel.csv'
+vessel_output_name = f'vessel_{postfix}.csv'
 vessel_output_path = os.path.join(output_root_path, vessel_output_name)
-skin_output_name = 'skin.csv'
+skin_output_name = f'skin_{postfix}.csv'
 skin_output_path = os.path.join(output_root_path, skin_output_name)
 
 damage_type_list = ['P53', 'KI67', 'DDB2']
@@ -319,76 +320,6 @@ for nid in range(len(nuclei_id_list)):
     if nid % 100 == 0:
         print('\r' + str(nid), end='')
 print()
-
-# calculate both distance
-# for nid in range(len(nuclei_id_list)):
-#     _min_vessel_dist = 100 * scale
-#     _min_skin_dist = 50000 * scale
-#     _nx = nuclei_x_list[nid]
-#     _ny = nuclei_y_list[nid]
-#     _nz = nuclei_z_list[nid]
-#     _min_vessel_x = _nx
-#     _min_vessel_y = _ny
-#     _min_vessel_z = _nz
-#     _min_skin_x = _nx
-#     _min_skin_y = _ny
-#     _min_skin_z = _nz
-#     # if nuclei_type_list[nid] in damage_type_list:
-#     # _min_vessel_dist = -1
-#     _has_near = False
-#     z_threshold = 1
-#     y_threshold = 2
-#     while not _has_near:
-#         y_threshold += 0.5
-#         if y_threshold >= 7.5:
-#             print("NO NEAR")
-#             _min_skin_dist = 0
-#             break
-#         for v in range(len(skin_x_list)):
-#             _sx = skin_x_list[v]
-#             _sy = skin_y_list[v]
-#             _sz = skin_z_list[v]
-#             # add new criteria for skin
-#             # if abs(_sz - _nz <= 1) and abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
-#             if _sx < _nx \
-#                     and abs(_sz - _nz) <= z_threshold \
-#                     and abs(_nx - _sx) <= _min_skin_dist \
-#                     and abs(_ny - _sy) <= y_threshold:
-#                 _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
-#                 if _dist < _min_skin_dist:
-#                     _has_near = True
-#                     _min_skin_dist = _dist
-#                     _min_skin_x = _sx
-#                     _min_skin_y = _sy
-#                     _min_skin_z = _sz
-#     # else:
-#     # _min_skin_dist = -1
-#     _has_near = False
-#     for v in range(len(vessel_x_list)):
-#         _vx = vessel_x_list[v]
-#         _vy = vessel_y_list[v]
-#         _vz = vessel_z_list[v]
-#         if abs(_nx - _vx) < _min_vessel_dist and abs(_ny - _vy) < _min_vessel_dist:
-#             _dist = math.sqrt((_nx - _vx) ** 2 + (_ny - _vy) ** 2 + (_nz - _vz) ** 2)
-#             if _dist < _min_vessel_dist:
-#                 _has_near = True
-#                 _min_vessel_dist = _dist
-#                 _min_vessel_x = _vx
-#                 _min_vessel_y = _vy
-#                 _min_vessel_z = _vz
-#     if not _has_near:
-#         print("NO NEAR")
-#     nuclei_vessel_distance_list.append(_min_vessel_dist)
-#     nuclei_nearest_vessel_x_list.append(_min_vessel_x)
-#     nuclei_nearest_vessel_y_list.append(_min_vessel_y)
-#     nuclei_nearest_vessel_z_list.append(_min_vessel_z)
-#     nuclei_skin_distance_list.append(_min_skin_dist)
-#     nuclei_nearest_skin_x_list.append(_min_skin_x)
-#     nuclei_nearest_skin_y_list.append(_min_skin_y)
-#     nuclei_nearest_skin_z_list.append(_min_skin_z)
-#     if nid % 100 == 0:
-#         print('\r' + str(nid), end='')
-# print()
 
 assert len(nuclei_id_list) == len(nuclei_x_list) == len(nuclei_y_list) == len(nuclei_z_list) == \
        len(nuclei_vessel_distance_list) == len(nuclei_skin_distance_list) == \

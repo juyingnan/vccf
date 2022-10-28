@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.figure_factory as ff
 from cell_defination import *
+import GE_visualization_3D_tcell2d
 
 sys.path.insert(1, r'C:\Users\bunny\PycharmProjects\vccf_visualization')
 import utils.kidney_nuclei_vessel_calculate as my_csv
@@ -253,7 +254,7 @@ print(f"Sampled skin size: {len(skin_x_list)}")
 
 # calculate blood vessel distance
 for nid in range(len(nuclei_id_list)):
-    _min_vessel_dist = 100 * scale
+    _min_vessel_dist = 1000 * scale
     _min_skin_dist = 50000 * scale
     _nx = nuclei_x_list[nid]
     _ny = nuclei_y_list[nid]
@@ -494,45 +495,46 @@ for trace_n in traces_n:
 layer_tol = 1
 z_count = 24
 
+traces_dict = GE_visualization_3D_tcell2d.get_2d_plots(region_index)
 for layer in range(0, z_count):
-    zmin = (layer - layer_tol) * scale
-    zmax = (layer + layer_tol) * scale
-    zn_df = n_df[n_df['nz'].between(zmin, zmax, inclusive="neither")]
-    zv_df = v_df[v_df['vz'].between(zmin, zmax, inclusive="neither")]
-    zs_df = s_df[s_df['sz'].between(zmin, zmax, inclusive="neither")]
-
-    # blood vessel distance
-    zvd_df = zn_df[zn_df['vessel_distance'] >= 0]
-    zv_df_one = generate_one_line_df(zvd_df, key='v')
-    # print(zv_df_one)
-
-    # skin surface distance
-    zsd_df = zn_df[zn_df['skin_distance'] >= 0]
-    zs_df_one = generate_one_line_df(zsd_df, key='s')
-    # print(zs_df_one)
-
-    traces_n = []
-    for cell_type in set(nuclei_type_list):
-        traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
-                                                legend_group="Damage" if cell_type in damage_type_list else "Cell"))
-    trace_v = generate_other_scatter(zv_df, key='v', name=cell_dict[vessel_replace]['legend'],
-                                     symbol_name=vessel_replace,
-                                     visible=False, show_legend=False, legend_group="Cluster Center")
-    trace_s = generate_other_scatter(zs_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin',
-                                     visible=False, show_legend=False, legend_group="Vessel & Skin")
-    traces_vessel_line = generate_line(zv_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
-                                       color='grey', visible=False, show_legend=False, legend_group="Link")
-    traces_skin_line = generate_line(zs_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
-                                     color='grey', visible=False, show_legend=False, legend_group="Link")
-    traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
-    for trace_n in traces_n:
+    # zmin = (layer - layer_tol) * scale
+    # zmax = (layer + layer_tol) * scale
+    # zn_df = n_df[n_df['nz'].between(zmin, zmax, inclusive="neither")]
+    # zv_df = v_df[v_df['vz'].between(zmin, zmax, inclusive="neither")]
+    # zs_df = s_df[s_df['sz'].between(zmin, zmax, inclusive="neither")]
+    #
+    # # blood vessel distance
+    # zvd_df = zn_df[zn_df['vessel_distance'] >= 0]
+    # zv_df_one = generate_one_line_df(zvd_df, key='v')
+    # # print(zv_df_one)
+    #
+    # # skin surface distance
+    # zsd_df = zn_df[zn_df['skin_distance'] >= 0]
+    # zs_df_one = generate_one_line_df(zsd_df, key='s')
+    # # print(zs_df_one)
+    #
+    # traces_n = []
+    # for cell_type in set(nuclei_type_list):
+    #     traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
+    #                                             legend_group="Damage" if cell_type in damage_type_list else "Cell"))
+    # trace_v = generate_other_scatter(zv_df, key='v', name=cell_dict[vessel_replace]['legend'],
+    #                                  symbol_name=vessel_replace,
+    #                                  visible=False, show_legend=False, legend_group="Cluster Center")
+    # trace_s = generate_other_scatter(zs_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin',
+    #                                  visible=False, show_legend=False, legend_group="Vessel & Skin")
+    # traces_vessel_line = generate_line(zv_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
+    #                                    color='grey', visible=False, show_legend=False, legend_group="Link")
+    # traces_skin_line = generate_line(zs_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
+    #                                  color='grey', visible=False, show_legend=False, legend_group="Link")
+    # traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
+    for trace_n in traces_dict[layer]:
         fig.add_trace(trace_n, 1, 1)
 
 # bin_width = 10
 # nbins = math.ceil((n_df["distance"].max() - n_df["distance"].min()) / bin_width)
 
-bin_size = 3
-bin_dict = dict(start=0, end=200, size=bin_size)
+bin_size = 1
+bin_dict = dict(start=0, end=20, size=bin_size)
 
 sbin_size = 10
 sbin_dict = dict(start=0, end=5000, size=sbin_size)
@@ -699,7 +701,7 @@ fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
                  title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
-fig.update_xaxes(range=[0, 210], row=3, col=1)
+fig.update_xaxes(range=[0, 15], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",

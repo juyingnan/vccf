@@ -60,6 +60,24 @@ def generate_nuclei_scatter(df, ct, visible=True, show_legend=True, legend_group
                         visible=visible)
 
 
+def generate_cluster_center_scatter(df, key, name, symbol_name, visible=True, show_legend=True, legend_group=""):
+    return go.Scatter3d(x=df[f"{key}x"], y=df[f"{key}y"], z=df[f"{key}z"],
+                        mode="markers",
+                        name=name,
+                        showlegend=show_legend,
+                        legendgroup=legend_group,
+                        legendgrouptitle_text=legend_group,
+                        marker=dict(
+                            size=df["cluster"],
+                            color=df["color"],
+                            symbol=cell_dict[symbol_name]['marker'],
+                            opacity=0.5,
+                            line=dict(
+                                color=df["color"],
+                                width=0)),
+                        visible=visible)
+
+
 def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend=True, legend_group=""):
     return go.Scatter3d(x=df[f"{key}x"], y=df[f"{key}y"], z=df[f"{key}z"],
                         mode="markers",
@@ -253,6 +271,7 @@ for key in temp_dict:
 print(f"Sampled skin size: {len(skin_x_list)}")
 
 # calculate blood vessel distance
+cluster_size_list = [0 for _ in range(len(vessel_x_list))]
 for nid in range(len(nuclei_id_list)):
     _min_vessel_dist = 1000 * scale
     _min_skin_dist = 50000 * scale
@@ -296,6 +315,7 @@ for nid in range(len(nuclei_id_list)):
     else:
         _min_skin_dist = -1
         _has_near = False
+        temp_v = -1
         for v in range(len(vessel_x_list)):
             _vx = vessel_x_list[v]
             _vy = vessel_y_list[v]
@@ -308,8 +328,11 @@ for nid in range(len(nuclei_id_list)):
                     _min_vessel_x = _vx
                     _min_vessel_y = _vy
                     _min_vessel_z = _vz
+                    temp_v = v
         if not _has_near:
             print("NO NEAR")
+        elif temp_v > 0:
+            cluster_size_list[temp_v] += 1
     nuclei_vessel_distance_list.append(_min_vessel_dist)
     nuclei_nearest_vessel_x_list.append(_min_vessel_x)
     nuclei_nearest_vessel_y_list.append(_min_vessel_y)
@@ -427,6 +450,9 @@ v_data["vy"] = vessel_y_list
 v_data["vz"] = vessel_z_list
 v_data["color"] = v_color
 v_data["size"] = v_size
+v_data['cluster'] = [
+    GE_visualization_3D_tcell2d.cluster_size_dict[item] if item in GE_visualization_3D_tcell2d.cluster_size_dict else 30
+    for item in cluster_size_list]
 v_df = pd.DataFrame(v_data)
 print(v_df)
 
@@ -458,9 +484,9 @@ traces_n = []
 for cell_type in set(nuclei_type_list):
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
-trace_v = generate_other_scatter(v_df, key='v', name=cell_dict[vessel_replace]['legend'],
-                                 symbol_name=vessel_replace, visible=True,
-                                 legend_group="Cluster Center")
+trace_v = generate_cluster_center_scatter(v_df, key='v', name=cell_dict[vessel_replace]['legend'],
+                                          symbol_name=vessel_replace, visible=True,
+                                          legend_group="Cluster Center")
 trace_s = generate_other_scatter(s_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin', visible=True,
                                  legend_group="Endothelial & Skin")
 traces_vessel_line = generate_line(v_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",

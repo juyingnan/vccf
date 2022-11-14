@@ -375,8 +375,8 @@ def get_2d_plots(region_index):
                       'skin_distance', 'sx', 'sy', 'sz'])
 
     my_csv.write_csv(vessel_output_path,
-                     [vessel_x_list, vessel_y_list, vessel_z_list],
-                     ['x', 'y', 'z'])
+                     [vessel_x_list, vessel_y_list, vessel_z_list, cluster_size_list],
+                     ['x', 'y', 'z', 'cluster_size'])
 
     my_csv.write_csv(skin_output_path,
                      [skin_x_list, skin_y_list, skin_z_list],

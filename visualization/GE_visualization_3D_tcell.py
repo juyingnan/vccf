@@ -273,7 +273,7 @@ print(f"Sampled skin size: {len(skin_x_list)}")
 # calculate blood vessel distance
 cluster_size_list = [0 for _ in range(len(vessel_x_list))]
 for nid in range(len(nuclei_id_list)):
-    _min_vessel_dist = 1000 * scale
+    _min_vessel_dist = 100  # 1000 * scale
     _min_skin_dist = 50000 * scale
     _nx = nuclei_x_list[nid]
     _ny = nuclei_y_list[nid]
@@ -370,8 +370,8 @@ my_csv.write_csv(nuclei_output_path,
                   'skin_distance', 'sx', 'sy', 'sz'])
 
 my_csv.write_csv(vessel_output_path,
-                 [vessel_x_list, vessel_y_list, vessel_z_list],
-                 ['x', 'y', 'z'])
+                 [vessel_x_list, vessel_y_list, vessel_z_list, cluster_size_list],
+                 ['x', 'y', 'z', 'cluster_size'])
 
 my_csv.write_csv(skin_output_path,
                  [skin_x_list, skin_y_list, skin_z_list],
@@ -588,12 +588,9 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
     print(cell_list, distance_type, col)
     hist_data = []
     hist_names = []
-    for cell_type in cell_list:
-        data = n_df[n_df['type'] == cell_type][f"{distance_type}_distance"]
-        print(cell_type, data.size)
-        if data.size > 5:
-            hist_data.append(data)
-            hist_names.append(cell_type)
+    data = cluster_size_list
+    hist_data.append(data)
+    hist_names.append('T-Helper')
 
     fig2 = ff.create_distplot(hist_data, hist_names, bin_size=bin_size if distance_type == 'vessel' else sbin_size,
                               histnorm='probability')  # , curve_type='normal')
@@ -606,12 +603,12 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
         #                            marker_color=color_dict[hist_names[i]], showlegend=False,
         #                            ), row=2, col=col)
         fig.add_trace(go.Histogram(
-            x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
+            x=cluster_size_list,
             xbins=bin_dict if distance_type == 'vessel' else sbin_dict,
             opacity=0.6,
             marker=dict(color=cell_dict[hist_names[i]]['color']),
             showlegend=False,
-            name=cell_dict[hist_names[i]]['legend']
+            name='T-Helper'
         ), row=2, col=col)
         line = fig2['data'][len(hist_data) + i]
         line['y'] = line['y'] * len(hist_data[i])  # * bin_size *
@@ -620,7 +617,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
                                      line=dict(color=cell_dict[hist_names[i]]['color'], width=2), showlegend=False,
                                      ), row=2, col=col)
         n_df[f'{hist_names[i]}_pos'] = 0.1 * (i + 1)
-        fig.add_trace(go.Scatter(x=n_df[n_df['type'] == hist_names[i]][f"{distance_type}_distance"],
+        fig.add_trace(go.Scatter(x=cluster_size_list,
                                  y=n_df[f'{hist_names[i]}_pos'],
                                  mode='markers',
                                  opacity=0.6,
@@ -725,7 +722,7 @@ fig.update_yaxes(rangemode='tozero', tickfont=dict(size=10), row=3)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
-                 title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
+                 title=dict(text="Nearest Count # (<15μm)", standoff=5, font_size=14), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 fig.update_xaxes(range=[0, 15], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)

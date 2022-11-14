@@ -230,6 +230,15 @@ n_data["color"] = n_color
 n_df = pd.DataFrame(n_data)
 print(n_df)
 
+v_data = dict()
+v_data["vx"] = vessel_x_list
+v_data["vy"] = vessel_y_list
+v_data["vz"] = vessel_z_list
+v_data["color"] = v_color
+v_data["size"] = v_size
+v_df = pd.DataFrame(v_data)
+print(v_df)
+
 nuclei_types = list(set(nuclei_type_list))
 result_path = f"cluster_region_{region_index}.html"
 if filter == 'damage':
@@ -245,6 +254,10 @@ traces_n = []
 for cell_type in nuclei_types:
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
+trace_v = generate_other_scatter(v_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31', visible=True,
+                                 legend_group="Endothelial & Skin")
+traces_n.extend([trace_v])
+
 main_fig_count = len(traces_n)
 
 image_hyperlink = f'https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_0{region_index:02d}.jpg'
@@ -282,6 +295,7 @@ invisible_scale = go.Scatter3d(
 )
 fig.add_trace(invisible_scale)
 
+main_fig_count -= 1  # blood vessel
 steps = []
 for i in range(-1, 11):
     title = str(i)
@@ -294,11 +308,13 @@ for i in range(-1, 11):
               # {"title": ""},
               ],  # layout attribute
     )
+    step["args"][0]["visible"][main_fig_count] = True  # blood vessel
+    step["args"][0]["showlegend"][main_fig_count] = True  # blood vessel
     for f in range(main_fig_count):
-        step["args"][0]["visible"][f] = True
-        step["args"][0]["showlegend"][f] = True
-        step["args"][0]["visible"][(i + 2) * main_fig_count + f] = True
-        step["args"][0]["showlegend"][(i + 2) * main_fig_count + f] = True
+        step["args"][0]["visible"][f + 1] = True
+        step["args"][0]["showlegend"][f + 1] = True
+        step["args"][0]["visible"][(i + 2) * main_fig_count + f + 1] = True
+        step["args"][0]["showlegend"][(i + 2) * main_fig_count + f + 1] = True
     steps.append(step)
 
 sliders = [dict(

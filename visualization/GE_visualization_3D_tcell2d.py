@@ -277,7 +277,7 @@ def get_2d_plots(region_index):
     # calculate blood vessel distance
     cluster_size_list = [0 for _ in range(len(vessel_x_list))]
     for nid in range(len(nuclei_id_list)):
-        _min_vessel_dist = 1000 * scale  # 15 * scale
+        _min_vessel_dist = 100 * scale  # 15 * scale
         _min_skin_dist = 50000 * scale
         _nx = nuclei_x_list[nid]
         _ny = nuclei_y_list[nid]

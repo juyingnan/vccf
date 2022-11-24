@@ -17,10 +17,10 @@ sun_type = {
 }
 suns = [sun_type['S'], sun_type['N'], sun_type['N'], sun_type['N'], sun_type['N'],
         # 'Sun-Exposed',
-        sun_type['S'], sun_type['S'], sun_type['S'], sun_type['S'], sun_type['N'], ]
+        sun_type['S'], sun_type['S'], sun_type['S'], sun_type['S'], sun_type['N'], sun_type['N'], ]
 olds = ['old', 'old', 'Young', 'Young', 'Young',
         # 'Young',
-        'old', 'old', 'old', 'old', 'Young', ]  # 'Young']
+        'old', 'old', 'old', 'old', 'Young', 'Young']
 
 # color_dict = {'Sun-Exposed': 'orange',
 #               'Non-Sun-Exposed': 'blue'}

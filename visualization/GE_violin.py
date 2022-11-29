@@ -25,6 +25,8 @@ n_data = pd.concat(data_list, axis=0, ignore_index=True)
 
 print(n_data)
 
+# n_data.to_csv(r'C:\Users\bunny\Desktop\violin.csv')
+
 threshold_distance = {
     'cell': n_data['vessel_distance'].quantile(.98),
     'damage': n_data['skin_distance'].quantile(.98)

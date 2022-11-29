@@ -105,6 +105,30 @@ cell_dict = {
         'size': 5,
         'histogram_location': [0, 0],
     },
+    '3d': {
+        'legend': "3D",
+        'group': 'Vessel & Skin',
+        'color': "cornflowerblue",
+        'marker': 'diamond',
+        'size': 5,
+        'histogram_location': [0, 0],
+    },
+    '2d': {
+        'legend': "2D",
+        'group': 'Vessel & Skin',
+        'color': "coral",
+        'marker': 'diamond',
+        'size': 5,
+        'histogram_location': [0, 0],
+    },
+    's2d': {
+        'legend': "2D from 3D data",
+        'group': 'Vessel & Skin',
+        'color': "darkgoldenrod",
+        'marker': 'diamond',
+        'size': 5,
+        'histogram_location': [0, 0],
+    },
 }
 
 cell_dict['Macrophage'] = cell_dict['CD68']

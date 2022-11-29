@@ -73,6 +73,7 @@ for (dirpath, dirnames, filenames) in walk(temp_root_path):
     temp_files.extend([os.path.join(dirpath, filename) for filename in filenames])
     temp_names.extend([filename for filename in filenames])
 
+# z_max = 0
 for i in range(len(temp_files)):
     name = temp_names[i].split('_')[0]
     temp_file_path = temp_files[i]
@@ -95,9 +96,13 @@ for i in range(len(temp_files)):
             assert current_type != ""
             if current_type in type_abr.values():
                 cells[current_region][current_type].append(f"{line},{current_type}")
+                # test z
+                # z = float(line.split(',')[3])
+                # z_max = max(z, z_max)
             else:
                 print(f"{current_region}, {current_type} not in the type dict")
     print("-----------------")
+# print(z_max)
 
 # write csv
 for region in cells:
@@ -128,3 +133,25 @@ for region in cells:
                       "DDB2", ]:
         print(f"{len(cells[region][type_abr[cell_type]])}\t", end='')
     print()
+
+layer_stat = True
+if layer_stat:
+    for region in cells:
+        print(region)
+        for layer in range(24):
+            print(f"Layer {layer}", "\t", end='')
+            for cell_type in ["Macrophage",
+                              "TKiller",
+                              "TRegulator",
+                              "THelper",
+                              "P53",
+                              "KI67",
+                              "DDB2", ]:
+                result = 0
+                for item in cells[region][type_abr[cell_type]]:
+                    z = round(float(item.split(',')[3]))
+                    if z == layer:
+                        result += 1
+                print(f"{result}\t", end='')
+            print()
+        print()

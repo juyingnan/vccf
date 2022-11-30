@@ -22,7 +22,7 @@ import utils.kidney_nuclei_vessel_calculate as my_csv
 # }
 
 
-def get_2d_plots(region_index):
+def get_2d_plots(region_index, radius):
     def generate_one_line_df(df, key):
         line_x = [None] * (len(df) * 2)
         line_y = [None] * (len(df) * 2)
@@ -316,7 +316,7 @@ def get_2d_plots(region_index):
     # print()
 
     # calculate clusters
-    cluster_range = 30
+    cluster_range = radius
     cluster_size_dict = {}
     for item in ['T-Helper', 'T-Reg', 'T-Killer', 'CD68', ]:
         cluster_size_dict[item] = [0 for _ in range(len(vessel_x_list))]

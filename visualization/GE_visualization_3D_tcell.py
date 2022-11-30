@@ -512,7 +512,7 @@ for trace_n in traces_n:
 layer_tol = 1
 z_count = 24
 
-traces_dict = GE_visualization_3D_tcell2d.get_2d_plots(region_index)
+traces_dict = GE_visualization_3D_tcell2d.get_2d_plots(region_index, radius=cluster_range)
 for layer in range(0, z_count):
     for trace_n in traces_dict[layer]:
         fig.add_trace(trace_n, 1, 1)

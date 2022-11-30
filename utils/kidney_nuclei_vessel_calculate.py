@@ -28,8 +28,8 @@ def read_csv(path):
             for _h, _v in zip(_headers, row):
                 _columns[_h].append(_v)
 
-        for item in _headers:
-            print(item)
+        # for item in _headers:
+        #     print(item)
 
         return _headers, _columns
 

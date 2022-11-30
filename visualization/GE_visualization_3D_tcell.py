@@ -69,11 +69,8 @@ def generate_cluster_center_scatter(df, key, name, symbol_name, visible=True, sh
                         legendgrouptitle_text=legend_group,
                         marker=dict(
                             size=df["cluster"],
-                            color=df["cluster"]/3,  # df["color"],
-                            colorscale='thermal',
-                            colorbar=dict(
-                                title='cluster size',
-                            ),
+                            color=df["cluster"] / cluster_size_index,  # df["color"],
+                            coloraxis="coloraxis",
                             symbol=cell_dict[symbol_name]['marker'],
                             opacity=0.5,
                             line=dict(
@@ -84,7 +81,7 @@ def generate_cluster_center_scatter(df, key, name, symbol_name, visible=True, sh
                         '<i>Y</i>: %{y:.2f}<br>' +
                         '<i>Z</i>: %{z:.2f}<br>' +
                         '<b><i>Cluster</i>: %{text}</b>',
-                        text=df["cluster"]/3,
+                        text=df["cluster"] / cluster_size_index,
                         visible=visible)
 
 
@@ -122,6 +119,10 @@ def generate_line(df, name, color, visible=True, opacity=0.5, width=1, show_lege
                         visible=visible)
 
 
+def all_same(items):
+    return all(x == items[0] for x in items)
+
+
 postfix = 'thelper'
 nuclei_id_list = list()
 nuclei_type_list = list()
@@ -145,6 +146,7 @@ bottom_right = [1000000, 1000000]
 
 region_index = 3
 show_html = True
+cluster_size_index = 6
 
 if len(sys.argv) >= 2:
     region_index = int(sys.argv[1])
@@ -440,7 +442,7 @@ v_data["vy"] = vessel_y_list
 v_data["vz"] = vessel_z_list
 v_data["color"] = v_color
 v_data["size"] = v_size
-v_data['cluster'] = [item * 3 for item in cluster_size_dict['all']]
+v_data['cluster'] = [item * cluster_size_index for item in cluster_size_dict['all']]
 v_df = pd.DataFrame(v_data)
 # print(v_df)
 
@@ -535,7 +537,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
     for cell_type in cell_list:
         data = cluster_size_dict[cell_type]
         # print(cell_type, len(data))
-        if len(data) > 5:
+        if not all_same(data):
             hist_data.append(data)
             hist_names.append(cell_type)
 
@@ -730,7 +732,7 @@ fig.update_layout(
     ),
     plot_bgcolor=background_color,
 )
-fig.update_layout(coloraxis = {'colorscale':'thermal'})
+fig.update_layout(coloraxis={'colorscale': 'thermal'})
 
 fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}_thelper.html"))
 if show_html:

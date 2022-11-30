@@ -78,11 +78,8 @@ def get_2d_plots(region_index):
                             legendgrouptitle_text=legend_group,
                             marker=dict(
                                 size=df["cluster"],
-                                color=df["cluster"] / 3,  # df["color"],
-                                colorscale='thermal',
-                                colorbar=dict(
-                                    title='cluster size',
-                                ),
+                                color=df["cluster"] / cluster_size_index,  # df["color"],
+                                coloraxis="coloraxis",
                                 symbol=cell_dict[symbol_name]['marker'],
                                 opacity=0.5,
                                 line=dict(
@@ -93,7 +90,7 @@ def get_2d_plots(region_index):
                             '<i>Y</i>: %{y:.2f}<br>' +
                             '<i>Z</i>: %{z:.2f}<br>' +
                             '<b><i>Cluster</i>: %{text}</b>',
-                            text=df["cluster"] / 3,
+                            text=df["cluster"] / cluster_size_index,
                             visible=visible)
 
     def generate_other_scatter(df, key, name, symbol_name, visible=True, show_legend=True, legend_group=""):
@@ -151,6 +148,7 @@ def get_2d_plots(region_index):
 
     region_index = 3
     show_html = True
+    cluster_size_index = 6
 
     if len(sys.argv) >= 2:
         region_index = int(sys.argv[1])
@@ -332,7 +330,7 @@ def get_2d_plots(region_index):
                 _nx = nuclei_x_list[nid]
                 _ny = nuclei_y_list[nid]
                 _nz = nuclei_z_list[nid]
-                if abs(_nx - _vx) < cluster_range and abs(_ny - _vy) < cluster_range:
+                if abs(_nx - _vx) < cluster_range and abs(_ny - _vy) < cluster_range and abs(_nz - _vz) <= 0.5:
                     _dist = math.sqrt((_nx - _vx) ** 2 + (_ny - _vy) ** 2 + (_nz - _vz) ** 2)
                     if _dist <= cluster_range:
                         cluster_size_dict[_type][vid] += 1
@@ -443,7 +441,7 @@ def get_2d_plots(region_index):
     v_data["vz"] = vessel_z_list
     v_data["color"] = v_color
     v_data["size"] = v_size
-    v_data['cluster'] = [item * 3 for item in cluster_size_dict['all']]
+    v_data['cluster'] = [item * cluster_size_index for item in cluster_size_dict['all']]
     v_df = pd.DataFrame(v_data)
     # print(v_df)
 
@@ -471,45 +469,8 @@ def get_2d_plots(region_index):
     s_df_one = generate_one_line_df(sd_df, key='s')
     # print(s_df_one)
 
-    traces_n = []
-    for cell_type in set(nuclei_type_list):
-        traces_n.append(generate_nuclei_scatter(n_df, cell_type,
-                                                legend_group=cell_dict[cell_type]['group']))
-    trace_v = generate_other_scatter(v_df, key='v', name=cell_dict[vessel_replace]['legend'],
-                                     symbol_name=vessel_replace, visible=True,
-                                     legend_group="Cluster Center")
-    trace_s = generate_other_scatter(s_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin', visible=True,
-                                     legend_group="Endothelial & Skin")
-    # traces_vessel_line = generate_line(v_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
-    #                                    color=cell_dict[vessel_replace]['color'], visible=True, legend_group="Link")
-    # traces_skin_line = generate_line(s_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
-    #                                  color=cell_dict['Skin']['color'], visible='legendonly', legend_group="Link")
-    traces_n.extend([trace_v, trace_s, ])  # traces_vessel_line, traces_skin_line])
-    main_fig_count = len(traces_n)
-
-    image_hyperlink = f'https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_0{region_index:02d}.jpg'
-    main_subtitle = f'<br><sup>Region {region_index} / Donor {donor_dict[region_index]}  <a href="{image_hyperlink}">Virtual H&E Image Preview</a></sup>'
-    hist_subtitle = '<br><sup>Histogram</sup>'
-    horizontal_spacing = 0.03
-    fig = make_subplots(
-        rows=3, cols=2,
-        column_widths=[1.0, 0],
-        row_heights=[0.7, 0.2, 0.1],
-        specs=[
-            [{"type": "Scatter3d", "colspan": 2}, None, ],
-            [{"type": "Histogram"}, None],  # {"type": "Histogram"}
-            [{"type": "Scatter"}, None],  # {"type": "Scatter"}
-        ],
-        horizontal_spacing=horizontal_spacing, vertical_spacing=0.02, shared_xaxes=True,
-        subplot_titles=[f'Vascular Common Coordinate Framework 3D Visualization {main_subtitle}',
-                        f'Distance to {vessel_replace} Cells{hist_subtitle}', ],
-        # f'Distance to Skin Surface{hist_subtitle}',
-    )
-    for trace_n in traces_n:
-        fig.add_trace(trace_n, 1, 1)
-
     # layers display
-    layer_tol = 1
+    layer_tol = 0.55
     z_count = 24
 
     traces_dict = {}
@@ -541,11 +502,11 @@ def get_2d_plots(region_index):
                                                   visible=False, show_legend=False, legend_group="Cluster Center")
         trace_s = generate_other_scatter(zs_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin',
                                          visible=False, show_legend=False, legend_group="Vessel & Skin")
-        traces_vessel_line = generate_line(zv_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
-                                           color='grey', visible=False, show_legend=False, legend_group="Link")
-        traces_skin_line = generate_line(zs_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
-                                         color='grey', visible=False, show_legend=False, legend_group="Link")
-        traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
+        # traces_vessel_line = generate_line(zv_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
+        #                                    color='grey', visible=False, show_legend=False, legend_group="Link")
+        # traces_skin_line = generate_line(zs_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
+        #                                  color='grey', visible=False, show_legend=False, legend_group="Link")
+        traces_n.extend([trace_v, trace_s, ])  # traces_vessel_line, traces_skin_line])
         for trace_n in traces_n:
             traces_dict[layer].append(trace_n)
     return traces_dict

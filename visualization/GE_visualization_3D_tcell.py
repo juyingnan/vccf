@@ -240,7 +240,7 @@ for i in range(len(n_columns['X'])):
 #             nuclei_image[i + 1][j + 1] *= 0
 #             nuclei_id_list.append(_nid)
 #             _nid += 1
-print("Nuclei & Damage count: ", len(nuclei_x_list))
+# print("Nuclei & Damage count: ", len(nuclei_x_list))
 x_min, x_max = min(nuclei_x_list), max(nuclei_x_list)
 y_min, y_max = min(nuclei_y_list), max(nuclei_y_list)
 z_min, z_max = min(nuclei_z_list), max(nuclei_z_list)
@@ -260,10 +260,10 @@ skin_output_path = os.path.join(output_root_path, skin_output_name)
 damage_type_list = ['P53', 'KI67', 'DDB2']
 
 # reduce skin size
-print(f"skin x min/max: {min(skin_x_list)} - {max(skin_x_list)}")
-print(f"skin y min/max: {min(skin_y_list)} - {max(skin_y_list)}")
-print(f"skin z min/max: {min(skin_z_list)} - {max(skin_z_list)}")
-print(f"Original skin size: {len(skin_x_list)}")
+# print(f"skin x min/max: {min(skin_x_list)} - {max(skin_x_list)}")
+# print(f"skin y min/max: {min(skin_y_list)} - {max(skin_y_list)}")
+# print(f"skin z min/max: {min(skin_z_list)} - {max(skin_z_list)}")
+# print(f"Original skin size: {len(skin_x_list)}")
 
 temp_dict = {}
 for i in range(len(skin_x_list)):
@@ -278,7 +278,7 @@ for key in temp_dict:
     skin_y_list.append(key[0])
     skin_z_list.append(key[1])
     skin_x_list.append(temp_dict[key])
-print(f"Sampled skin size: {len(skin_x_list)}")
+# print(f"Sampled skin size: {len(skin_x_list)}")
 
 # calculate blood vessel distance
 for nid in range(len(nuclei_id_list)):
@@ -308,9 +308,9 @@ for nid in range(len(nuclei_id_list)):
     nuclei_nearest_skin_x_list.append(_min_skin_x)
     nuclei_nearest_skin_y_list.append(_min_skin_y)
     nuclei_nearest_skin_z_list.append(_min_skin_z)
-    if nid % 100 == 0:
-        print('\r' + str(nid), end='')
-print()
+#     if nid % 100 == 0:
+#         print('\r' + str(nid), end='')
+# print()
 
 # calculate clusters
 cluster_range = 30
@@ -432,7 +432,7 @@ n_data["skin_distance"] = nuclei_skin_distance_list
 n_data["color"] = n_color
 
 n_df = pd.DataFrame(n_data)
-print(n_df)
+# print(n_df)
 
 v_data = dict()
 v_data["vx"] = vessel_x_list
@@ -442,7 +442,7 @@ v_data["color"] = v_color
 v_data["size"] = v_size
 v_data['cluster'] = [item * 3 for item in cluster_size_dict['all']]
 v_df = pd.DataFrame(v_data)
-print(v_df)
+# print(v_df)
 
 s_data = dict()
 s_data["sx"] = skin_x_list
@@ -453,20 +453,20 @@ s_data["size"] = s_size
 s_df = pd.DataFrame(s_data)
 skin_display_rate = 1
 s_df = s_df[s_df.index % skin_display_rate == 0]
-print(s_df)
-print(f"Displayed skin size: {len(s_df)}")
+# print(s_df)
+# print(f"Displayed skin size: {len(s_df)}")
 
 # https://stackoverflow.com/questions/56723792/plotly-how-to-efficiently-plot-a-large-number-of-line-shapes-where-the-points-a
 
 # blood vessel distance
 vd_df = n_df[n_df['vessel_distance'] >= 0]
 v_df_one = generate_one_line_df(vd_df, key='v')
-print(v_df_one)
+# print(v_df_one)
 
 # skin surface distance
 sd_df = n_df[n_df['skin_distance'] >= 0]
 s_df_one = generate_one_line_df(sd_df, key='s')
-print(s_df_one)
+# print(s_df_one)
 
 traces_n = []
 for cell_type in set(nuclei_type_list):
@@ -529,12 +529,12 @@ sbin_dict = dict(start=0, end=5000, size=sbin_size)
 #                                          ['vessel', 'skin'], [1, 2]):
 for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68', 'all'], ],
                                          ['vessel', ], [1, ]):
-    print(cell_list, distance_type, col)
+    # print(cell_list, distance_type, col)
     hist_data = []
     hist_names = []
     for cell_type in cell_list:
         data = cluster_size_dict[cell_type]
-        print(cell_type, len(data))
+        # print(cell_type, len(data))
         if len(data) > 5:
             hist_data.append(data)
             hist_names.append(cell_type)

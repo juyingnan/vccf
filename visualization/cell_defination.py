@@ -129,6 +129,13 @@ cell_dict = {
         'size': 5,
         'histogram_location': [0, 0],
     },
+    'all': {
+        'group': 'Vessel',
+        'color': "gray",
+        'marker': 'diamond',
+        'size': 5,
+        'histogram_location': [0, 0],
+    },
 }
 
 cell_dict['Macrophage'] = cell_dict['CD68']

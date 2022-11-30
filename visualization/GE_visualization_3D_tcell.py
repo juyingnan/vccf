@@ -49,7 +49,7 @@ def generate_nuclei_scatter(df, ct, visible=True, show_legend=True, legend_group
                         legendgroup=legend_group,
                         legendgrouptitle_text=legend_group,
                         marker=dict(
-                            size=df[df['type'] == ct]["size"],
+                            size=3,
                             color=df[df['type'] == ct]["color"],
                             symbol=cell_dict[ct]['marker'],
                             opacity=0.75,
@@ -69,12 +69,22 @@ def generate_cluster_center_scatter(df, key, name, symbol_name, visible=True, sh
                         legendgrouptitle_text=legend_group,
                         marker=dict(
                             size=df["cluster"],
-                            color=df["color"],
+                            color=df["cluster"]/3,  # df["color"],
+                            colorscale='thermal',
+                            colorbar=dict(
+                                title='cluster size',
+                            ),
                             symbol=cell_dict[symbol_name]['marker'],
                             opacity=0.5,
                             line=dict(
                                 color=df["color"],
                                 width=0)),
+                        hovertemplate=
+                        '<i>X</i>: %{x:.2f}<br>' +
+                        '<i>Y</i>: %{y:.2f}<br>' +
+                        '<i>Z</i>: %{z:.2f}<br>' +
+                        '<b><i>Cluster</i>: %{text}</b>',
+                        text=df["cluster"]/3,
                         visible=visible)
 
 
@@ -205,12 +215,12 @@ for i in range(len(n_columns['X'])):
                 skin_x_list.append(x_temp)
                 skin_y_list.append((float(n_columns['Y'][i]) + offset_y) * scale - top_left[1])
                 skin_z_list.append(z * scale)
-        else:
-            nuclei_id_list.append(i)
-            nuclei_type_list.append(n_columns['cell_type'][i])
-            nuclei_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
-            nuclei_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
-            nuclei_z_list.append(z * scale)
+            continue
+        nuclei_id_list.append(i)
+        nuclei_type_list.append(n_columns['cell_type'][i])
+        nuclei_x_list.append(float(n_columns['X'][i]) * scale - top_left[0])
+        nuclei_y_list.append(float(n_columns['Y'][i]) * scale - top_left[1])
+        nuclei_z_list.append(z * scale)
 # nuclei_class_list = [int(value) for value in n_columns['Class']]
 
 # nuclei_image = io.imread('../images/nuclei_ml.png')  # [::-1, :]
@@ -271,7 +281,6 @@ for key in temp_dict:
 print(f"Sampled skin size: {len(skin_x_list)}")
 
 # calculate blood vessel distance
-cluster_size_list = [0 for _ in range(len(vessel_x_list))]
 for nid in range(len(nuclei_id_list)):
     _min_vessel_dist = 100  # 1000 * scale
     _min_skin_dist = 50000 * scale
@@ -286,53 +295,11 @@ for nid in range(len(nuclei_id_list)):
     _min_skin_z = _nz
     if nuclei_type_list[nid] in damage_type_list:
         _min_vessel_dist = -1
-        _has_near = False
-        z_threshold = 1
-        y_threshold = 2
-        while not _has_near:
-            y_threshold += 0.5
-            if y_threshold >= 7.5:
-                print("NO NEAR")
-                _min_skin_dist = 0
-                break
-            for v in range(len(skin_x_list)):
-                _sx = skin_x_list[v]
-                _sy = skin_y_list[v]
-                _sz = skin_z_list[v]
-                # add new criteria for skin
-                # if abs(_sz - _nz <= 1) and abs(_nx - _sx) < _min_skin_dist and abs(_ny - _sy) < _min_skin_dist:
-                if _sx < _nx \
-                        and abs(_sz - _nz) <= z_threshold \
-                        and abs(_nx - _sx) <= _min_skin_dist \
-                        and abs(_ny - _sy) <= y_threshold:
-                    _dist = math.sqrt((_nx - _sx) ** 2 + (_ny - _sy) ** 2 + (_nz - _sz) ** 2)
-                    if _dist < _min_skin_dist:
-                        _has_near = True
-                        _min_skin_dist = _dist
-                        _min_skin_x = _sx
-                        _min_skin_y = _sy
-                        _min_skin_z = _sz
+        _min_skin_dist = 0
     else:
         _min_skin_dist = -1
-        _has_near = False
-        temp_v = -1
-        for v in range(len(vessel_x_list)):
-            _vx = vessel_x_list[v]
-            _vy = vessel_y_list[v]
-            _vz = vessel_z_list[v]
-            if abs(_nx - _vx) < _min_vessel_dist and abs(_ny - _vy) < _min_vessel_dist:
-                _dist = math.sqrt((_nx - _vx) ** 2 + (_ny - _vy) ** 2 + (_nz - _vz) ** 2)
-                if _dist < _min_vessel_dist:
-                    _has_near = True
-                    _min_vessel_dist = _dist
-                    _min_vessel_x = _vx
-                    _min_vessel_y = _vy
-                    _min_vessel_z = _vz
-                    temp_v = v
-        if not _has_near:
-            print("NO NEAR")
-        elif temp_v > 0:
-            cluster_size_list[temp_v] += 1
+        _min_vessel_dist = 0
+
     nuclei_vessel_distance_list.append(_min_vessel_dist)
     nuclei_nearest_vessel_x_list.append(_min_vessel_x)
     nuclei_nearest_vessel_y_list.append(_min_vessel_y)
@@ -344,6 +311,30 @@ for nid in range(len(nuclei_id_list)):
     if nid % 100 == 0:
         print('\r' + str(nid), end='')
 print()
+
+# calculate clusters
+cluster_range = 30
+cluster_size_dict = {}
+for item in ['T-Helper', 'T-Reg', 'T-Killer', 'CD68', ]:
+    cluster_size_dict[item] = [0 for _ in range(len(vessel_x_list))]
+for vid in range(len(vessel_x_list)):
+    _vx = vessel_x_list[vid]
+    _vy = vessel_y_list[vid]
+    _vz = vessel_z_list[vid]
+    for nid in range(len(nuclei_id_list)):
+        _type = nuclei_type_list[nid]
+        if _type not in damage_type_list:
+            _nx = nuclei_x_list[nid]
+            _ny = nuclei_y_list[nid]
+            _nz = nuclei_z_list[nid]
+            if abs(_nx - _vx) < cluster_range and abs(_ny - _vy) < cluster_range:
+                _dist = math.sqrt((_nx - _vx) ** 2 + (_ny - _vy) ** 2 + (_nz - _vz) ** 2)
+                if _dist <= cluster_range:
+                    cluster_size_dict[_type][vid] += 1
+cluster_size_dict['all'] = [sum(x) for x in zip(*[cluster_size_dict['T-Helper'],
+                                                  cluster_size_dict['T-Reg'],
+                                                  cluster_size_dict['T-Killer'],
+                                                  cluster_size_dict['CD68']])]
 
 assert len(nuclei_id_list) == len(nuclei_x_list) == len(nuclei_y_list) == len(nuclei_z_list) == \
        len(nuclei_vessel_distance_list) == len(nuclei_skin_distance_list) == \
@@ -370,19 +361,18 @@ my_csv.write_csv(nuclei_output_path,
                   'skin_distance', 'sx', 'sy', 'sz'])
 
 my_csv.write_csv(vessel_output_path,
-                 [vessel_x_list, vessel_y_list, vessel_z_list, cluster_size_list],
-                 ['x', 'y', 'z', 'cluster_size'])
+                 [vessel_x_list, vessel_y_list, vessel_z_list,
+                  cluster_size_dict['all'],
+                  cluster_size_dict['T-Helper'],
+                  cluster_size_dict['T-Reg'],
+                  cluster_size_dict['T-Killer'],
+                  cluster_size_dict['CD68']],
+                 ['x', 'y', 'z', 'cluster_all', 'cluster_T-Helper',
+                  'cluster_T-Reg', 'cluster_T-Killer', 'cluster_CD68'])
 
-my_csv.write_csv(skin_output_path,
-                 [skin_x_list, skin_y_list, skin_z_list],
-                 ['x', 'y', 'z'])
-
-# import matplotlib.pyplot as plt
-#
-# # plt.scatter(vessel_x_list, vessel_y_list, c='r')
-# # plt.scatter(nuclei_x_list, nuclei_y_list, c='b')
-# plt.hist(nuclei_distance_list, bins=100)
-# plt.show()
+# my_csv.write_csv(skin_output_path,
+#                  [skin_x_list, skin_y_list, skin_z_list],
+#                  ['x', 'y', 'z'])
 
 
 n_color = [cell_dict[cell_type]['color'] for cell_type in nuclei_type_list]
@@ -450,9 +440,7 @@ v_data["vy"] = vessel_y_list
 v_data["vz"] = vessel_z_list
 v_data["color"] = v_color
 v_data["size"] = v_size
-v_data['cluster'] = [
-    GE_visualization_3D_tcell2d.cluster_size_dict[item] if item in GE_visualization_3D_tcell2d.cluster_size_dict else 30
-    for item in cluster_size_list]
+v_data['cluster'] = [item * 3 for item in cluster_size_dict['all']]
 v_df = pd.DataFrame(v_data)
 print(v_df)
 
@@ -484,16 +472,17 @@ traces_n = []
 for cell_type in set(nuclei_type_list):
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
-trace_v = generate_cluster_center_scatter(v_df, key='v', name=cell_dict[vessel_replace]['legend'],
+trace_v = generate_cluster_center_scatter(v_df, key='v', name='Center:T-helper',
+                                          # name=cell_dict[vessel_replace]['legend'],
                                           symbol_name=vessel_replace, visible=True,
                                           legend_group="Cluster Center")
 trace_s = generate_other_scatter(s_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin', visible=True,
                                  legend_group="Endothelial & Skin")
-traces_vessel_line = generate_line(v_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
-                                   color=cell_dict[vessel_replace]['color'], visible=True, legend_group="Link")
-traces_skin_line = generate_line(s_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
-                                 color=cell_dict['Skin']['color'], visible='legendonly', legend_group="Link")
-traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
+# traces_vessel_line = generate_line(v_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
+#                                    color=cell_dict[vessel_replace]['color'], visible=True, legend_group="Link")
+# traces_skin_line = generate_line(s_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
+#                                  color=cell_dict['Skin']['color'], visible='legendonly', legend_group="Link")
+traces_n.extend([trace_v, trace_s, ])  # traces_vessel_line, traces_skin_line])
 main_fig_count = len(traces_n)
 
 image_hyperlink = f'https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_0{region_index:02d}.jpg'
@@ -523,36 +512,6 @@ z_count = 24
 
 traces_dict = GE_visualization_3D_tcell2d.get_2d_plots(region_index)
 for layer in range(0, z_count):
-    # zmin = (layer - layer_tol) * scale
-    # zmax = (layer + layer_tol) * scale
-    # zn_df = n_df[n_df['nz'].between(zmin, zmax, inclusive="neither")]
-    # zv_df = v_df[v_df['vz'].between(zmin, zmax, inclusive="neither")]
-    # zs_df = s_df[s_df['sz'].between(zmin, zmax, inclusive="neither")]
-    #
-    # # blood vessel distance
-    # zvd_df = zn_df[zn_df['vessel_distance'] >= 0]
-    # zv_df_one = generate_one_line_df(zvd_df, key='v')
-    # # print(zv_df_one)
-    #
-    # # skin surface distance
-    # zsd_df = zn_df[zn_df['skin_distance'] >= 0]
-    # zs_df_one = generate_one_line_df(zsd_df, key='s')
-    # # print(zs_df_one)
-    #
-    # traces_n = []
-    # for cell_type in set(nuclei_type_list):
-    #     traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
-    #                                             legend_group="Damage" if cell_type in damage_type_list else "Cell"))
-    # trace_v = generate_other_scatter(zv_df, key='v', name=cell_dict[vessel_replace]['legend'],
-    #                                  symbol_name=vessel_replace,
-    #                                  visible=False, show_legend=False, legend_group="Cluster Center")
-    # trace_s = generate_other_scatter(zs_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin',
-    #                                  visible=False, show_legend=False, legend_group="Vessel & Skin")
-    # traces_vessel_line = generate_line(zv_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
-    #                                    color='grey', visible=False, show_legend=False, legend_group="Link")
-    # traces_skin_line = generate_line(zs_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
-    #                                  color='grey', visible=False, show_legend=False, legend_group="Link")
-    # traces_n.extend([trace_v, trace_s, traces_vessel_line, traces_skin_line])
     for trace_n in traces_dict[layer]:
         fig.add_trace(trace_n, 1, 1)
 
@@ -565,32 +524,20 @@ bin_dict = dict(start=0, end=20, size=bin_size)
 sbin_size = 10
 sbin_dict = dict(start=0, end=5000, size=sbin_size)
 
-# curve fitting
-# from scipy import stats
-#
-# data_all = n_df["vessel_distance"].to_numpy()
-# # data_all.sort()
-# threshold = len(data_all) - np.count_nonzero(data_all)
-# data_all = data_all[threshold:]
-# curve_fit_all = stats.exponweib.fit(data_all, floc=0)
-# pdf = stats.exponweib.pdf(data_all, *curve_fit_all)
-# trace_curve_all = go.Scatter(x=data_all, y=pdf * len(data_all) * bin_size,
-#                              marker=dict(color='grey'),
-#                              showlegend=False,
-#                              name='weibull fitting')
-
-
 # add displot
 # for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68'], ["P53", "KI67", "DDB2", ]],  # ]],
 #                                          ['vessel', 'skin'], [1, 2]):
-for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68'], ],
+for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD68', 'all'], ],
                                          ['vessel', ], [1, ]):
     print(cell_list, distance_type, col)
     hist_data = []
     hist_names = []
-    data = cluster_size_list
-    hist_data.append(data)
-    hist_names.append('T-Helper')
+    for cell_type in cell_list:
+        data = cluster_size_dict[cell_type]
+        print(cell_type, len(data))
+        if len(data) > 5:
+            hist_data.append(data)
+            hist_names.append(cell_type)
 
     fig2 = ff.create_distplot(hist_data, hist_names, bin_size=bin_size if distance_type == 'vessel' else sbin_size,
                               histnorm='probability')  # , curve_type='normal')
@@ -603,7 +550,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
         #                            marker_color=color_dict[hist_names[i]], showlegend=False,
         #                            ), row=2, col=col)
         fig.add_trace(go.Histogram(
-            x=cluster_size_list,
+            x=cluster_size_dict[hist_names[i]],
             xbins=bin_dict if distance_type == 'vessel' else sbin_dict,
             opacity=0.6,
             marker=dict(color=cell_dict[hist_names[i]]['color']),
@@ -617,7 +564,7 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
                                      line=dict(color=cell_dict[hist_names[i]]['color'], width=2), showlegend=False,
                                      ), row=2, col=col)
         n_df[f'{hist_names[i]}_pos'] = 0.1 * (i + 1)
-        fig.add_trace(go.Scatter(x=cluster_size_list,
+        fig.add_trace(go.Scatter(x=cluster_size_dict[hist_names[i]],
                                  y=n_df[f'{hist_names[i]}_pos'],
                                  mode='markers',
                                  opacity=0.6,
@@ -783,6 +730,7 @@ fig.update_layout(
     ),
     plot_bgcolor=background_color,
 )
+fig.update_layout(coloraxis = {'colorscale':'thermal'})
 
 fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}_thelper.html"))
 if show_html:

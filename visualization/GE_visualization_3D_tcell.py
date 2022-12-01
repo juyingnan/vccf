@@ -147,6 +147,7 @@ bottom_right = [1000000, 1000000]
 region_index = 3
 show_html = True
 cluster_size_index = 6
+cluster_range = 30
 
 if len(sys.argv) >= 2:
     region_index = int(sys.argv[1])
@@ -315,7 +316,6 @@ for nid in range(len(nuclei_id_list)):
 # print()
 
 # calculate clusters
-cluster_range = 30
 cluster_size_dict = {}
 for item in ['T-Helper', 'T-Reg', 'T-Killer', 'CD68', ]:
     cluster_size_dict[item] = [0 for _ in range(len(vessel_x_list))]
@@ -734,6 +734,6 @@ fig.update_layout(
 )
 fig.update_layout(coloraxis={'colorscale': 'thermal'})
 
-fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}_thelper.html"))
+fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}_thelper_{cluster_range}.html"))
 if show_html:
     fig.show()

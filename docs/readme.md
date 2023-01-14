@@ -155,7 +155,7 @@ Markers of UV damage, repair and proliferation in epidermis and distance to skin
 
 **Vascular Common Coordinate Framework Visualization - Immune cells cluster**
 
-These interactive plots show the 3D view of the distribution and clustering of immune cells.
+These interactive plots show the 3D view of the distribution and clustering of immune cells. The immune cell cluster view allows for the identification of areas with high immune cell density through the use of heatmap-like bubbles of varying sizes and colors. Large, yellow bubbles indicate a high density of immune cells, while small, dark blue bubbles indicate a lower density.
 
 External link to the 3D view for the immune cells clustering views:
 
@@ -173,9 +173,12 @@ Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1
 
 **Stastics comparison between 2D and 3D segmentation**
 
-Average number of all immune cells within 30 um of a T Helper cell in 2D (red) and 3D (blue) for each donor sample. Overall, the number of immune cellswithin 30 um of a T Helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T Helpercell. There was variation across all regions, for example, region 7 there a cluster of 11 immune cells within 30 μm were foun d in 3D while 3 cells were quantified in 2D.
+(A) Average number of all immune cells within 30 um of a T Helper cell in 2D (red) and 3D (blue) for each donor sample. Overall, the number of immune cellswithin 30 um of a T Helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T Helpercell. There was variation across all regions, for example, region 7 there a cluster of 11 immune cells within 30 μm were foun d in 3D while 3 cells were quantified in 2D.
 
+**(A)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/10.png" alt="alt text" title="image Title" />
+
+**(B)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/11.png" alt="alt text" title="image Title" />
 
 Histogram of distance to nearest endothelial cells from each immune cell (CD68, T-Helper, T-Killer, and T-Reg). 3D distance tends to have much shorter distance (3D was capped at 1000 um for visualization. Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16)
@@ -200,7 +203,7 @@ The Visible Human Project skin, male (left) and female (right)
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - immune cells 3D mesh view**
+**Future work: Immune cells 3D mesh view**
 
 These interactive plots show the 3D representation of a set of triangles with vertices that outline the immune cells. This part is our future work and not included in the paper. These visualizations allow for the observation of the spatial distribution of immune cells within a skin sample through the use of 3D meshes and polygons. These distributions highlight the differences in both the spatial arrangements and overlap of various types of immune cells. The 3D meshes and polygons are created based on the spatial coordinates of the immune cells, and the shape of the mesh can also be influenced by the parameter alphahull.
 

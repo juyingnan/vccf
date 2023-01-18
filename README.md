@@ -8,7 +8,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 ---
 
-[Link to preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/2021.11.09.467810v1)
+[Link to preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/2022.03.30.486438v1)
 
 [Link to MATRICS-A code on GitHub](https://github.com/hubmapconsortium/MATRICS-A)
 
@@ -31,7 +31,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 - **Region 9:** 10.35079/HBM494.XDQW.356, [https://doi.org/10.35079/HBM494.XDQW.356](https://doi.org/10.35079/HBM494.XDQW.356)
 - **Region 10:** 10.35079/HBM238.ZKPC.934,[https://doi.org/10.35079/HBM238.ZKPC.934](https://doi.org/10.35079/HBM238.ZKPC.934)
 - **Region 11:** 10.35079/HBM975.FVCG.922, [https://doi.org/10.35079/HBM975.FVCG.922](https://doi.org/10.35079/HBM975.FVCG.922)
-- **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364)
+<!-- - **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364) -->
 
 ---
 
@@ -115,9 +115,15 @@ External link to the 3D view for immune cells:
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_11.html)
 
-**Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell**
+**Example Region 4: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell**
 
-<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/7.png" alt="alt text" title="image Title" />
+3D distance between immune cells and nearest endothelial cells for region 4 (donor 12, male, 48 years, superior abdomen, mild sun exposure); (ii) and histogram plots showing the highest distribution of immune cells within 50-200 um and higher counts of T killer cells within 50 um
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/15.png" alt="alt text" title="image Title" />
+
+**Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell (RGB rendering version)**
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/14.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -127,15 +133,57 @@ These interactive plots show the 3D view of the skin and the distribution of p53
 
 External link to the 3D view for epithelial cells:
 
-[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_1.htmltml/region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_2.htmlhtml) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_3.html/html/region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_4.htmlegion_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_5.htmlml/region_5.html) /
+[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_2.html) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_5.html) /
 
-[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_8.htmltml/region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_9.html.io/html/region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_10.html/region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
+[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
 
-Example Region 11: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface
+**Example Region 11: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
+
+Markers of UV damage, repair and proliferation in epidermis and distance to skin surface represented as 3D distance plots from the skin surface and histogram distribution. Region 11 (upper arm, mild sun exposure, 41 years) shows a higher distribution of DDB2 positive cells within 200 um distance from the skin surface and lower distribution of cells positive for p53 and Ki67
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/6.png" alt="alt text" title="image Title" />
+
+**Example Region 7: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
+
+Markers of UV damage, repair and proliferation in epidermis and distance to skin surface represented as 3D distance plots from the skin surface and histogram distribution.  Region 7 (lower forearm, marked sun exposure, 69 years) shows highest distribution of Ki67 positive cells within 200 um distance from the skin surface, followed by p53 and lowest DDB2 positive cells
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/16.png" alt="alt text" title="image Title" />
+
+---
+
+**Vascular Common Coordinate Framework Visualization - Immune cells cluster**
+
+These interactive plots show the 3D view of the distribution and clustering of immune cells. The immune cell cluster view allows for the identification of areas with high immune cell density through the use of heatmap-like bubbles of varying sizes and colors. Large, yellow bubbles indicate a high density of immune cells, while small, dark blue bubbles indicate a lower density.
+
+External link to the 3D view for the immune cells clustering views:
+
+[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_1_30.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_2_30.html) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_3_30.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_4_30.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_5_30.html) /
+
+[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_7_30.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_8_30.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_9_30.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_10_30.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_11_30.html)
+
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/immune_cluster/immune_cluster_region_9_30.html)
+
+Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1, male aged 60 years, sample was from the lower distal arm region, with marked sun exposure).
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/12.png" alt="alt text" title="image Title" />
+
+---
+
+**Stastics comparison between 2D and 3D segmentation**
+
+(A) Average number of all immune cells within 30 um of a T Helper cell in 2D (red) and 3D (blue) for each donor sample. Overall, the number of immune cellswithin 30 um of a T Helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T Helpercell. There was variation across all regions, for example, region 7 there a cluster of 11 immune cells within 30 μm were foun d in 3D while 3 cells were quantified in 2D.
+
+**(A)**
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/10.png" alt="alt text" title="image Title" />
+
+**(B)**
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/11.png" alt="alt text" title="image Title" />
+
+Histogram of distance to nearest endothelial cells from each immune cell (CD68, T-Helper, T-Killer, and T-Reg). 3D distance tends to have much shorter distance (3D was capped at 1000 um for visualization. Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16)
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/13.png" alt="alt text" title="image Title" />
 
 ---
 
@@ -153,3 +201,22 @@ You can explore all the 3D models of the CCF-HRA at [https://hubmapconsortium.gi
 
 The Visible Human Project skin, male (left) and female (right)
 
+---
+
+**Future work: Immune cells 3D mesh view**
+
+These interactive plots show the 3D representation of a set of triangles with vertices that outline the immune cells. This part is our future work and not included in the paper. These visualizations allow for the observation of the spatial distribution of immune cells within a skin sample through the use of 3D meshes and polygons. These distributions highlight the differences in both the spatial arrangements and overlap of various types of immune cells. The 3D meshes and polygons are created based on the spatial coordinates of the immune cells, and the shape of the mesh can also be influenced by the parameter alphahull.
+
+External link to the 3D mesh view for the immune cells:
+
+[Region 1](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_1.html) / [Region 2](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_2.html) / [Region 3](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_3.html) / [Region 4](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_4.html) / [Region 5](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_5.html) /
+
+[Region 7](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_7.html) / [Region 8](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_8.html) / [Region 9](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_9.html) / [Region 10](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_10.html) / [Region 11](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_11.html)
+
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/3d_mesh/3d_mesh_region_9.html)
+
+**Example Region 9: 3D mesh view from region 9 (donor 1, male aged 60 years, sample was from the lower distal arm region, with marked sun exposure).**
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/17.png" alt="alt text" title="image Title" />
+
+---

@@ -10,7 +10,7 @@ target_root_path = r"G:\GE\skin_12_data"
 file_paths = []
 
 # no 12
-# regions.pop()
+regions.pop()
 
 for region_id in regions:
     target_file_path = target_root_path + rf"\region_{region_id}\nuclei_epidermis.csv"
@@ -137,8 +137,8 @@ for cell_type in cell_type_list:
 
 annotations = go.Scatter(
     x=ages,
-    y=[520, 500, 520, 520, 520, 520, 520, 520, 500, 520],
-    # y=[1400, 1400, 1400, 1300, 1400, 1400, 1400, 1400, 1300, 1400],
+    # y=[520, 500, 520, 520, 520, 520, 520, 520, 500, 520],
+    y=[1300, 1300, 1300, 1200, 1300, 1300, 1300, 1300, 1200, 1300],
     marker={
         "color": "LightBlue",
         "line": {
@@ -181,7 +181,7 @@ fig.update_layout(
 fig.update_xaxes(title_text="Age", row=5, col=1)
 fig.update_yaxes(title_text=f"Nearest Distance {title_dict['damage']['yaxis']}", row=3, col=1)
 fig.update_yaxes(title_text="Percentage", row=2, col=1, secondary_y=True)
-fig.update_yaxes(range=[-99, 599])  # 1500
+fig.update_yaxes(range=[-99, 1400])  # 1500
 
 # subtitle location
 vertical_offset = 0.02

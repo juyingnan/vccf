@@ -113,7 +113,9 @@ scale = 16 * micro_per_pixel
 top_left = [0, 0]
 bottom_right = [1000000, 1000000]
 
-region_index = 8
+damage_list = ["P53","KI67","DDB2",]
+
+region_index = 7
 show_html = True
 
 if len(sys.argv) >= 2:
@@ -513,7 +515,8 @@ print(s_df_one)
 
 traces_n = []
 for cell_type in set(nuclei_type_list):
-    traces_n.append(generate_nuclei_scatter(n_df, cell_type,
+    if cell_type in damage_list:
+        traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
 trace_v = generate_other_scatter(v_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31',
                                  visible='legendonly', legend_group="Endothelial & Skin")
@@ -569,7 +572,8 @@ for layer in range(0, z_count):
 
     traces_n = []
     for cell_type in set(nuclei_type_list):
-        traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
+        if cell_type in damage_list:
+            traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
                                                 legend_group="Damage" if cell_type in damage_type_list else "Cell"))
     trace_v = generate_other_scatter(zv_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31',
                                      visible=False, show_legend=False, legend_group="Vessel & Skin")

@@ -195,7 +195,7 @@ Initially, reference objects are created using data from the Visible Human male 
 
 On March 12, 2022, a total of 50 reference organs--including the human skin--became available in GLB format. Each organ can be viewed and explored using free web browsers such as [Babylon.js.](https://sandbox.babylonjs.com/)
 
-You can explore all the 3D models of the CCF-HRA at [https://hubmapconsortium.github.io/ccf/pages/ccf-3d-reference-library.html](https://hubmapconsortium.github.io/ccf/pages/ccf-3d-reference-library.html)
+You can explore all the 3D models of the HRA at [https://humanatlas.io/3d-reference-library](https://humanatlas.io/3d-reference-library)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/8.png" alt="alt text" title="image Title" />
 

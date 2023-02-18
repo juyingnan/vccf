@@ -31,7 +31,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 - **Region 9:** 10.35079/HBM494.XDQW.356, [https://doi.org/10.35079/HBM494.XDQW.356](https://doi.org/10.35079/HBM494.XDQW.356)
 - **Region 10:** 10.35079/HBM238.ZKPC.934,[https://doi.org/10.35079/HBM238.ZKPC.934](https://doi.org/10.35079/HBM238.ZKPC.934)
 - **Region 11:** 10.35079/HBM975.FVCG.922, [https://doi.org/10.35079/HBM975.FVCG.922](https://doi.org/10.35079/HBM975.FVCG.922)
-<!-- - **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364) -->
+- **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364)
 
 ---
 

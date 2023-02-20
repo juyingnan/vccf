@@ -671,7 +671,7 @@ fig.update_yaxes(rangemode='tozero', tickfont=dict(size=10), row=3)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
-                 title=dict(text="Nearest Count # (<15μm)", standoff=5, font_size=14), row=3, )
+                 title=dict(text=f"Nearest Count # (<{cluster_range}μm)", standoff=5, font_size=14), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 fig.update_xaxes(range=[0, 15], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)

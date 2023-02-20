@@ -66,8 +66,8 @@ cell_dict = {
         'histogram_location': [2, 4],
     },
     'P53': {
-        'legend': "P53",
-        'full': "P53",
+        'legend': "P53+",
+        'full': "P53+",
         'short': "P53",
         'group': "UV Damage",
         'color': "chocolate",
@@ -76,8 +76,8 @@ cell_dict = {
         'histogram_location': [3, 2],
     },
     'KI67': {
-        'legend': "KI67",
-        'full': "KI67",
+        'legend': "KI67+",
+        'full': "KI67+",
         'short': "KI67",
         'group': 'Proliferation',
         'color': "cyan",
@@ -86,8 +86,8 @@ cell_dict = {
         'histogram_location': [3, 3],
     },
     'DDB2': {
-        'legend': "DDB2",
-        'full': "DDB2",
+        'legend': "DDB2+",
+        'full': "DDB2+",
         'short': "DDB2",
         'group': "UV Damage",
         'color': "olivedrab",

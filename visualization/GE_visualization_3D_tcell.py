@@ -160,8 +160,10 @@ nuclei_file_name = rf'centroids.csv'
 
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
+# if len(sys.argv) >= 3:
+#     nuclei_file_path = sys.argv[2]
 if len(sys.argv) >= 3:
-    nuclei_file_path = sys.argv[2]
+    cluster_range = int(sys.argv[2])
 
 skin_threshold_dict = {
     1: 1000,
@@ -671,7 +673,7 @@ fig.update_yaxes(rangemode='tozero', tickfont=dict(size=10), row=3)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
 fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
-                 title=dict(text="Nearest Count # (<15μm)", standoff=5, font_size=14), row=3, )
+                 title=dict(text=f"Nearest Count # (<{cluster_range}μm)", standoff=5, font_size=14), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 fig.update_xaxes(range=[0, 15], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
@@ -734,6 +736,6 @@ fig.update_layout(
 )
 fig.update_layout(coloraxis={'colorscale': 'thermal'})
 
-fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}_thelper_{cluster_range}.html"))
+fig.write_html(os.path.join(nuclei_root_path, f"immune_cluster_region_{region_index}_{cluster_range}.html"))
 if show_html:
     fig.show()

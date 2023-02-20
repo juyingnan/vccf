@@ -160,8 +160,10 @@ nuclei_file_name = rf'centroids.csv'
 
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
+# if len(sys.argv) >= 3:
+#     nuclei_file_path = sys.argv[2]
 if len(sys.argv) >= 3:
-    nuclei_file_path = sys.argv[2]
+    cluster_range = int(sys.argv[2])
 
 skin_threshold_dict = {
     1: 1000,
@@ -734,6 +736,6 @@ fig.update_layout(
 )
 fig.update_layout(coloraxis={'colorscale': 'thermal'})
 
-fig.write_html(os.path.join(nuclei_root_path, f"region_{region_index}_thelper_{cluster_range}.html"))
+fig.write_html(os.path.join(nuclei_root_path, f"immune_cluster_region_{region_index}_{cluster_range}.html"))
 if show_html:
     fig.show()

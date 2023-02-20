@@ -161,8 +161,8 @@ def get_2d_plots(region_index, radius):
 
     nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
-    if len(sys.argv) >= 3:
-        nuclei_file_path = sys.argv[2]
+    # if len(sys.argv) >= 3:
+    #     nuclei_file_path = sys.argv[2]
 
     skin_threshold_dict = {
         1: 1000,

@@ -36,8 +36,8 @@ cell_dict = {
         'histogram_location': [0, 0],
     },
     'T-Helper': {
-        'legend': "T helper (CD4)",
-        'full': "T-Helper Cells (CD4)",
+        'legend': "T helper (CD3+CD4+)",
+        'full': "T-Helper Cells (CD3+CD4+)",
         'short': "T-Helper",
         'group': "Immune Cells",
         'color': "blue",
@@ -46,8 +46,8 @@ cell_dict = {
         'histogram_location': [2, 2],
     },
     'T-Reg': {
-        'legend': "T reg (FOXP3)",
-        'full': "T-Regulatory Cells (FOXP3)",
+        'legend': "T reg (CD3+CD4+FOXP3+)",
+        'full': "T-Regulatory Cells (CD3+CD4+FOXP3+)",
         'short': "T-Reg",
         'group': "Immune Cells",
         'color': "mediumspringgreen",
@@ -56,8 +56,8 @@ cell_dict = {
         'histogram_location': [2, 3],
     },
     'T-Killer': {
-        'legend': "T killer (CD8)",
-        'full': "T-Killer Cells (CD8)",
+        'legend': "T killer (CD3+CD8+)",
+        'full': "T-Killer Cells (CD3+CD8+)",
         'short': "T-Killer",
         'group': "Immune Cells",
         'color': "purple",

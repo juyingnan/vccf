@@ -199,7 +199,7 @@ You can explore all the 3D models of the HRA at [https://humanatlas.io/3d-refere
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/8.png" alt="alt text" title="image Title" />
 
-The Visible Human Project skin, male (left) and female (right)
+The Visible Human Project skin, female (left) and male (right)
 
 ---
 

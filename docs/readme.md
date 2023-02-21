@@ -31,7 +31,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 - **Region 9:** 10.35079/HBM494.XDQW.356, [https://doi.org/10.35079/HBM494.XDQW.356](https://doi.org/10.35079/HBM494.XDQW.356)
 - **Region 10:** 10.35079/HBM238.ZKPC.934,[https://doi.org/10.35079/HBM238.ZKPC.934](https://doi.org/10.35079/HBM238.ZKPC.934)
 - **Region 11:** 10.35079/HBM975.FVCG.922, [https://doi.org/10.35079/HBM975.FVCG.922](https://doi.org/10.35079/HBM975.FVCG.922)
-<!-- - **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364) -->
+- **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364)
 
 ---
 
@@ -199,7 +199,7 @@ You can explore all the 3D models of the HRA at [https://humanatlas.io/3d-refere
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/8.png" alt="alt text" title="image Title" />
 
-The Visible Human Project skin, male (left) and female (right)
+The Visible Human Project skin, female (left) and male (right)
 
 ---
 

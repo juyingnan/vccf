@@ -95,11 +95,21 @@ These interactive violin plots show the distribution of distances of immune cell
 
 The interactive violin plots combine a box plot and a density plot to display the probability density of the cell damage and proliferation markers within the epithelial region and their distance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
 
-[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
+***Sub-epithelium (AE1)***
+[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface | sub-epithelium (AE1) ](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/5.png" alt="alt text" title="image Title" />
+
+
+***Entire epithelium (CK26)***
+[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface | entire epithelium (CK26) ](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
+
+
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/18.png" alt="alt text" title="image Title" />
 
 ---
 

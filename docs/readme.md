@@ -1,4 +1,4 @@
-# **Companion Website for &quot;Human Digital Twin: Automated Cell Type Distance Computation and 3D Atlas Construction in Multiplexed Skin Biopsies&quot;**
+# **Companion Website for &quot;Human Digital Twin: 3D Atlas Reconstruction of Skin and Spatial Mapping of Immune Cell Density, Vascular Distance and Effects of Sun Exposure and Aging&quot;**
 
 Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2</sup>,Jonhan Ho<sup>4</sup>, Arivarasan Karunamurthy<sup>4</sup>, Chrystal Chadwick<sup>2</sup>, Sanghee Cho<sup>2</sup>, Rachel Rose<sup>2</sup>, Alex Corwin<sup>2</sup>, Eric Williams<sup>2</sup>, Christine Surrette<sup>2</sup>, Jessica Martinez<sup>2</sup>, Anup Sood<sup>2</sup>, Yousef Al-Kofahi<sup>2</sup>, Louis Falo<sup>4</sup>, Katy Börner<sup>3,5</sup>, Fiona Ginty<sup>2,5</sup>
 
@@ -52,8 +52,8 @@ Images are also accessible at [vccf-visualization-release/vheimages at main · h
 
 All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12). For the final 10 datasets that were analyzed, **six** were collected from male donors , and **four** were collected from female donors. Using the [E](https://portal.hubmapconsortium.org/organ/skin)[xploration User Interface](https://portal.hubmapconsortium.org/organ/skin) (EUI), you can:
 
-- **Select an organ** : One can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left.
-- **Filter** : Above the Search is the Filter icon which opens a flyout with many options (e.g. Sex, Assay Types, etc) for refining what tissue data is presented.
+- **Select an organ** : one can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left.
+- **Filter** : Above the Search is the Filter icon which opens a menu with many options (e.g. sex, assay types, etc) for refining what tissue data is presented.
 - **Registered Blocks** : It is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections.
 - **Data** : Using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
 

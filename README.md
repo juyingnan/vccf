@@ -52,10 +52,10 @@ Images are also accessible at [vccf-visualization-release/vheimages at main · h
 
 All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12). For the final 10 datasets that were analyzed, **six** were collected from male donors , and **four** were collected from female donors. Using the [E](https://portal.hubmapconsortium.org/organ/skin)[xploration User Interface](https://portal.hubmapconsortium.org/organ/skin) (EUI), you can:
 
-- **Select an organ** : one can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left.
-- **Filter** : Above the Search is the Filter icon which opens a menu with many options (e.g. sex, assay types, etc) for refining what tissue data is presented.
-- **Registered Blocks** : It is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections.
-- **Data** : Using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
+- **Select an organ**: one can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left.
+- **Filter**: above the Search is the Filter icon which opens a menu with many options (e.g. sex, assay types, etc) for refining what tissue data is presented.
+- **Registered Blocks**: it is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections.
+- **Data** : using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://portal.hubmapconsortium.org/organ/skin)
 
@@ -70,7 +70,7 @@ In support of CCF design, ASCT+B table was compiled for all organs under investi
 
 Link to skin master ASCT+B Table: [Anatomical Structures, Cell Types, plus Biomarkers (ASCT+B) table](https://hubmapconsortium.github.io/ccf-releases/v1.2/docs/asct-b/skin.html)
 
-Link to Experimental ASCT+B Metadata:
+Link to experimental ASCT+B Metadata:
 
 [https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0]
 (https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0)
@@ -101,7 +101,7 @@ The interactive violin plots combine a box plot and a density plot to display th
 
 The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells (detected by cytokeratin AE1) positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were grouped by sun exposure and plotted by age for all 10 donors.
 
-[Link to violin plots for p53, Ki67, DDB2 positive epidermis  cells (identified by AE1 positive staining and distance to skin surface.](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
+[Link to violin plots for p53, Ki67, DDB2 positive epidermis  cells (identified by AE1 positive staining) and distance to skin surface.](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
@@ -110,7 +110,7 @@ The interactive violin plots combine a box plot and a density plot to display th
 
 ***CK26 positive keratinocytes***
 
-[Link to violin plots for p53, Ki67, DDB2 positive epidermis cells and distance to skin surface | entire epithelium (CK26)](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
+[Link to violin plots for p53, Ki67, DDB2 positive keratinocytes (CK26 positive) and distance to skin surface.](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
 
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)

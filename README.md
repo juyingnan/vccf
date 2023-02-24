@@ -57,7 +57,7 @@ All tissue datasets used in this study can be explored in their three-dimensiona
 - **Registered Blocks**: it is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections. Select tissue block on the male head to see age, BMI and to explore the 28 tissue sections cut from it.
 - **Data** : using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.2&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D1990254927&comparisonName=Human%20Digital%20Twin&comparisonColor=%23ff8000&comparisonHasFile=false)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://portal.hubmapconsortium.org/organ/skin)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/2.png" alt="alt text" title="image Title" />
 
@@ -72,7 +72,7 @@ Link to skin master ASCT+B Table: [Anatomical Structures, Cell Types, plus Bioma
 
 Link to experimental skin ASCT+B Metadata: [Skin markers used in the paper](https://docs.google.com/spreadsheets/d/1HM_rDLEMGYZ2r8jXjeEs3nNB94ubvn083y4ojjWT6mU/)
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.1&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D0&comparisonName=GE%20Skin%20Paper&comparisonColor=%23ff8000&comparisonHasFile=false)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.2&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D1990254927&comparisonName=Human%20Digital%20Twin&comparisonColor=%23ff8000&comparisonHasFile=false)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/3.png" alt="alt text" title="image Title" />
 

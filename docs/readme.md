@@ -50,14 +50,14 @@ Images are also accessible at [vccf-visualization-release/vheimages at main · h
 
 #### **Explore Skin Tissue Data in 3D**
 
-All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12). For the final 10 datasets that were analyzed, **six** were collected from male donors , and **four** were collected from female donors. Using the [E](https://portal.hubmapconsortium.org/organ/skin)[xploration User Interface](https://portal.hubmapconsortium.org/organ/skin) (EUI), you can:
+All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12). For the final 10 datasets that were analyzed, **six** were collected from male donors, and **four** were collected from female donors. Using the [Exploration User Interface](https://portal.hubmapconsortium.org/ccf-eui) (EUI), you can:
 
-- **Select an organ**: one can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left.
-- **Filter**: above the Search is the Filter icon which opens a menu with many options (e.g. sex, assay types, etc) for refining what tissue data is presented.
-- **Registered Blocks**: it is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections.
+- **Select an organ**: one can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left. Select ‘Skin’ to see all skin datasets on stage.
+- **Filter**: above the Search is the Filter icon which opens a menu with many options (e.g., sex, assay types, etc.) for refining what tissue data is presented. Under Tissue Providers, select ‘RTI-General Electric’ to see 312 tissue sections from 12 donors listed on right. Click on one of the 12 tissue blocks listed to see all tissue sections cut from it.
+- **Registered Blocks**: it is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections. Select tissue block on the male head to see age, BMI and to explore the 28 tissue sections cut from it.
 - **Data** : using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
 
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://portal.hubmapconsortium.org/organ/skin)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.2&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D1990254927&comparisonName=Human%20Digital%20Twin&comparisonColor=%23ff8000&comparisonHasFile=false)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/2.png" alt="alt text" title="image Title" />
 
@@ -68,12 +68,9 @@ All tissue datasets used in this study can be explored in their three-dimensiona
 
 In support of CCF design, ASCT+B table was compiled for all organs under investigation in HuBMAP, see details for ASCT+B table effort [here](https://hubmapconsortium.github.io/ccf/pages/ccf-anatomical-structures.html). A subset of these anatomical structures (AS), cell types (CT) and biomarkers (B) were included in this paper. The[ASCT+B Reporter](https://hubmapconsortium.github.io/ccf-asct-reporter) was used to comparethe AS, CT and B  used in this  paper to the most recent version (1.2) of the skin ASCT+B aster table.
 
-Link to skin master ASCT+B Table: [Anatomical Structures, Cell Types, plus Biomarkers (ASCT+B) table for skin v1.2](https://hubmapconsortium.github.io/ccf-releases/v1.2/docs/asct-b/skin.html)
+Link to skin master ASCT+B Table: [Anatomical Structures, Cell Types, plus Biomarkers (ASCT+B) table for skin v1.2 (hubmapconsortium.github.io)](https://hubmapconsortium.github.io/ccf-releases/v1.2/docs/asct-b/skin.html)
 
-Link to experimental skin ASCT+B Metadata:
-
-[https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0]
-(https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0)
+Link to experimental skin ASCT+B Metadata: [Skin markers used in the paper](https://docs.google.com/spreadsheets/d/1HM_rDLEMGYZ2r8jXjeEs3nNB94ubvn083y4ojjWT6mU/)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.1&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D0&comparisonName=GE%20Skin%20Paper&comparisonColor=%23ff8000&comparisonHasFile=false)
 
@@ -95,7 +92,7 @@ These interactive violin plots show the distribution of distances of immune cell
 
 **Violin Charts for Epidermis Cells**
 
-The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were and plotted by sun exposure (mild/marked) and age for all 10 donors.
+The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were plotted by sun exposure (mild/marked) and age for all 10 donors.
 
 ***AE1 positive keratinocytes***
 
@@ -197,7 +194,7 @@ Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1
 **(B)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/11.png" alt="alt text" title="image Title" />
 
-Histogram of distance of immune cells(CD68, T helper, T killer, and T reg) to nearest endothelial cell. 3D distance tends to be much shorter (3D was capped at 1000 µm for visualization). The average distance of the nearest endothelial cell to immune cells in 3D was approximately half that found in 2D (~56 µm vs 108 µm on average). Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16).
+Histogram of distance of immune cells (CD68, T helper, T killer, and T reg) to nearest endothelial cell. 3D distance tends to be much shorter (distance was capped at 1000 µm for visualization). The average distance of the nearest endothelial cell to immune cells in 3D was approximately half that found in 2D (~56 µm vs 108 µm on average). Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16).
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/13.png" alt="alt text" title="image Title" />
 

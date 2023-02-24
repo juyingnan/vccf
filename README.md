@@ -83,7 +83,7 @@ Link to Experimental ASCT+B Metadata:
 
 #### **Violin Charts for Immune Cells**
 
-These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages) to the nearest endothelial cell in mild-marked sun exposede regions and plotted by age for all 10 donors.
+These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages) to the nearest endothelial cell in all regions and plotted by sun exposure (mild/marked) and age for all 10 donors.
 
 [Link to violin plots for immune cell distances from endothelial cells](https://hubmapconsortium.github.io/vccf-visualization-release/html/violin_cell.html)
 
@@ -95,9 +95,11 @@ These interactive violin plots show the distribution of distances of immune cell
 
 **Violin Charts for Epidermis Cells**
 
-The interactive violin plots combine a box plot and a density plot to display the probability density of cells positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67)within the entire epidermisregion (PCK26 positive cells) anddistance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
+The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were and plotted by sun exposure (mild/marked) and age for all 10 donors.
 
-***Sub-epidermis (AE1 positive cells)***
+***AE1 positive keratinocytes***
+
+The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells (detected by cytokeratin AE1) positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were grouped by sun exposure and plotted by age for all 10 donors.
 
 [Link to violin plots for p53, Ki67, DDB2 positive epidermis  cells (identified by AE1 positive staining and distance to skin surface.](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
@@ -106,7 +108,7 @@ The interactive violin plots combine a box plot and a density plot to display th
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/18.png" alt="alt text" title="image Title" />
 
 
-***Entire epidermis  (CK26 positive cells)***
+***CK26 positive keratinocytes***
 
 [Link to violin plots for p53, Ki67, DDB2 positive epidermis cells and distance to skin surface | entire epithelium (CK26)](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
 
@@ -117,7 +119,7 @@ The interactive violin plots combine a box plot and a density plot to display th
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - Immune Cell Distance Endothelial Cells**
+**Vascular Common Coordinate Framework Visualization - Immune Cell Distance to Endothelial Cells**
 
 These interactive plots show the 3D view of the skin and the distribution of immune cells (T helper, T killer, T reg, macrophages) and distance to nearest endothelial cells.
 
@@ -129,13 +131,13 @@ External link to the 3D view for immune cells:
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_11.html)
 
-**Example Region 4: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell**
+**Example Region 4: Immune cells (T helper, T killer, T reg, macrophages) and distance to nearest endothelial cell**
 
 3D distance between immune cells and nearest endothelial cells for region 4 (donor 12, male, 48 years, superior abdomen, mild sun exposure); (ii) and histogram plots showing the highest distribution of immune cells within 50-200 um and higher counts of T killer cells within 50 um
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/15.png" alt="alt text" title="image Title" />
 
-**Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell (RGB rendering version)**
+**Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance to nearest endothelial cell (RGB rendered version)**
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/14.png" alt="alt text" title="image Title" />
 
@@ -143,7 +145,7 @@ External link to the 3D view for immune cells:
 
 **Vascular Common Coordinate Framework Visualization - Epithelial Cells**
 
-These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epidermis cells and distance to the skin surface.
+These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive keratinocytes and distance to the skin surface.
 
 External link to the 3D view for epithelial cells:
 
@@ -159,9 +161,9 @@ Markers of UV damage, repair and proliferation in epidermis and distance to skin
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/6.png" alt="alt text" title="image Title" />
 
-**Example Region 7: Keratinocytes positive for l markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
+**Example Region 7: Keratinocytes positive for markers of UV damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
 
-Positive keratinocytes were shown as  3D distance plots from the skin surface and histogram distribution. Region 7 (lower forearm, marked sun exposure, 69 years) shows highest distribution of Ki67 positive keratinocytes  within 200 µm distance from the skin surface, followed by p53 and lowest DDB2 positive keratinocytes. 
+Positive keratinocytes were shown as 3D distance plots from the skin surface and histogram distribution. Region 7 (lower forearm, marked sun exposure, 69 years) shows highest distribution of Ki67 positive keratinocytes  within 200 µm distance from the skin surface, followed by p53 and lowest DDB2 positive keratinocytes.
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/16.png" alt="alt text" title="image Title" />
 
@@ -185,9 +187,9 @@ Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1
 
 ---
 
-**Statisical  comparison between 2D and 3D immune cell counts**
+**Statistical comparison between 2D and 3D immune cell counts**
 
-(A) Average number of all Tcells within 30 µm of a T helper cell in 2D (red) and 3D (blue) for each donor sample. Overall, the number of immune cells within 30 µm of a T helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T helper cell. There was variation across all regions, for example, region 7 there was a cluster of 11 immune cells within 30 μm in 3D while just 3 cells were quantified in 2D. 
+(A) Average number of all T cells within 30 µm of a T helper cell in 2D (red) and 3D (blue) for each region. Overall, the number of immune cells within 30 µm of a T helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T helper cell. There was variation across all regions, for example, in region 7 there was a cluster of 11 immune cells within 30 μm in 3D while just 3 cells were quantified in 2D. 
 
 **(A)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/10.png" alt="alt text" title="image Title" />
@@ -195,7 +197,7 @@ Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1
 **(B)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/11.png" alt="alt text" title="image Title" />
 
-Histogram of distance to nearest endothelial cells from each immune cell (CD68, T helper, T killer, and T reg). 3D distance tends to be much shorter  (3D was capped at 1000 µm for visualization). The average distance of the nearest endothelial cell to immune cells in 3D was half that found in 2D (~56 µm vs 108 µm on average). Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16).
+Histogram of distance of immune cells(CD68, T helper, T killer, and T reg) to nearest endothelial cell. 3D distance tends to be much shorter (3D was capped at 1000 µm for visualization). The average distance of the nearest endothelial cell to immune cells in 3D was approximately half that found in 2D (~56 µm vs 108 µm on average). Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16).
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/13.png" alt="alt text" title="image Title" />
 

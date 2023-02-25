@@ -40,7 +40,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 Virtual H&amp;E (pseudo colored DAPI and autofluorescence image) for all regions. Region 10 shown below. Each 3D view has a link to a single virtual H&amp;E image for reference.
 
-Images are also accessible at [vccf-visualization-release/vheimages at main · hubmapconsortium/vccf-visualization-release · GitHub](https://github.com/hubmapconsortium/vccf-visualization-release/tree/main/vheimages)
+Images are also accessible at [Virtual H&E Images of 12 regions](https://github.com/hubmapconsortium/vccf-visualization-release/tree/main/vheimages)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_004.jpg)
 

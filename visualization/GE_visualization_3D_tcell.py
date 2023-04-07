@@ -476,12 +476,12 @@ traces_n = []
 for cell_type in set(nuclei_type_list):
     traces_n.append(generate_nuclei_scatter(n_df, cell_type,
                                             legend_group=cell_dict[cell_type]['group']))
-trace_v = generate_cluster_center_scatter(v_df, key='v', name='Center:T-helper',
+trace_v = generate_cluster_center_scatter(v_df, key='v', name='Immune Cell Cluster Density',
                                           # name=cell_dict[vessel_replace]['legend'],
                                           symbol_name=vessel_replace, visible=True,
-                                          legend_group="Cluster Center")
+                                          legend_group="Cluster")
 trace_s = generate_other_scatter(s_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin', visible=True,
-                                 legend_group="Endothelial & Skin")
+                                 show_legend=False, legend_group="Endothelial & Skin")
 # traces_vessel_line = generate_line(v_df_one, name=f"Distance-{cell_dict[vessel_replace]['legend']}",
 #                                    color=cell_dict[vessel_replace]['color'], visible=True, legend_group="Link")
 # traces_skin_line = generate_line(s_df_one, name=f"Distance-{cell_dict['Skin']['legend']}",
@@ -572,7 +572,8 @@ for cell_list, distance_type, col in zip([['T-Helper', 'T-Reg', 'T-Killer', 'CD6
                                  y=n_df[f'{hist_names[i]}_pos'],
                                  mode='markers',
                                  opacity=0.6,
-                                 marker=dict(color=cell_dict[hist_names[i]]['color'], symbol='line-ns-open'),
+                                 marker=dict(color=cell_dict[hist_names[i]]['color'], symbol='line-ns-open',
+                                             line=dict(width=4)),
                                  showlegend=False,
                                  ), row=3, col=col)
 
@@ -668,18 +669,18 @@ background_color = 'rgb(240,246,255)'
 
 # fig.add_annotation(dict(text="Slide:", showarrow=False,
 #                         x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
-fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
-fig.update_yaxes(rangemode='tozero', tickfont=dict(size=10), row=3)
-fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
-fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=14), row=2)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=14), row=3)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=14), row=2)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=14), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
-                 title=dict(text=f"Nearest Count # (<{cluster_range}μm)", standoff=5, font_size=14), row=3, )
+                 title=dict(text=f"Nearest Count # (<{cluster_range}μm)", standoff=5, font_size=16), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 fig.update_xaxes(range=[0, 15], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",
-                 title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)
+                 title=dict(text="Count #", standoff=5, font_size=16), row=2, col=1)
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
     updatemenus=[
@@ -735,6 +736,8 @@ fig.update_layout(
     plot_bgcolor=background_color,
 )
 fig.update_layout(coloraxis={'colorscale': 'thermal'})
+fig.update_layout(legend={'itemsizing': 'constant', "itemwidth": 30, })
+# fig.update_layout(legend={'traceorder': 'normal'})
 
 fig.write_html(os.path.join(nuclei_root_path, f"immune_cluster_region_{region_index}_{cluster_range}.html"))
 if show_html:

@@ -754,18 +754,18 @@ background_color = 'rgb(240,246,255)'
 
 # fig.add_annotation(dict(text="Slide:", showarrow=False,
 #                         x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
-fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
-fig.update_yaxes(rangemode='tozero', tickfont=dict(size=10), row=3)
-fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
-fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=14), row=2)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=14), row=3)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=14), row=2)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=14), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
-                 title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
+                 title=dict(text="Distance (μm)", standoff=5, font_size=16), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 fig.update_xaxes(range=[0, 210], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=2)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",
-                 title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)
+                 title=dict(text="Count #", standoff=5, font_size=16), row=2, col=1)
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
     updatemenus=[

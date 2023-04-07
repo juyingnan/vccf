@@ -1,4 +1,4 @@
-# **Companion Website for &quot;Human Digital Twin: Automated Cell Type Distance Computation and 3D Atlas Construction in Multiplexed Skin Biopsies&quot;**
+# **Companion Website for &quot;Human Digital Twin: 3D Atlas Reconstruction of Skin and Spatial Mapping of Immune Cell Density, Vascular Distance and Effects of Sun Exposure and Aging&quot;**
 
 Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2</sup>,Jonhan Ho<sup>4</sup>, Arivarasan Karunamurthy<sup>4</sup>, Chrystal Chadwick<sup>2</sup>, Sanghee Cho<sup>2</sup>, Rachel Rose<sup>2</sup>, Alex Corwin<sup>2</sup>, Eric Williams<sup>2</sup>, Christine Surrette<sup>2</sup>, Jessica Martinez<sup>2</sup>, Anup Sood<sup>2</sup>, Yousef Al-Kofahi<sup>2</sup>, Louis Falo<sup>4</sup>, Katy Börner<sup>3,5</sup>, Fiona Ginty<sup>2,5</sup>
 
@@ -31,7 +31,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 - **Region 9:** 10.35079/HBM494.XDQW.356, [https://doi.org/10.35079/HBM494.XDQW.356](https://doi.org/10.35079/HBM494.XDQW.356)
 - **Region 10:** 10.35079/HBM238.ZKPC.934,[https://doi.org/10.35079/HBM238.ZKPC.934](https://doi.org/10.35079/HBM238.ZKPC.934)
 - **Region 11:** 10.35079/HBM975.FVCG.922, [https://doi.org/10.35079/HBM975.FVCG.922](https://doi.org/10.35079/HBM975.FVCG.922)
-<!-- - **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364) -->
+- **Region 12:** 10.35079/HBM674.XQFQ.364, [https://doi.org/10.35079/HBM674.XQFQ.364](https://doi.org/10.35079/HBM674.XQFQ.364)
 
 ---
 
@@ -40,7 +40,7 @@ Soumya Ghose<sup>1,2</sup>, Yingnan Ju<sup>1,3</sup>, Elizabeth McDonough<sup>2<
 
 Virtual H&amp;E (pseudo colored DAPI and autofluorescence image) for all regions. Region 10 shown below. Each 3D view has a link to a single virtual H&amp;E image for reference.
 
-Images are also accessible at [vccf-visualization-release/vheimages at main · hubmapconsortium/vccf-visualization-release · GitHub](https://github.com/hubmapconsortium/vccf-visualization-release/tree/main/vheimages)
+Images are also accessible at [Virtual H&E Images of 12 regions](https://github.com/hubmapconsortium/vccf-visualization-release/tree/main/vheimages)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-release/main/vheimages/S002_VHE_region_004.jpg)
 
@@ -50,30 +50,29 @@ Images are also accessible at [vccf-visualization-release/vheimages at main · h
 
 #### **Explore Skin Tissue Data in 3D**
 
-All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12), see below skin organ webpage. For the final 10 datasets that were analyzed, **six were male** from the male, **and four were** female. Using the [E](https://portal.hubmapconsortium.org/organ/skin)[xploration User Interface](https://portal.hubmapconsortium.org/organ/skin) (EUI), you can:
+All tissue datasets used in this study can be explored in their three-dimensional size, position, and rotation in the context of the Human Reference Atlas. In total, 12 data sets were collected and 10 were used in the final analysis (2 were excluded due to presence of a benign cyst (region 6) and scarring (region 12). For the final 10 datasets that were analyzed, **six** were collected from male donors, and **four** were collected from female donors. Using the [Exploration User Interface](https://portal.hubmapconsortium.org/ccf-eui) (EUI), you can:
 
-- **Select an organ** : One can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left.
-- **Filter** : Above the Search is the Filter icon which opens a flyout with many options (e.g. Sex, Assay Types, etc) for refining what tissue data is presented.
-- **Registered Blocks** : It is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections.
-- **Data** : Using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
+- **Select an organ**: one can navigate available organs by selecting them from the carousel above the stage or using the ontology on the left. Select ‘Skin’ to see all skin datasets on stage.
+- **Filter**: above the Search is the Filter icon which opens a menu with many options (e.g., sex, assay types, etc.) for refining what tissue data is presented. Under Tissue Providers, select ‘RTI-General Electric’ to see 312 tissue sections from 12 donors listed on right. Click on one of the 12 tissue blocks listed to see all tissue sections cut from it.
+- **Registered Blocks**: it is possible to select a block of tissue samples either using the bodies on stage or the cards in the right column. Color coding helps to identify different selections. Select tissue block on the male head to see age, BMI and to explore the 28 tissue sections cut from it.
+- **Data** : using the cards in the right column, click on items to dig deeper into the data. **You can watch a tutorial on how to use the EUI** [**here**](https://www.youtube.com/watch?v=YAHJqvD3Q_8).
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://portal.hubmapconsortium.org/organ/skin)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/2.png" alt="alt text" title="image Title" />
 
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/19.png" alt="alt text" title="image Title" />
 ---
 
-**Skin ASCT+B Table and Comparison**
+**Skin Anatomical Structures, Cell Types and Biomarker (ASCT+B) Table and Comparison**
 
-In support of CCF design, a skin master ASCT+B table was compiled, see details for ASCT+B table effort [here](https://hubmapconsortium.github.io/ccf/pages/ccf-anatomical-structures.html). In addition, a second ASCT+B table was compiled for all AS, CT, B used in this paper. Then, the[ASCT+B Reporter](https://hubmapconsortium.github.io/ccf-asct-reporter) was used to compare an ASCT+B table that documents ASCT+B used in the paper to the most recent skin ASCT+B Master table.
+In support of CCF design, ASCT+B table was compiled for all organs under investigation in HuBMAP, see details for ASCT+B table effort [here](https://hubmapconsortium.github.io/ccf/pages/ccf-anatomical-structures.html). A subset of these anatomical structures (AS), cell types (CT) and biomarkers (B) were included in this paper. The[ASCT+B Reporter](https://hubmapconsortium.github.io/ccf-asct-reporter) was used to comparethe AS, CT and B  used in this  paper to the most recent version (1.2) of the skin ASCT+B aster table.
 
-Link to skin master ASCT+B Table: [https://hubmapconsortium.github.io/ccf-releases/v1.1/docs/asct-b/skin.html](https://hubmapconsortium.github.io/ccf-releases/v1.1/docs/asct-b/skin.html)
+Link to skin master ASCT+B Table: [Anatomical Structures, Cell Types, plus Biomarkers (ASCT+B) table for skin v1.2](https://hubmapconsortium.github.io/ccf-releases/v1.2/docs/asct-b/skin.html)
 
-Link to Experimental ASCT+B Metadata:
+Link to experimental skin ASCT+B Metadata: [Skin markers used in the paper](https://docs.google.com/spreadsheets/d/1HM_rDLEMGYZ2r8jXjeEs3nNB94ubvn083y4ojjWT6mU/)
 
-[https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0](https://docs.google.com/spreadsheets/d/1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8/edit#gid=0)
-
-[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.1&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D0&comparisonName=GE%20Skin%20Paper&comparisonColor=%23ff8000&comparisonHasFile=false)
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?selectedOrgans=skin-v1.2&playground=false&comparisonCSVURL=https:%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1ebxX1VmZXrxjfxZC8DdxtPjTGQLId9NBja71ii939c8%2Fedit%23gid%3D1990254927&comparisonName=Human%20Digital%20Twin&comparisonColor=%23ff8000&comparisonHasFile=false)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/3.png" alt="alt text" title="image Title" />
 
@@ -81,7 +80,7 @@ Link to Experimental ASCT+B Metadata:
 
 #### **Violin Charts for Immune Cells**
 
-These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages) to the nearest endothelial cell in marked sun exposure and mild exposure regions and plotted by age for all 10 donors.
+These interactive violin plots show the distribution of distances of immune cells (T Helper, T Killer, T reg, macrophages) to the nearest endothelial cell in all regions and plotted by sun exposure (mild/marked) and age for all 10 donors.
 
 [Link to violin plots for immune cell distances from endothelial cells](https://hubmapconsortium.github.io/vccf-visualization-release/html/violin_cell.html)
 
@@ -91,21 +90,35 @@ These interactive violin plots show the distribution of distances of immune cell
 
 ---
 
-**Violin Charts for Epithelial Cells**
+**Violin Charts for Epidermis Cells**
 
-The interactive violin plots combine a box plot and a density plot to display the probability density of the cell damage and proliferation markers within the epithelial region and their distance from the skin surface, in marked sun exposure and mild sun exposure regions and plotted by age for all 10 donors.
+The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were plotted by sun exposure (mild/marked) and age for all 10 donors.
 
-[Link to violin plots for p53, Ki67, DDB2 positive epithelial cells and distance to skin surface](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
+***AE1 positive keratinocytes***
+
+The interactive violin plots combine a box plot and a density plot to display the probability density of keratinocyte cells (detected by cytokeratin AE1) positive for markers of DNA damage (p53), repair (DBB2) damage and proliferation (Ki67) and distance from the skin surface. They were grouped by sun exposure and plotted by age for all 10 donors.
+
+[Link to violin plots for p53, Ki67, DDB2 positive epidermis  cells (identified by AE1 positive staining) and distance to skin surface.](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/violin_damage_epidermis.html)
+
+<img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/18.png" alt="alt text" title="image Title" />
+
+
+***CK26 positive keratinocytes***
+
+[Link to violin plots for p53, Ki67, DDB2 positive keratinocytes (CK26 positive) and distance to skin surface.](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
+
+
+[<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis_entire/violin_damage_epidermis.html)
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/5.png" alt="alt text" title="image Title" />
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - Immune Cell Distance Endothelial Cells**
+**Vascular Common Coordinate Framework Visualization - Immune Cell Distance to Endothelial Cells**
 
-These interactive plots show the 3D view of the skin and the distribution of immune cells (T helper, T killer, T reg, macrophages) and distance to the endothelial cells.
+These interactive plots show the 3D view of the skin and the distribution of immune cells (T helper, T killer, T reg, macrophages) and distance to nearest endothelial cells.
 
 External link to the 3D view for immune cells:
 
@@ -115,13 +128,13 @@ External link to the 3D view for immune cells:
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/region_11.html)
 
-**Example Region 4: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell**
+**Example Region 4: Immune cells (T helper, T killer, T reg, macrophages) and distance to nearest endothelial cell**
 
 3D distance between immune cells and nearest endothelial cells for region 4 (donor 12, male, 48 years, superior abdomen, mild sun exposure); (ii) and histogram plots showing the highest distribution of immune cells within 50-200 um and higher counts of T killer cells within 50 um
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/15.png" alt="alt text" title="image Title" />
 
-**Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance from nearest endothelial cell (RGB rendering version)**
+**Example Region 11: Immune cells (T helper, T killer, T reg, macrophages) and distance to nearest endothelial cell (RGB rendered version)**
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/14.png" alt="alt text" title="image Title" />
 
@@ -129,7 +142,7 @@ External link to the 3D view for immune cells:
 
 **Vascular Common Coordinate Framework Visualization - Epithelial Cells**
 
-These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive epithelial cells and distance to the skin surface.
+These interactive plots show the 3D view of the skin and the distribution of p53, DDB2 and Ki67 positive keratinocytes and distance to the skin surface.
 
 External link to the 3D view for epithelial cells:
 
@@ -139,23 +152,23 @@ External link to the 3D view for epithelial cells:
 
 [<img alt="alt_text" width="84px" src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/button_load.png" />](https://hubmapconsortium.github.io/vccf-visualization-release/html/epidermis/epidermis_region_11.html)
 
-**Example Region 11: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
+**Example Region 11: Keratinocytes positive for markers of UV damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
 
-Markers of UV damage, repair and proliferation in epidermis and distance to skin surface represented as 3D distance plots from the skin surface and histogram distribution. Region 11 (upper arm, mild sun exposure, 41 years) shows a higher distribution of DDB2 positive cells within 200 um distance from the skin surface and lower distribution of cells positive for p53 and Ki67
+Markers of UV damage, repair and proliferation in epidermis and distance to skin surface represented as 3D distance plots from the skin surface and histogram distribution. Region 11 (upper arm, mild sun exposure, 41 years) shows a higher distribution of DDB2 positive keratinocytes  within 200 um distance from the skin surface and lower distribution of keratinocytes  positive for p53 and Ki67
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/6.png" alt="alt text" title="image Title" />
 
-**Example Region 7: Epithelial cell markers of UV Damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
+**Example Region 7: Keratinocytes positive for markers of UV damage (p53), repair (DDB2) and proliferation (Ki67) and distance from skin surface**
 
-Markers of UV damage, repair and proliferation in epidermis and distance to skin surface represented as 3D distance plots from the skin surface and histogram distribution.  Region 7 (lower forearm, marked sun exposure, 69 years) shows highest distribution of Ki67 positive cells within 200 um distance from the skin surface, followed by p53 and lowest DDB2 positive cells
+Positive keratinocytes were shown as 3D distance plots from the skin surface and histogram distribution. Region 7 (lower forearm, marked sun exposure, 69 years) shows highest distribution of Ki67 positive keratinocytes  within 200 µm distance from the skin surface, followed by p53 and lowest DDB2 positive keratinocytes.
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/16.png" alt="alt text" title="image Title" />
 
 ---
 
-**Vascular Common Coordinate Framework Visualization - Immune cells cluster**
+**Vascular Common Coordinate Framework Visualization - Immune Cell Cluster Density**
 
-These interactive plots show the 3D view of the distribution and clustering of immune cells. The immune cell cluster view allows for the identification of areas with high immune cell density through the use of heatmap-like bubbles of varying sizes and colors. Large, yellow bubbles indicate a high density of immune cells, while small, dark blue bubbles indicate a lower density.
+These interactive plots show the 3D view of the distribution and clustering of immune cells (T cells). The immune cell cluster view allows for the identification of areas with high immune cell density through the use of heatmap-like bubbles of varying sizes and colors. Large, yellow bubbles indicate a high density of immune cells, while small, dark blue bubbles indicate a lower density.
 
 External link to the 3D view for the immune cells clustering views:
 
@@ -171,9 +184,9 @@ Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1
 
 ---
 
-**Stastics comparison between 2D and 3D segmentation**
+**Statistical comparison between 2D and 3D immune cell counts**
 
-(A) Average number of all immune cells within 30 um of a T Helper cell in 2D (red) and 3D (blue) for each donor sample. Overall, the number of immune cellswithin 30 um of a T Helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T Helpercell. There was variation across all regions, for example, region 7 there a cluster of 11 immune cells within 30 μm were foun d in 3D while 3 cells were quantified in 2D.
+(A) Average number of all T cells within 30 µm of a T helper cell in 2D (red) and 3D (blue) for each region. Overall, the number of immune cells within 30 µm of a T helper cell was higher in 3D compared to 2D with 10-70% more cells found in 3D; (B) Maximum number of immune cells within 30 μm of a T helper cell. There was variation across all regions, for example, in region 7 there was a cluster of 11 immune cells within 30 μm in 3D while just 3 cells were quantified in 2D. 
 
 **(A)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/10.png" alt="alt text" title="image Title" />
@@ -181,7 +194,7 @@ Example Region 9: Medium-high immune cluster density plot from region 9 (donor 1
 **(B)**
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/11.png" alt="alt text" title="image Title" />
 
-Histogram of distance to nearest endothelial cells from each immune cell (CD68, T-Helper, T-Killer, and T-Reg). 3D distance tends to have much shorter distance (3D was capped at 1000 um for visualization. Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16)
+Histogram of distance of immune cells (CD68, T helper, T killer, and T reg) to nearest endothelial cell. 3D distance tends to be much shorter (distance was capped at 1000 µm for visualization). The average distance of the nearest endothelial cell to immune cells in 3D was approximately half that found in 2D (~56 µm vs 108 µm on average). Two sample Kolmogorov-Smirnov test was performed to confirm that there is statistically significant difference between the 2D and 3D distributions for total immune cell counts (D =0.43, p-value <2.2e-16).
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/13.png" alt="alt text" title="image Title" />
 
@@ -199,7 +212,7 @@ You can explore all the 3D models of the HRA at [https://humanatlas.io/3d-refere
 
 <img src="https://raw.githubusercontent.com/hubmapconsortium/vccf-visualization-2022/main/docs/images/8.png" alt="alt text" title="image Title" />
 
-The Visible Human Project skin, male (left) and female (right)
+The Visible Human Project skin, female (left) and male (right)
 
 ---
 

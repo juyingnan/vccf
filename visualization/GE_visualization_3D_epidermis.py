@@ -113,7 +113,7 @@ scale = 16 * micro_per_pixel
 top_left = [0, 0]
 bottom_right = [1000000, 1000000]
 
-damage_list = ["P53","KI67","DDB2",]
+damage_list = ["P53", "KI67", "DDB2", ]
 
 region_index = 7
 show_html = True
@@ -517,7 +517,7 @@ traces_n = []
 for cell_type in set(nuclei_type_list):
     if cell_type in damage_list:
         traces_n.append(generate_nuclei_scatter(n_df, cell_type,
-                                            legend_group=cell_dict[cell_type]['group']))
+                                                legend_group=cell_dict[cell_type]['group']))
 trace_v = generate_other_scatter(v_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31',
                                  visible='legendonly', legend_group="Endothelial & Skin")
 trace_s = generate_other_scatter(s_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin', visible=True,
@@ -574,7 +574,7 @@ for layer in range(0, z_count):
     for cell_type in set(nuclei_type_list):
         if cell_type in damage_list:
             traces_n.append(generate_nuclei_scatter(zn_df, cell_type, show_legend=False, visible=False,
-                                                legend_group="Damage" if cell_type in damage_type_list else "Cell"))
+                                                    legend_group="Damage" if cell_type in damage_type_list else "Cell"))
     trace_v = generate_other_scatter(zv_df, key='v', name=cell_dict['CD31']['legend'], symbol_name='CD31',
                                      visible=False, show_legend=False, legend_group="Vessel & Skin")
     trace_s = generate_other_scatter(zs_df, key='s', name=cell_dict['Skin']['legend'], symbol_name='Skin',
@@ -754,18 +754,18 @@ background_color = 'rgb(240,246,255)'
 
 # fig.add_annotation(dict(text="Slide:", showarrow=False,
 #                         x=1, y=0.88, xref="paper", yref="paper", xanchor='right', yanchor='top', ))
-fig.update_yaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
-fig.update_yaxes(rangemode='tozero', tickfont=dict(size=10), row=3)
-fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=2)
-fig.update_xaxes(rangemode='tozero', tickfont=dict(size=12), row=3)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=14), row=2)
+fig.update_yaxes(rangemode='tozero', tickfont=dict(size=14), row=3)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=14), row=2)
+fig.update_xaxes(rangemode='tozero', tickfont=dict(size=14), row=3)
 fig.update_xaxes(ticklabelposition="outside", side="bottom",
-                 title=dict(text="Distance (μm)", standoff=5, font_size=14), row=3, )
+                 title=dict(text="Distance (μm)", standoff=5, font_size=16), row=3, )
 # fig.update_xaxes(range=[0, np.percentile(nuclei_vessel_distance_list, 99)], row=3, col=1)
 # fig.update_xaxes(range=[0, np.percentile(nuclei_skin_distance_list, 98)], row=3, col=1)
 fig.update_xaxes(range=[0, 510], row=3, col=1)
 # fig.update_yaxes(ticklabelposition="inside", side="right", row=3, )
 fig.update_yaxes(ticklabelposition="outside", side="left",
-                 title=dict(text="Count #", standoff=5, font_size=14), row=2, col=1)
+                 title=dict(text="Count #", standoff=5, font_size=16), row=2, col=1)
 fig.update_traces(connectgaps=False, selector=dict(type="Scatter3d"))
 fig.update_layout(
     updatemenus=[

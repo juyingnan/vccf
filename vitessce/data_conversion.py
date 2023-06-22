@@ -60,6 +60,7 @@ def main():
     link_table = filtered_df[['type', 'x', 'y', 'z', 'vx', 'vy', 'vz']].copy()
     link_table['vertices'] = link_table.apply(
         lambda row: generate_link_vertices(row['x'], row['y'], row['z'], row['vx'], row['vy'], row['vz']), axis=1)
+    link_table['type'] = link_table['type'].apply(lambda x: x + '_link')
 
     # read the vessel csv file
     vessel_df = pd.read_csv(vessel_file_path)

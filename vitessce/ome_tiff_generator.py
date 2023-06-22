@@ -7,15 +7,29 @@ from skimage.draw import polygon
 from vitessce.data_utils import multiplex_img_to_ome_tiff
 
 
-def generate_cell_mask(shape, vertices):
+def generate_cell_mask(mask_shape, vertices):
     rr, cc = polygon([v[1] for v in vertices], [v[0] for v in vertices])
-    mask = np.zeros(shape)
+    mask = np.zeros(mask_shape)
     mask[rr, cc] = 1
     return mask
 
 
 def convert_str_to_list(row):
     return [list(i) for i in ast.literal_eval(row)]
+
+
+def generate_mask_arr(type_list, table, mask_shape):
+    # initialize an empty mask for each cell type
+    masks = {cell_type: np.zeros(mask_shape, dtype=np.uint16) for cell_type in type_list}
+    for index, row in table.iterrows():
+        mask = generate_cell_mask(mask_shape, row['vertices'])
+        masks[row['type']] += (mask * (index + 1)).astype(np.uint16)
+    # Create an ordered list of masks
+    mask_list = [masks[cell_type] for cell_type in type_list]
+    # Stack masks into a 3D array. The new array has shape (n, m, len(cell_types)),
+    # where n and m are the dimensions of the original masks.
+    bitmask_stack = np.dstack(mask_list)
+    return bitmask_stack
 
 
 # Default region_index
@@ -41,6 +55,7 @@ cell_table['vertices'] = cell_table['vertices'].apply(convert_str_to_list)
 link_table['vertices'] = link_table['vertices'].apply(convert_str_to_list)
 
 cell_types = ['T-Killer', 'T-Helper', 'T-Reg', 'CD68', 'vessel']
+links_types = ["T-Killer_link", 'T-Helper_link', 'T-Reg_link', 'CD68_link']
 
 # determine the shape of your canvas
 height = cell_table['y'].max() + 30
@@ -48,22 +63,14 @@ width = cell_table['x'].max() + 30
 shape = (height, width)
 shape = tuple(map(int, shape))
 
-# initialize an empty mask for each cell type
-masks = {cell_type: np.zeros(shape, dtype=np.uint16) for cell_type in cell_types}
+cell_mask_stack = generate_mask_arr(cell_types, cell_table, shape)
+link_mask_stack = generate_mask_arr(links_types, link_table, shape)
 
-for index, row in cell_table.iterrows():
-    mask = generate_cell_mask(shape, row['vertices'])
-    masks[row['type']] += (mask * (index + 1)).astype(np.uint16)
-
-# Create an ordered list of masks
-mask_list = [masks[cell_type] for cell_type in cell_types]
-
-# Stack masks into a 3D array. The new array has shape (n, m, len(cell_types)),
-# where n and m are the dimensions of the original masks.
-bitmask_arr = np.dstack(mask_list)
+# stack cell_mask_stack and link_mask_stack
+mask_stack = np.dstack((cell_mask_stack, link_mask_stack))
 
 # Ensure the axes are in the CYX order by transposing the array
-bitmask_arr = np.transpose(bitmask_arr, (2, 0, 1))
+bitmask_arr = np.transpose(mask_stack, (2, 0, 1))
 
 # Save the masks
 multiplex_img_to_ome_tiff(bitmask_arr, cell_types, nuclei_file_path.replace('csv', 'ome.tif'), axes="CYX")

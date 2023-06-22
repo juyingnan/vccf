@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 import numpy as np
 import ast
+from tqdm import tqdm
 from skimage.draw import polygon
 from vitessce.data_utils import multiplex_img_to_ome_tiff
 
@@ -21,7 +22,7 @@ def convert_str_to_list(row):
 def generate_mask_arr(type_list, table, mask_shape):
     # initialize an empty mask for each cell type
     masks = {cell_type: np.zeros(mask_shape, dtype=np.uint16) for cell_type in type_list}
-    for index, row in table.iterrows():
+    for index, row in tqdm(table.iterrows(), total=len(table), desc='Processing rows'):
         mask = generate_cell_mask(mask_shape, row['vertices'])
         masks[row['type']] += (mask * (index + 1)).astype(np.uint16)
     # Create an ordered list of masks
@@ -63,7 +64,9 @@ width = cell_table['x'].max() + 30
 shape = (height, width)
 shape = tuple(map(int, shape))
 
+print("Generating cell masks...")
 cell_mask_stack = generate_mask_arr(cell_types, cell_table, shape)
+print("Generating link masks...")
 link_mask_stack = generate_mask_arr(links_types, link_table, shape)
 
 # stack cell_mask_stack and link_mask_stack
@@ -73,4 +76,4 @@ mask_stack = np.dstack((cell_mask_stack, link_mask_stack))
 bitmask_arr = np.transpose(mask_stack, (2, 0, 1))
 
 # Save the masks
-multiplex_img_to_ome_tiff(bitmask_arr, cell_types, nuclei_file_path.replace('csv', 'ome.tif'), axes="CYX")
+multiplex_img_to_ome_tiff(bitmask_arr, cell_types + links_types, nuclei_file_path.replace('csv', 'ome.tif'), axes="CYX")

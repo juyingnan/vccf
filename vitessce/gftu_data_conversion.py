@@ -54,4 +54,4 @@ for i in range(json_count):
 
 # Concatenate all dataframes and save to a single CSV
 df_final = pd.concat(df_list, ignore_index=True)
-df_final.to_csv(os.path.join(folder, "all_coordinates.csv"), index=False)
+df_final.to_csv(os.path.join(folder, rf"{image_index}_all_coordinates.csv"), index=False)

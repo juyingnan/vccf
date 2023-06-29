@@ -40,7 +40,7 @@ def generate_mask_arr(type_list, table, mask_shape, is_line=False):
 
 
 # Default region_index
-region_index = 'a'
+region_index = 'b'
 
 # Check if at least one command-line argument is given
 if len(sys.argv) >= 2:
@@ -49,7 +49,7 @@ if len(sys.argv) >= 2:
 
 # Construct the path to the nuclei file
 nuclei_root_path = rf'F:\Projects\VCCF\hackathon_temp\crypts'
-nuclei_file_name = f'{region_index}_coordinates.csv'
+nuclei_file_name = f'{region_index}_all_coordinates.csv'
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
 cell_table = pd.read_csv(nuclei_file_path)

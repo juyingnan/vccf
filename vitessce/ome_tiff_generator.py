@@ -86,4 +86,6 @@ bitmask_arr = np.transpose(mask_stack, (2, 0, 1))
 
 # Save the masks
 print("Saving masks...")
-multiplex_img_to_ome_tiff(bitmask_arr, cell_types + links_types, nuclei_file_path.replace('csv', 'ome.tif'), axes="CYX")
+multiplex_img_to_ome_tiff(bitmask_arr, cell_types + links_types,
+                          nuclei_file_path.replace('.csv', f'_region_{region_index}.ome.tif'),
+                          axes="CYX")

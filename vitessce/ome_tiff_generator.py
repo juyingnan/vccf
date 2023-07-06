@@ -9,19 +9,16 @@ from vitessce.data_utils import multiplex_img_to_ome_tiff
 from skimage.morphology import disk, dilation
 
 
-def generate_cell_mask(mask_shape, vertices, is_line=False):
+def generate_cell_mask(mask, value, vertices, is_line=False):
     if is_line:
         rr, cc = line(int(vertices[0][1]), int(vertices[0][0]),
                       int(vertices[1][1]), int(vertices[1][0]))
-        mask = np.zeros(mask_shape)
-        mask[rr, cc] = 1
-        selem = disk(1)
-        mask = dilation(mask, selem)
+        mask[rr, cc] = value
+        # selem = disk(1)
+        # mask = dilation(mask, selem)
     else:
         rr, cc = polygon([v[1] for v in vertices], [v[0] for v in vertices])
-        mask = np.zeros(mask_shape)
-        mask[rr, cc] = 1
-    return mask
+        mask[rr, cc] = value
 
 
 def convert_str_to_list(row):
@@ -32,12 +29,7 @@ def generate_mask_arr(type_list, table, mask_shape, is_line=False):
     # initialize an empty mask for each cell type
     masks = {cell_type: np.zeros(mask_shape, dtype=np.uint8) for cell_type in type_list}
     for index, row in tqdm(table.iterrows(), total=len(table), desc='Processing rows'):
-        mask = generate_cell_mask(mask_shape, row['vertices'], is_line=is_line)
-        # each channel has unique color
-        mask_value = (mask * (color_dict[row['type']])).astype(np.uint8)
-        # each cell has unique color
-        # mask_value = (mask * (index + 1)).astype(np.uint8)
-        masks[row['type']] = np.maximum(masks[row['type']], mask_value)
+        generate_cell_mask(masks[row['type']], color_dict[row['type']], row['vertices'], is_line=is_line)
     # Create an ordered list of masks
     mask_list = [masks[cell_type] for cell_type in type_list]
     # Stack masks into a 3D array. The new array has shape (n, m, len(cell_types)),

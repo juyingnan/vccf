@@ -17,3 +17,8 @@ for i in tqdm(range(1, 65)):  # Loop from 1 to 64
         img_name='EUI',
         axes="CYX",
     )
+
+# Linux command
+# for i in {1..64}; do
+#   ./bftools/bfconvert -tilex 512 -tiley 512 -pyramid-resolutions 6 -pyramid-scale 2 -compression LZW ./static_images/Region_${i}.ome.tif ./static_images/Region_${i}.pyramid.ome.tif
+# done

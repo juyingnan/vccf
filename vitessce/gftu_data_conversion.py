@@ -1,22 +1,30 @@
 import json
 import os
+import sys
 import pandas as pd
 
-folder = r'F:\Projects\VCCF\hackathon_temp\crypts'
+folder = r'C:\Users\bunny\Desktop\test'
 
-image_index = 'a'
-rescale_index = 1.2
+image_index = '00a67c839'
+rescale_index = 1.0
 
-# VU "gold" standard reading
-gt_file_name = os.path.join(folder, f'{image_index}.json')
+# Check if at least one command-line argument is given
+if len(sys.argv) >= 2:
+    # Use the given argument as region_index
+    image_index = sys.argv[1]
+if len(sys.argv) >= 3:
+    # Use the given argument as scale
+    rescale_index = float(sys.argv[2])
 
-path_list = [gt_file_name]
+path_list = []
 
 # student json reading
 name_list = ["Ground Truth", "Tom", "Gleb", "Whats goin on", "Deeplive.exe", "Deepflash2"]
-for i in [1, 2, 3, 4, 5]:
-    path_list.append(os.path.join(rf"{folder}\{i}", f"{i}{image_index}.json"))
+for i in [0, 1, 2, 3, 4, 5]:
+    path_list.append(os.path.join(rf"{folder}\{i}", f"{image_index}.json"))
 json_count = len(path_list)
+
+print(path_list)
 
 df_list = []
 
@@ -31,10 +39,7 @@ for i in range(len(path_list)):
         coor_list.extend(item["geometry"]["coordinates"])
     x_list = [[xy[0] // 2 // rescale_index for xy in coor] for coor in coor_list]
     y_list = [[xy[1] // 2 // rescale_index for xy in coor] for coor in coor_list]
-    if i == 0:
-        vertices_list = [list(zip(x, y)) for x, y in zip(x_list, y_list)]
-    else:
-        vertices_list = [list(zip(y, x)) for x, y in zip(x_list, y_list)]
+    vertices_list = [list(zip(x, y)) for x, y in zip(x_list, y_list)]
 
     df_temp = pd.DataFrame({'id': range(1, len(vertices_list) + 1),
                             'type': name_list[i],

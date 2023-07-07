@@ -8,14 +8,14 @@ from skimage.draw import polygon_perimeter, line
 from vitessce.data_utils import multiplex_img_to_ome_tiff
 
 
-def generate_cell_mask(mask_shape, vertices, is_line=False):
+def generate_cell_mask(mask, value, vertices, is_line=False):
     if is_line:
-        rr, cc = line(*map(int, vertices[0]), *map(int, vertices[1]))
+        rr, cc = line(int(vertices[0][1]), int(vertices[0][0]),
+                      int(vertices[1][1]), int(vertices[1][0]))
+        mask[rr, cc] = value
     else:
-        rr, cc = polygon_perimeter([v[1] for v in vertices], [v[0] for v in vertices], shape=mask_shape)
-    mask = np.zeros(mask_shape)
-    mask[rr, cc] = 1
-    return mask
+        rr, cc = polygon_perimeter([v[1] for v in vertices], [v[0] for v in vertices])
+        mask[rr, cc] = value
 
 
 def convert_str_to_list(row):
@@ -24,13 +24,9 @@ def convert_str_to_list(row):
 
 def generate_mask_arr(type_list, table, mask_shape, is_line=False):
     # initialize an empty mask for each cell type
-    masks = {cell_type: np.zeros(mask_shape, dtype=np.uint16) for cell_type in type_list}
+    masks = {cell_type: np.zeros(mask_shape, dtype=np.uint8) for cell_type in type_list}
     for index, row in tqdm(table.iterrows(), total=len(table), desc='Processing rows'):
-        mask = generate_cell_mask(mask_shape, row['vertices'], is_line=is_line)
-        # each channel has unique color
-        masks[row['type']] += (mask * (color_dict[row['type']])).astype(np.uint16)
-        # each cell has unique color
-        # masks[row['type']] += (mask * (index + 1)).astype(np.uint16)
+        generate_cell_mask(masks[row['type']], color_dict[row['type']], row['vertices'], is_line=is_line)
     # Create an ordered list of masks
     mask_list = [masks[cell_type] for cell_type in type_list]
     # Stack masks into a 3D array. The new array has shape (n, m, len(cell_types)),
@@ -38,17 +34,20 @@ def generate_mask_arr(type_list, table, mask_shape, is_line=False):
     bitmask_stack = np.dstack(mask_list)
     return bitmask_stack
 
-
 # Default region_index
-region_index = 'b'
+region_index = '00a67c839'
+scale = 0.1
 
 # Check if at least one command-line argument is given
 if len(sys.argv) >= 2:
     # Use the given argument as region_index
-    region_index = int(sys.argv[1])
+    region_index = sys.argv[1]
+if len(sys.argv) >= 3:
+    # Use the given argument as scale
+    scale = float(sys.argv[2])
 
 # Construct the path to the nuclei file
-nuclei_root_path = rf'F:\Projects\VCCF\hackathon_temp\crypts'
+nuclei_root_path = rf'C:\Users\bunny\Desktop\test'
 nuclei_file_name = f'{region_index}_all_coordinates.csv'
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
@@ -56,6 +55,7 @@ cell_table = pd.read_csv(nuclei_file_path)
 
 # convert the vertices column from string to list
 cell_table['vertices'] = cell_table['vertices'].apply(convert_str_to_list)
+cell_table['vertices'] = cell_table['vertices'].apply(lambda x: [[int(i[0] * scale), int(i[1] * scale)] for i in x])
 
 cell_types = ["Ground Truth", "Tom", "Gleb", "Whats goin on", "Deeplive.exe", "Deepflash2"]
 color_dict = {"Ground Truth": 1, "Tom": 2, "Gleb": 3, "Whats goin on": 4, "Deeplive.exe": 5, "Deepflash2": 6}
@@ -63,8 +63,8 @@ color_dict = {"Ground Truth": 1, "Tom": 2, "Gleb": 3, "Whats goin on": 4, "Deepl
 # determine the shape of your canvas
 # height should be the max value of cell_table['vertices']
 # width should be the max value of cell_table['vertices']
-height = max([max([v[0] for v in vertices]) for vertices in cell_table['vertices']]) + 30
-width = max([max([v[1] for v in vertices]) for vertices in cell_table['vertices']]) + 30
+height = max([max([v[1] for v in vertices]) for vertices in cell_table['vertices']]) + 30
+width = max([max([v[0] for v in vertices]) for vertices in cell_table['vertices']]) + 30
 shape = (height, width)
 shape = tuple(map(int, shape))
 

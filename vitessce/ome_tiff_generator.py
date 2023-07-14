@@ -14,8 +14,6 @@ def generate_cell_mask(mask, value, vertices, is_line=False):
         rr, cc = line(int(vertices[0][1]), int(vertices[0][0]),
                       int(vertices[1][1]), int(vertices[1][0]))
         mask[rr, cc] = value
-        # selem = disk(1)
-        # mask = dilation(mask, selem)
     else:
         rr, cc = polygon([v[1] for v in vertices], [v[0] for v in vertices])
         mask[rr, cc] = value
@@ -30,8 +28,16 @@ def generate_mask_arr(type_list, table, mask_shape, is_line=False):
     masks = {cell_type: np.zeros(mask_shape, dtype=np.uint8) for cell_type in type_list}
     for index, row in tqdm(table.iterrows(), total=len(table), desc='Processing rows'):
         generate_cell_mask(masks[row['type']], color_dict[row['type']], row['vertices'], is_line=is_line)
+
     # Create an ordered list of masks
     mask_list = [masks[cell_type] for cell_type in type_list]
+
+    # make the line thicker by dilation
+    if is_line:
+        for i in range(len(mask_list)):
+            selem = disk(2)
+            mask_list[i] = dilation(mask_list[i], selem)
+
     # Stack masks into a 3D array. The new array has shape (n, m, len(cell_types)),
     # where n and m are the dimensions of the original masks.
     bitmask_stack = np.dstack(mask_list)
@@ -41,7 +47,7 @@ def generate_mask_arr(type_list, table, mask_shape, is_line=False):
 # Default region_index
 region_index = 3
 
-scale = 0.5
+scale = 16 * 0.325
 
 # Check if at least one command-line argument is given
 if len(sys.argv) >= 2:

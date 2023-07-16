@@ -6,6 +6,7 @@ import ast
 from tqdm import tqdm
 from skimage.draw import polygon_perimeter, line
 from vitessce.data_utils import multiplex_img_to_ome_tiff
+from skimage.morphology import disk, dilation
 
 
 def generate_cell_mask(mask, value, vertices, is_line=False):
@@ -31,12 +32,19 @@ def generate_mask_arr(type_list, table, mask_shape, is_line=False):
     mask_list = [masks[cell_type] for cell_type in type_list]
     # Stack masks into a 3D array. The new array has shape (n, m, len(cell_types)),
     # where n and m are the dimensions of the original masks.
+
+    # make the line thicker by dilation
+    for i in range(len(mask_list)):
+        selem = disk(1)
+        mask_list[i] = dilation(mask_list[i], selem)
+
     bitmask_stack = np.dstack(mask_list)
     return bitmask_stack
 
+
 # Default region_index
 region_index = '00a67c839'
-scale = 0.1
+scale = 1
 
 # Check if at least one command-line argument is given
 if len(sys.argv) >= 2:
@@ -47,7 +55,7 @@ if len(sys.argv) >= 3:
     scale = float(sys.argv[2])
 
 # Construct the path to the nuclei file
-nuclei_root_path = rf'C:\Users\bunny\Desktop\test'
+nuclei_root_path = rf'G:\HuBMAP\Vignette_GFTU_kidney'
 nuclei_file_name = f'{region_index}_all_coordinates.csv'
 nuclei_file_path = os.path.join(nuclei_root_path, nuclei_file_name)
 
@@ -65,6 +73,11 @@ color_dict = {"Ground Truth": 1, "Tom": 2, "Gleb": 3, "Whats goin on": 4, "Deepl
 # width should be the max value of cell_table['vertices']
 height = max([max([v[1] for v in vertices]) for vertices in cell_table['vertices']]) + 30
 width = max([max([v[0] for v in vertices]) for vertices in cell_table['vertices']]) + 30
+# height and width from command-line arguments
+if len(sys.argv) >= 4:
+    width = int(sys.argv[3])
+if len(sys.argv) >= 5:
+    height = int(sys.argv[4])
 shape = (height, width)
 shape = tuple(map(int, shape))
 

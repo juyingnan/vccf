@@ -7,4 +7,4 @@ cell_data = {
 }
 cell_sets_data = pd.DataFrame(cell_data)
 
-cell_sets_data.to_csv('cell_sets.csv', index=False)
+cell_sets_data.to_csv('vccf_cell_sets.csv', index=False)

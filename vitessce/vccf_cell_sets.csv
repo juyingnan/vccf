@@ -1,0 +1,10 @@
+cell_id,cell_type
+1,T-Killer
+2,T-Helper
+3,T-Reg
+4,CD68
+5,vessel
+6,T-Killer_link
+7,T-Helper_link
+8,T-Reg_link
+9,CD68_link

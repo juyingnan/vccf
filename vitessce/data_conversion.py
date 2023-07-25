@@ -30,11 +30,15 @@ def generate_link_vertices(x, y, z, vx, vy, vz):
 def main():
     # Default region_index
     region_index = 3
+    scale = 0.35
 
     # Check if at least one command-line argument is given
     if len(sys.argv) >= 2:
         # Use the given argument as region_index
         region_index = int(sys.argv[1])
+    if len(sys.argv) >= 3:
+        # Use the given argument as scale
+        scale = float(sys.argv[2])
 
     # Construct the path to the nuclei file
     nuclei_root_path = rf'G:\GE\skin_12_data\region_{region_index}'
@@ -49,6 +53,7 @@ def main():
     # filter out the rows where type is one of the specified values
     cell_types = ['T-Killer', 'T-Helper', 'T-Reg', 'CD68']
     average_sizes = {'T-Killer': 15.89, 'T-Helper': 16.96, 'T-Reg': 17.75, 'CD68': 16, 'CD31': 16}
+    average_sizes = {k: v * scale for k, v in average_sizes.items()}
     filtered_df = df[df['type'].isin(cell_types)]
 
     # construct the 'cell' table and generate vertices
